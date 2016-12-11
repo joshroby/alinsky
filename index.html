@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>Project Alinsky</title>
+		<link rel="stylesheet" href="style.css">
+		<script src="data.js"></script>
+		<script src="handlers.js"></script>
+		<script src="model.js"></script>
+		<script src="view.js"></script>
+	</head>
+	
+	<div class="header">
+	
+		<div class="resourceTracker">
+			<span id="time">Oct 5, 2018</span>
+		</div>
+	
+		<div class="resourceTracker">
+			<span id="resourceMana">X</span> mana
+		</div>
+	
+		<div class="resourceTracker">
+			<span id="resourceCash">X</span> cash
+		</div>
+	
+		<div class="resourceTracker">
+			<span id="resourceTreasury">X</span> treasury
+		</div>
+		
+		<ul class="barList" />
+	
+	</div>
+	
+	<div class="sidebar">
+	
+		<div id="mapBar">
+			<h3 onclick="handlers.sidebarMapExpand('map')">Map</h3>
+			<div id="mapBarContents" class="mapContent">
+				<div id="mapBarFilters" class="filterBar">
+					<div id="filterRes" class="filter">res</div>
+					<div id="filterBiz" class="filter">biz</div>
+					<div id="filterGov" class="filter">gov</div>
+					<div id="filterMisc" class="filter">misc</div>
+				</div>
+				<ul class="barList">
+					<li>City Hall</li>
+					<li>Brownstone</li>
+					<li>Shopping Plaza</li>
+					<li>First Manichean</li>
+				</ul>
+			</div>
+		</div>
+	
+		<div id="calBar">
+			<h3 onclick="handlers.sidebarMapExpand('cal')">Calendar</h3>
+			<div id="calBarContents">
+				<table id="calendar">
+					<tr>
+						<td class="calCellPast">1</td>
+						<td class="calCellPast">2</td>
+						<td class="calCellPast">3</td>
+						<td class="calCellPast">4</td>
+						<td class="calCellFutureNone">5</td>
+						<td class="calCellFutureNone">6</td>
+						<td class="calCellFutureEvent">7</td>
+					</tr>
+					<tr>
+						<td class="calCellFutureNone">8</td>
+						<td class="calCellFutureNone">9</td>
+						<td class="calCellFutureNone">10</td>
+						<td class="calCellFutureEvent">11</td>
+						<td class="calCellFutureNone">12</td>
+						<td class="calCellFutureEvent">13</td>
+						<td class="calCellFutureEvent">14</td>
+					</tr>
+					<tr>
+						<td class="calCellFutureNone">15</td>
+						<td class="calCellFutureNone">16</td>
+						<td class="calCellFutureNone">17</td>
+						<td class="calCellFutureNone">18</td>
+						<td class="calCellFutureNone">19</td>
+						<td class="calCellFutureNone">20</td>
+						<td class="calCellFutureNone">21</td>
+					</tr>
+					<tr>
+						<td class="calCellFutureNone">22</td>
+						<td class="calCellFutureNone">23</td>
+						<td class="calCellFutureNone">24</td>
+						<td class="calCellFutureNone">25</td>
+						<td class="calCellFutureNone">26</td>
+						<td class="calCellFutureNone">27</td>
+						<td class="calCellFutureNone">28</td>
+					</tr>
+					<tr>
+						<td class="calCellFutureNone">29</td>
+						<td class="calCellFutureNone">30</td>
+						<td class="calCellFutureNone">31</td>
+						<td class="calCellFutureNone">1</td>
+						<td class="calCellFutureNone">2</td>
+						<td class="calCellFutureNone">3</td>
+						<td class="calCellFutureNone">4</td>
+					</tr>
+					<tr>
+						<td class="calCellFutureNone">5</td>
+						<td class="calCellFutureNone">6</td>
+						<td class="calCellFutureNone">7</td>
+						<td class="calCellFutureNone">8</td>
+						<td class="calCellFutureNone">9</td>
+						<td class="calCellFutureNone">10</td>
+						<td class="calCellFutureNone">11</td>
+					</tr>
+					<tr>
+						<td class="calCellFutureNone">12</td>
+						<td class="calCellFutureNone">13</td>
+						<td class="calCellFutureNone">14</td>
+						<td class="calCellFutureNone">15</td>
+						<td class="calCellFutureNone">16</td>
+						<td class="calCellFutureNone">17</td>
+						<td class="calCellFutureNone">18</td>
+					</tr>
+					<tr>
+						<td class="calCellFutureNone">19</td>
+						<td class="calCellFutureNone">20</td>
+						<td class="calCellFutureNone">21</td>
+						<td class="calCellFutureNone">22</td>
+						<td class="calCellFutureNone">23</td>
+						<td class="calCellFutureNone">24</td>
+						<td class="calCellFutureNone">25</td>
+					</tr>
+					<tr>
+						<td class="calCellFutureNone">26</td>
+						<td class="calCellFutureNone">27</td>
+						<td class="calCellFutureNone">28</td>
+						<td class="calCellFutureNone">29</td>
+						<td class="calCellFutureNone">30</td>
+						<td class="calCellFutureNone">1</td>
+						<td class="calCellFutureNone">2</td>
+					</tr>
+					<tr>
+						<td class="calCellFutureNone">3</td>
+						<td class="calCellFutureNone">4</td>
+						<td class="calCellFutureNone">5</td>
+						<td class="calCellFutureNone">6</td>
+						<td class="calCellFutureNone">7</td>
+						<td class="calCellFutureNone">8</td>
+						<td class="calCellFutureNone">9</td>
+					</tr>
+					<tr>
+						<td class="calCellFutureNone">10</td>
+						<td class="calCellFutureNone">11</td>
+						<td class="calCellFutureNone">12</td>
+						<td class="calCellFutureNone">13</td>
+						<td class="calCellFutureNone">14</td>
+						<td class="calCellFutureNone">15</td>
+						<td class="calCellFutureNone">16</td>
+					</tr>
+					<tr>
+						<td class="calCellFutureNone">17</td>
+						<td class="calCellFutureNone">18</td>
+						<td class="calCellFutureNone">19</td>
+						<td class="calCellFutureNone">20</td>
+						<td class="calCellFutureNone">21</td>
+						<td class="calCellFutureNone">22</td>
+						<td class="calCellFutureNone">23</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	
+		<div id="contactBar">
+			<h3 onclick="handlers.sidebarMapExpand('contact')">Contacts</h3>
+			<div id="contactBarContents">
+				<div id="contactBarFilters" class="filterBar">
+					<div id="filterHires" class="filter">hires</div>
+					<div id="filterVolunteers" class="filter">vols</div>
+					<div id="filterSubscribers" class="filter">subs</div>
+					<div id="filterAllies" class="filter">allies</div>
+				</div>
+				<ul id="contactList" class="barList">
+					<li>Sam Black (you)</li>
+					<li>Maria Russo</li>
+					<li>Alphonse Zizek</li>
+				</ul>
+			</div>
+		</div>
+	
+		<div id="actionBar">
+			<h3 onclick="handlers.sidebarMapExpand('action')">Actions</h3>
+			<div id="actionBarContents">
+				<ul class="barList">
+					<li>One-on-One</li>
+					<li>Newsletter</li>
+					<li>Press Release</li>
+					<li>Attend Event</li>
+					<li>Event Planning</li>
+					<li>Day Job</li>
+					<li>Self Care</li>
+				</ul>
+			</div>
+		</div>
+		
+		<div id="fillBar">
+		</div>
+	
+	</div>
+	
+	<div class="pane">
+		<div id="mapPane" class="mapContent">
+			<img src="Chicago-Neighborhoods-Map.jpg" height="600px" />
+			<div id="locationDetails">
+				<h3>Shopping Plaza</h3>
+				<table>
+					<tr>
+						<td class="tableHead">Quality Tier:</td>
+						<td>Upscale</td>
+						<td class="tableHead">Paygrades:</td>
+						<td>9/12/30</td>
+					</tr>
+					<tr>
+						<td class="tableHead">Typical Clientele:</td>
+						<td>White Middle-Class Shoppers</td>
+						<td class="tableHead">Active Unions:</td>
+						<td>SIEU</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		
+		<div id="calPane" class="calContent">
+			<div id="calPaneDay">
+				<h1 id="calendarDate">October 7th, 2017</h1>
+				<div id="calendarMorning">
+					<h3 class="calHead">Morning:</h3>
+					<h3 class="eventHead">Work</h3>
+				</div>
+				<div id="calendarAfternoon">
+					<h3 class="calHead">Lunch:</h3>
+					<h3 class="eventHead">Free!</h3>
+				</div>
+				<div id="calendarAfternoon">
+					<h3 class="calHead">Afternoon:</h3>
+					<h3 class="eventHead">Work</h3>
+				</div>
+				<div id="calendarEvening">
+					<h3 class="calHead">Evening:</h3>
+					<h3 class="eventHead">Candlelight Vigil</h3>
+					<table class="eventList">
+						<tr>
+							<td class="tableHead">Location:</td>
+							<td class="eventInfo" id="eventLocation">First Manichean</td>
+						</tr>
+						<tr>
+							<td class="tableHead">Sponsor:</td>
+							<td class="eventInfo" id="eventOrganizer">Downtown Shelter</td>
+						</tr>
+						<tr>
+							<td class="tableHead">Funding:</td>
+							<td class="eventInfo" id="eventFunding">100%</li>
+						</tr>
+						<tr>
+							<td class="tableHead">RSVPs:</td>
+							<td class="eventInfo" id="eventRSVPs">34</li>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		
+		<div id="contactPane" class="contactContent">
+			<h1 id="contactName">Maria Russo</h1>
+			<table>
+				<tr>
+					<td class="tableHead">Age:</td>
+					<td id="contactAge">28</td>
+					<td class="tableHead">Gender:</td>
+					<td id="contactGender">Cisgender Woman</td>
+					<td class="tableHead">Race:</td>
+					<td id="contactRace">White</td>
+				</tr>
+				<tr>
+					<td class="tableHead">Residence:</td>
+					<td id="contactHome">Brownstone</td>
+					<td class="tableHead">Orientation:</td>
+					<td id="contactOrientation">Straight</td>
+					<td class="tableHead">Ethnicity:</td>
+					<td id="contactEthnicity">Italian</td>
+				</tr>
+				<tr>
+				</tr>
+			</table>
+			<h3>Affiliations</h3>
+			<ul id="contactAffiliations">
+				<li id="contactJob">Shopping Plaza, entry level</li>
+				<li id="contactChurch">First Manichean, board member</li>
+				<li id="contactUnion">SIEU, member</li>
+				<li>Downtown Shelter, volunteer</li>
+			</ul>
+			<h3>Known Backstory</h3>
+			<ul id="contactStory">
+				<li class="contactStory">Raised in Poverty</li>
+				<li class="contactStory">Queer Friend</li>
+				<li class="contactStory">Period of Homelessness</li>
+				<li class="contactStory">Stable Employment</li>
+			</ul>
+			
+			<div class="debug">
+				<button onclick="handlers.newPerson()">New Person</button>
+			</div>
+		</div>
+		
+		<div id="actionPane" class="actionContent">
+			<h1>Action</h1>
+		</div>
+	
+	</div>
+
+</html>

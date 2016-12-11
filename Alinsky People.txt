@@ -1,0 +1,89 @@
+
+
+
+Building a Person in Alinsky
+
+Name, duh
+
+Demographics =-=-=-=-
+
+Ethnicity
+Race
+Orientation
+Gender
+
+
+
+Connections =-=-=-=-
+
+Employment
+Church Attendance
+Political Affiliation
+
+
+
+History =-=-=-=-=-=-=-
+- leads to values, issues, and resources
+
+FAMILY BLOCKS (3)
+	- single mom (+Care, +Fair, Gender Equity)
+	- singe dad (+Care, +Authority, Patriarchy)
+	- religious family (+Purity, +InGroup, +Authority; Patriarchy, Homophobia)
+	- struggling family (+Care, +Ambition; Economic Equity, School Reform)
+	- privileged family (+Liberty, +InGroup; White Supremacy, Laissez-Faire)
+	- family of color (+Care, +Liberty; Racial Justice)
+	- disabled family member (+Care, +Fair; Healthcare)
+	- queer family member (+Care, +Liberty; Queer Rights)
+
+YOUTH BLOCKS (2)
+	- immediate higher education (+Liberty, +Ambition, +Authority)
+	- early activism (+Fair, +InGroup; ~random issue~)
+	- outdoors experience (+Purity +Liberty; Environmentalism)
+	- friends of other race (+Fair +Liberty; Racial Justice
+	- queer friend (+Fair, +Liberty; Queer Rights)
+	- religious devotion (+Pure; Homophobia, Patriarchy)
+	- crime (+Liberty +Ambition; Economic Equity, Prison Reform)
+	- coming out of closet (+Liberty, +InGroup; Queer Rights)
+
+MATURE BLOCKS (# depends on age)
+	- stable employment (+Authority, +InGroup; Local Economy, Laissez-Faire)
+	- unemployment (+Care, +Ambition; Economic Equity)
+	- homeless (+Care, +Liberty; Economic Equity, Healthcare)
+	- imprisonment (+Liberty +Ambition; Prison Reform)
+	- parenthood (+Care, +Fair; School Reform)
+	- parent of queer kid (+Care, +Fair; Queer Rights, School Reform)
+	- parent of disabled kid (+Care, +Fair; Healthcare, School Reform)
+	- addiction (+Care, +Pure; Healthcare)
+	- found religion (+Pure, +Care; Homophobia, Patriarchy)
+	- medical emergency (+Care, +Fair; Healthcare, Economic Equity)
+	- coming out of closet (+Liberty, +InGroup; Queer Rights)
+	- outdoors experience (+Purity +Liberty; Environmentalism)
+	- back to school (+Fair, +Ambition; School Reform, Electoral Reform)
+
+
+
+
+VALUES =-=-=-	
+	Care/Harm
+	Fairness/Cheating
+	Liberty/Oppression
+	InGroup Loyalty/Cosmopolitain
+	Authority/Subversion
+	Purity/Degradation
+	Ambition/Submission
+
+ISSUES =-=-=-=-
+	Racial Justice
+	White Supremacy
+	Gender Equity
+	Patriarchy
+	Queer Rights
+	Homophobia
+	Local Economy
+	School Reform
+	Electoral Reform
+	Prison Reform
+	Economic Equity
+	Laissez-Faire
+	Environmentalism
+	Healthcare
