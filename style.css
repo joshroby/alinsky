@@ -2,6 +2,10 @@ body {
 	font-family: sans-serif;
 	cursor: default;
 	}
+
+ul {
+	margin-top: 0px;
+	}
 	
 .header {
 	background: #BBB;
@@ -211,4 +215,44 @@ dd {
 
 .eventInfo {
 	margin-left: 30px;
+	}
+
+
+/* VALUES TABLE */
+
+#valuesTable {
+	width: 100%;
+	}
+
+.valueCell {
+	font-size: 60%;
+	text-align: center;
+	}
+
+#ambitionCell {
+	background: #e66665;
+	}
+
+#authorityCell {
+	background: #f47d43;
+	}
+
+#careCell {
+	background: #ffd602;
+	}
+
+#fairnessCell {
+	background: #9eceb4;
+	}
+
+#libertyCell {
+	background: #accbe8;
+	}
+
+#loyaltyCell {
+	background: #9295ca;
+	}
+					
+#purityCell {
+	background: #a9b2b1;
 	}
