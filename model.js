@@ -33,34 +33,11 @@ function Person(block) {
 		var genderPublic = genderIdentity;
 		}
 	
-
 	var races = Object.keys(dataRaces);
 	var race = dataRaces[races[races.length * Math.random() << 0]];
 
 	var ethnicities = Object.keys(race.ethnicities);
 	var ethnicity = race.ethnicities[ethnicities[ethnicities.length * Math.random() << 0]];
-	if (genderPublic.name === dataGenders.man.name) {
-		var firstNames = ethnicity.masculineNames;
-		firstNames = firstNames.concat(common.masculineNames);
-	} else if (genderPublic.name === dataGenders.woman.name) {
-		var firstNames = ethnicity.feminineNames;
-		firstNames = firstNames.concat(common.feminineNames);
-	} else {
-		var firstNames = ethnicity.neutralNames;
-		firstNames = firstNames.concat(common.neutralNames);
-	}
-	firstNames = firstNames.concat(ethnicity.neutralNames);
-	firstNames = firstNames.concat(common.neutralNames);
-	var firstName = firstNames[firstNames.length * Math.random() << 0];
-	var middleName = firstNames[firstNames.length * Math.random() << 0];
-	var lastName = ethnicity.surnames[ethnicity.surnames.length * Math.random() << 0];
-	
-// 	if (Math.random() < 0.2) {
-// 		genderIdentity = dataGenders[genders[genders.length * Math.random() << 0]];
-// 		if (Math.random() < 0.5) {
-// 		genderPublic = genderIdentity;
-// 		}
-// 	}
 	
 	var attraction = [];
 	var orientation;
@@ -87,12 +64,20 @@ function Person(block) {
 		purity: 1 + Math.random() * 3 << 0,
 		ambition: 1 + Math.random() * 3 << 0,
 		};
-	var resources = {status:1,money:1,education:1,network:0,child:0};
+	var resources = {status:1,money:1,education:1,network:0,child:0,devotion:0};
 	
-	var age = Math.round(Math.random()*82)+18;
+	var faith = dataFaiths[ethnicity.majorityFaith];
+	
+	var age = Math.round(Math.max(Math.random()*20+Math.random()*20+Math.random()*20+Math.random()*20,18));
+	
 	var backstories = [];
+	var backstoriesPickList = [];
+	var newBackstory;
 	
 	// Adding new Backstory Blocks Here
+		// Will need to incorporate the effects into the add code so that the add code can take the current totals of resources to determine what the next block should be
+		// Maybe build the pick-from list by adding in Stable and Promotion entries equal to Network & Status
+		// Also maybe add Unemployment and Homeless in Inverse of Network and Money?	
 	for (i = 0; i < 3; i++) {
 		backstories.push(backstoriesFamily[backstoriesFamily.length * Math.random() << 0]);
 		}
@@ -100,12 +85,8 @@ function Person(block) {
 	for (i = 0; i < 2; i++) {
 		backstories.push(backstoriesYouth[backstoriesYouth.length * Math.random() << 0]);
 		}
-		
-	for (i = 18; i < age; i += 10) {
-		backstories.push(backstoriesMature[backstoriesMature.length * Math.random() << 0]);
-		}
-	
-	// Processing Backstory Blocks' Effects Here
+
+	// Processing Youth+Family Backstory Blocks' Effects Here
 	for (i in backstories) {
 		for (n in backstories[i].values) {
 			values[backstories[i].values[n]]++;
@@ -121,12 +102,118 @@ function Person(block) {
 				issues.push(backstories[i].issues[n]);
 				}
 			}
+		if (backstories[i].updateDemo !== undefined) {
+			var type = backstories[i].updateDemo[0];
+			var list = backstories[i].updateDemo[1];
+			if (type === "faith") {
+				var newFaith = list[list.length * Math.random() << 0];
+				faith = newFaith;
+			} else if (type === "orientation") {
+				orientation = "Queer";
+				if (genderIdentity !== "Man") {attraction.push(dataGenders.woman)};
+				if (genderIdentity !== "Woman") {attraction.push(dataGenders.man)};
+			} else if (type === "gender") {
+				genders = [dataGenders.genderqueer];
+				if (genderIdentity.name !== "Man") {genders.push(dataGenders.man)};
+				if (genderIdentity.name !== "Woman") {genders.push(dataGenders.woman)};
+				genderIdentity = genders[genders.length * Math.random() << 0];
+				genderPublic = genderIdentity;
+				}
+			}
 		}
-		
-		// Will need to incorporate the effects into the add code so that the add code can take the current totals of resources to determine what the next block should be
-	
-	this.name = {};
 
+	// Mature Phase Backstory Blocks	
+	for (y = 18; y < age; y += 12) {
+		backstoriesPickList = backstoriesMature.concat(backstoriesMature);
+		for (i=0;i<resources.education;i++) {
+			backstoriesPickList = backstoriesPickList.concat(backstoriesMatureEducation);
+		}
+		for (i=0;i<resources.money;i++) {
+			backstoriesPickList = backstoriesPickList.concat(backstoriesMatureMoney);
+		}
+		for (i=0;i<resources.status;i++) {
+			backstoriesPickList = backstoriesPickList.concat(backstoriesMatureStatus);
+		}
+		for (i=0;i<resources.network;i++) {
+			backstoriesPickList = backstoriesPickList.concat(backstoriesMatureNetwork);
+		}
+		for (i=0;i<resources.child;i++) {
+			backstoriesPickList = backstoriesPickList.concat(backstoriesMatureChild);
+		}
+		newBackstory = backstoriesPickList[backstoriesPickList.length * Math.random() << 0];
+		backstories.push(newBackstory);
+		
+		for (n in newBackstory.values) {
+			values[newBackstory.values[n]]++;
+			}
+		for (n in newBackstory.resources) {
+			resources[newBackstory.resources[n]]++;
+			}
+		for (n in newBackstory.resourceLosses) {
+			resources[newBackstory.resourceLosses[n]]--;
+			}
+		for (n in newBackstory.issues) {
+			if (issues.indexOf(newBackstory.issues[n]) == -1) {
+				issues.push(newBackstory.issues[n]);
+				}
+			}
+		if (newBackstory.updateDemo !== undefined) {
+			var type = newBackstory.updateDemo[0];
+			var list = newBackstory.updateDemo[1];
+			if (type === "faith") {
+				var newFaith = list[list.length * Math.random() << 0];
+				faith = newFaith;
+			} else if (type === "orientation") {
+				orientation = "Queer";
+				if (genderIdentity !== "Man") {attraction.push(dataGenders.woman)};
+				if (genderIdentity !== "Woman") {attraction.push(dataGenders.man)};
+			} else if (type === "gender") {
+				genders = [dataGenders.genderqueer];
+				if (genderIdentity.name !== "Man") {genders.push(dataGenders.man)};
+				if (genderIdentity.name !== "Woman") {genders.push(dataGenders.woman)};
+				genderIdentity = genders[genders.length * Math.random() << 0];
+				genderPublic = genderIdentity;
+				}
+			}
+		
+		}
+	
+	// Identity-based Issues not handled in Backstory
+	var identityIssues = [];
+	identityIssues = identityIssues.concat(genderIdentity.issues);
+	identityIssues = identityIssues.concat(race.issues);
+	identityIssues = identityIssues.concat(faith.issues);
+	if (orientation === "Queer") {identityIssues = identityIssues.concat(dataIssues.queerRights)};
+	for (i in identityIssues) {
+		if (issues.indexOf(identityIssues[n]) == -1) {
+			issues.push(identityIssues[n]);
+			}
+	}
+	
+		
+	// Picking Names, now that we've established current Gender Identity in Backstory	
+	if (genderPublic.name === dataGenders.man.name) {
+		var firstNames = ethnicity.masculineNames;
+		firstNames = firstNames.concat(common.masculineNames);
+	} else if (genderPublic.name === dataGenders.woman.name) {
+		var firstNames = ethnicity.feminineNames;
+		firstNames = firstNames.concat(common.feminineNames);
+	} else {
+		var firstNames = ethnicity.neutralNames;
+		firstNames = firstNames.concat(common.neutralNames);
+	}
+	firstNames = firstNames.concat(ethnicity.neutralNames);
+	firstNames = firstNames.concat(common.neutralNames);
+	var firstName = firstNames[firstNames.length * Math.random() << 0];
+	var middleName = firstNames[firstNames.length * Math.random() << 0];
+	var lastName = ethnicity.surnames[ethnicity.surnames.length * Math.random() << 0];
+	
+	// Sticking stuff on the actual object for later reference now
+	this.name = {};
+	this.name.first = firstName;
+	this.name.middle = middleName;
+	this.name.last = lastName;
+	
 	this.home = block;
 	
 	this.race = race;
@@ -136,8 +223,12 @@ function Person(block) {
 	this.gender.assigned = genderAssigned;
 	this.gender.identity = genderIdentity;
 	this.gender.public = genderPublic;
-	this.gender.attraction = attraction;
-	this.gender.orientation = orientation;
+	
+	this.orientation = {};
+	this.orientation.name = orientation;
+	this.orientation.attraction = attraction;
+	
+	this.faith = faith;
 	
 	this.age = age;
 	this.backstories = backstories;
@@ -145,11 +236,11 @@ function Person(block) {
 	this.values = values;
 	this.issues = issues;
 	this.resources = resources;
-
-	this.name.first = firstName;
-	this.name.middle = middleName;
-	this.name.last = lastName;
 	
 	people.push(this);
+	
+	// Functions
+	
 
 }
+

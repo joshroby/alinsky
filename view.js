@@ -42,31 +42,38 @@ var view = {
 				var gender = "Transgender " + contact.gender.identity.name + " (Publicly, a " + contact.gender.public.name + ")";
 			}
 		
-		if (contact.gender.attraction.length === 0) {
+		if (contact.orientation.attraction.length === 0) {
 				var orientation = "Asexual";
-			} else if (contact.gender.public.name === "Man" && contact.gender.attraction[0].name === "Woman" && contact.gender.attraction.length === 1) {
+			} else if (contact.gender.public.name === "Man" && contact.orientation.attraction[0].name === "Woman" && contact.orientation.attraction.length === 1) {
 				var orientation = "Straight";
-			} else if (contact.gender.public.name === "Woman" && contact.gender.attraction[0].name === "Man" && contact.gender.attraction.length === 1) {
+			} else if (contact.gender.public.name === "Woman" && contact.orientation.attraction[0].name === "Man" && contact.orientation.attraction.length === 1) {
 				var orientation = "Straight";
-			} else if (contact.gender.attraction.length > 2) {
+			} else if (contact.orientation.attraction.length > 2) {
 				var orientation = "Queer (Pansexual)";
-			} else if (contact.gender.attraction.length > 1) {
+			} else if (contact.orientation.attraction.length > 1) {
 				var orientation = "Queer (Bisexual)";
-			} else if (contact.gender.public.name === "Man" && contact.gender.attraction[0].name === "Man") {
+			} else if (contact.gender.public.name === "Man" && contact.orientation.attraction[0].name === "Man") {
 				var orientation = "Queer (Gay)";
-			} else if (contact.gender.public.name === "Woman" && contact.gender.attraction[0].name === "Woman") {
+			} else if (contact.gender.public.name === "Woman" && contact.orientation.attraction[0].name === "Woman") {
 				var orientation = "Queer (Lesbian)";
 			} else {
 				var orientation = "Queer";
 			}
 		
-		var home = "X";
+		var faith = contact.faith.denomination;
+		if (contact.resources.devotion > 2) {
+				faith += " (devout)"
+			} else if (contact.resources.devotion > 0) {
+				faith += " (nominally)"
+			} else {
+				faith += " (non-practicing)"
+			}
 		
 		var contactName = document.getElementById('contactName');
 		var contactAge = document.getElementById('contactAge');
 		var contactGender = document.getElementById('contactGender');
 		var contactRace = document.getElementById('contactRace');
-		var contactHome = document.getElementById('contactHome');
+		var contactFaith = document.getElementById('contactFaith');
 		var contactOrientation = document.getElementById('contactOrientation');
 		var contactEthnicity = document.getElementById('contactEthnicity');
 		
@@ -74,7 +81,7 @@ var view = {
 		contactAge.innerHTML = age;
 		contactGender.innerHTML = gender;
 		contactRace.innerHTML = race;
-		contactHome.innerHTML = home;
+		contactFaith.innerHTML = faith;
 		contactOrientation.innerHTML = orientation;
 		contactEthnicity.innerHTML = ethnicity;
 		
@@ -86,10 +93,10 @@ var view = {
 		var contactNetwork = document.getElementById('contactNetwork');
 		var contactEducation = document.getElementById('contactEducation');
 		
-		contactStatus.innerHTML = contact.resources.status;
-		contactMoney.innerHTML = contact.resources.money;
-		contactNetwork.innerHTML = contact.resources.network;
-		contactEducation.innerHTML = contact.resources.education;
+		contactStatus.innerHTML = descStatus[Math.max(0,contact.resources.status)] + " (" + contact.resources.status + ")";
+		contactMoney.innerHTML = descMoney[Math.max(0,contact.resources.money)] + " (" + contact.resources.money + ")";
+		contactNetwork.innerHTML = descNetwork[Math.max(0,contact.resources.network)] + " (" + contact.resources.network + ")";
+		contactEducation.innerHTML = descEducation[Math.max(0,contact.resources.education)] + " (" + contact.resources.education + ")";
 
 		var contactBackstory = document.getElementById('contactStory');
 		contactStory.innerHTML = '';
@@ -143,9 +150,12 @@ var view = {
 		issuesList.innerHTML = '';
 		var issuesItem;
 		var issues = [];
+		var issueStrength = 0;
 		for (n in contact.issues) {
+			var person = contact;
+			issueStrength = contact.issues[n].value(contact);
 			issuesItem = document.createElement('li');
-			issuesItem.innerHTML =  contact.issues[n].name + " [" + contact.values[contact.issues[n].coreValue] + "]";
+			issuesItem.innerHTML =  contact.issues[n].name + " [" + issueStrength + "]";
 			issuesList.appendChild(issuesItem);
 			}
 		

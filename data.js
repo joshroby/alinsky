@@ -8,99 +8,123 @@ var dataValues = [
 	"ambition",
 	];
 
+var descStatus = ["underclass","lower class","lower-middle class","upper-middle class","upper class","celebrity"];
+var descMoney = ["in debt","poor","struggling","comfortable","well-off","wealthy","very wealthy"];
+var descEducation = ["illiterate","high school diploma","BA","graduate degree","PhD","multiple PhDs"];
+var descNetwork = ["outcast","weak","small","medium","connected","well-connected","power networker"];
+
+function valuation(coreValue,secondaryValue,conditionalValue,condition,bool,key) {
+	return function(person) {
+		var issueStrength = person.values[coreValue] * 2 ;
+		if (secondaryValue !== undefined) {
+			issueStrength += person.values[secondaryValue];
+		} else if ((person[condition].name === key) === bool) {
+			issueStrength += person.values[conditionalValue];
+		}
+		return issueStrength;
+	}
+}
+
 var dataIssues = {
 
 	racialJustice: {
 		name: "Racial Justice",
-		coreValue: "fairness",
-		conditionalValue: ["race","is not","White","liberty"],
+		value: valuation("fairness",undefined,"liberty","race",false,"White"),
 		},
 		
 	whiteSupremacy: {
 		name: "White Supremacy",
-		coreValue: "authority",
-		conditionalValue: ["race","is","White","loyalty"]
+		value: valuation("authority",undefined,"loyalty","race",true,"White"),
 		},
 		
 	genderEquity: {
 		name: "Gender Equity",
-		coreValue: "fairness",
-		conditionalValue: ["gender","is not","Man","liberty"],
+		value: valuation("fairness",undefined,"liberty","gender",false,"Man"),
 		},
 		
 	patriarchy: {
 		name: "Patriarchy",
-		coreValue: "authority",
-		conditionalValue: ["race","is","Man","loyalty"],
+		value: valuation("authority",undefined,"loyalty","race",true,"Man"),
 		},
 		
 	queerRights: {
 		name: "Queer Rights",
-		coreValue: "fairness",
-		conditionalValue: ["orientation","is","Queer","liberty"],
+		value: valuation("fairness",undefined,"liberty","orientation",true,"Queer"),
 		},
 		
 	homophobia: {
 		name: "Homophobia",
-		coreValue: "purity",
-		conditionalValue: ["orientation","is","Straight","authority"],
+		value: valuation("purity",undefined,"authority","orientation",true,"Straight"),
 		},
 	
 	religiousFreedom: {
 		name: "Religious Freedom",
-		coreValue: "liberty",
-		conditionalValue: ["religion","is not","Christian","loyalty"],
+		value: valuation("liberty",undefined,"loyalty","faith",false,"Christian"),
 		},
 	
 	stateReligion: {
 		name: "State Religion",
-		coreValue: "loyalty",
-		conditionalValue: ["religion","is","Christian","authority"],
+		value: valuation("loyalty",undefined,"authority","faith",true,"Christian"),
 		},
 		
 	localEconomy: {
 		name: "Local Economy",
-		coreValue: "ambition",
+		value: valuation("ambition","loyalty"),
 		},
 		
 	economicEquity: {
 		name: "Economic Equity",
-		coreValue: "care",
+		value: valuation("care","fairness"),
 		},
 		
 	schoolReform: {
 		name: "School Reform",
-		coreValue: "care",
+		value: valuation("ambition","fairness"),
+		},
+		
+	schoolPrivatization: {
+		name: "School Privatization",
+		value: valuation("liberty","ambition"),
 		},
 		
 	electoralReform: {
 		name: "Electoral Reform",
-		coreValue: "liberty",
+		value: valuation("liberty","fairness"),
+		},
+		
+	voterSuppression: {
+		name: "Voter Suppression",
+		value: valuation("loyalty","authority"),
 		},
 		
 	prisonReform: {
 		name: "Prison Reform",
-		coreValue: "care",
+		value: valuation("care","purity"),
 		},
 		
 	laissezFaire: {
-		name: "Laissez-Faire Policy",
-		coreValue: "ambition",
+		name: "Industrial Deregulation",
+		value: valuation("ambition","liberty"),
 		},
 		
 	environmentalism: {
 		name: "Environmentalism",
-		coreValue: "purity",
+		value: valuation("purity","fairness"),
 		},
 		
 	healthcare: {
 		name: "Healthcare",
-		coreValue: "care",
+		value: valuation("care","purity"),
 		},
 	
 	immigration: {
 		name: "Immigration",
-		coreValue: "liberty",
+		value: valuation("liberty","care"),
+		},
+	
+	immigrationRestriction: {
+		name: "Immigration Restriction",
+		value: valuation("loyalty","purity"),
 		},
 
 	};
@@ -132,6 +156,7 @@ var dataEthnicities = {
 		feminineNames: ["Amelia","Olivia","Isla","Emily","Poppy","Ava","Isabella","Jessica","Lily","Sophie","Grace","Sophia","Mia","Eve","Ella","Scarlette","Chloe","Sienna","Freya","Phoebe","Charlotte","Daisy","Alice"],
 		neutralNames: ["Jack","Charlie","Freddie","Alex","Max","Mason","Riley","Finley","Toby"],
 		surnames: ["White","Jackson","Cooper"],
+		majorityFaith: "anglican",
 		},
 	
 	scots: {
@@ -140,6 +165,7 @@ var dataEthnicities = {
 		feminineNames: ["Mary","Sophie","Olivia","Emily","Isla","Lucy","Ava","Jessica","Ella","Amelia","Millie","Lily","Chloe","Eva","Emma","Sophia","Ellie","Mia","Erin","Freya","Grace","Charlotte","Ellidh","Holly","Anna","Hannah"],
 		neutralNames: ["Charlie","Riley","Finlay","Max","Cameron","Ryan","Jamie","Ruby"],
 		surnames: ["Smith","Brown","Wilson","Campbell","Stewart","Thomson","Robertson","Anderson","Macdonald","Scott","Reid","Murray","Taylor","Clark","Ross","Watson","Morrison","Paterson","Young","Mitchell","Walker","Fraser","Miller","Gray","Henderson","Hamilton","McTavish","McGuinness","MacDougal"],
+		majorityFaith: "romanCatholic",
 		},
 	
 	italian: {
@@ -148,6 +174,7 @@ var dataEthnicities = {
 		feminineNames: ["Maria","Beatrice","Giulia","Chiara","Sara","Martina","Francesca","Silvia","Elisa","Alice","Federica","Alessia","Laura","Elena","Giorgia","Valentina","Eleonora","Anna","Marta","Claudia","Ilaria","Sofia","Arianna","Irene"],
 		neutralNames: ["Luca","Ferrari","Rome","Messina","Andrea","Daniele","Simone","Michelle","Nicola"],
 		surnames: ["Rossi","Russo","Ferrari","Esposito","Bianchi","Romano","Caruso","Rizzo","Gallo","Greco","De Luca","Giordano","Lombardo","Leone","De Marco","Lombardi","Ferrarra","D'Amico","Vitale","Messina","Marino","Bruno"],
+		majorityFaith: "romanCatholic",
 		},
 	
 	africanAmerican: {
@@ -156,6 +183,7 @@ var dataEthnicities = {
 		feminineNames: ["Tanya","Chantelle","Monique","Shaniqua","Iesha","Kalisha","Kenya","Keisha","Ladonna","Latasha","Shanice","Shelena","Tajuana","Talisha","Tisha"],
 		neutralNames: ["Imani","Ivory","Jaylen","Lashawn"],
 		surnames: ["Williams","Johnson","Smith","Jones","Brown","Jackson","Davis","Thomas","Harris","Robinson","Taylor","Wilson","Moore","White","Washington"],
+		majorityFaith: "africanMethodist",
 		},
 	
 	};
@@ -188,6 +216,189 @@ var dataRaces = {
 
 	};
 
+var dataFaiths = {
+
+	atheist: {
+			denomination: "Atheist",
+			sect: "Atheist",
+			name: "Atheist",
+			issues: [dataIssues.religiousFreedom],
+		},
+
+	anglican: {
+			denomination: "Anglican",
+			sect: "Protestant",
+			name: "Christian",
+			issues: [dataIssues.patriarchy,dataIssues.homophobia],
+		},
+
+	baptist: {
+			denomination: "Baptist",
+			sect: "Protestant",
+			name: "Christian",
+			issues: [dataIssues.patriarchy,dataIssues.homophobia],
+		},
+
+	lutheran: {
+			denomination: "Lutheran",
+			sect: "Protestant",
+			name: "Christian",
+			issues: [dataIssues.patriarchy,dataIssues.homophobia],
+		},
+
+	methodist: {
+			denomination: "Methodist",
+			sect: "Protestant",
+			name: "Christian",
+			issues: [dataIssues.patriarchy,dataIssues.homophobia],
+		},
+	
+	unitedChurchChrist: {
+			denomination: "United Church of Christ",
+			sect: "Protestant",
+			name: "Christian",
+			issues: [dataIssues.religiousFreedom,dataIssues.racialJustice,dataIssues.queerRights],
+		},
+
+	africanMethodist: {
+			denomination: "African Methodist",
+			sect: "Protestant",
+			name: "Christian",
+			issues: [dataIssues.patriarchy,dataIssues.homophobia,dataIssues.voterSuppression,dataIssues.racialJustice,dataIssues.economicEquity],
+		},
+
+	romanCatholic: {
+			denomination: "Roman Catholic",
+			sect: "Roman Catholic",
+			name: "Christian",
+			issues: [dataIssues.patriarchy,dataIssues.homophobia],
+		},
+
+	greekOrthodox: {
+			denomination: "Greek Orthodox",
+			sect: "Orthodox",
+			name: "Christian",
+			issues: [dataIssues.patriarchy,dataIssues.homophobia],
+		},
+
+	russianOrthodox: {
+			denomination: "Russian Orthodox",
+			sect: "Orthodox",
+			name: "Christian",
+			issues: [dataIssues.patriarchy,dataIssues.homophobia],
+		},
+		
+	bahai: {
+			denomination: "Baha'i",
+			sect: "Baha'i",
+			name: "Baha'i",
+			issues: [dataIssues.religiousFreedom,dataIssues.homophobia],
+		},
+		
+	orthodoxJudaism: {
+			denomination: "Orthodox Judaism",
+			sect: "Judaism",
+			name: "Judaism",
+			issues: [dataIssues.religiousFreedom,dataIssues.racialJustice,dataIssues.patriarchy,dataIssues.homophobia],
+		},
+		
+	reformJudaism: {
+			denomination: "Reform Judaism",
+			sect: "Judaism",
+			name: "Judaism",
+			issues: [dataIssues.religiousFreedom,dataIssues.racialJustice,dataIssues.patriarchy,dataIssues.homophobia],
+		},
+		
+	conservativeJudaism: {
+			denomination: "Conservative Judaism",
+			sect: "Judaism",
+			name: "Judaism",
+			issues: [dataIssues.religiousFreedom,dataIssues.racialJustice,dataIssues.patriarchy,dataIssues.homophobia],
+		},
+	
+	sunniIslam: {
+			denomination: "Sunni Muslim",
+			sect: "Islam",
+			name: "Islam",
+			issues: [dataIssues.religiousFreedom,dataIssues.racialJustice,dataIssues.patriarchy,dataIssues.homophobia],
+		},
+	
+	shiaIslam: {
+			denomination: "Shia Muslim",
+			sect: "Islam",
+			name: "Islam",
+			issues: [dataIssues.religiousFreedom,dataIssues.racialJustice,dataIssues.patriarchy,dataIssues.homophobia],
+		},
+	
+	sufiIslam: {
+			denomination: "Sufi",
+			sect: "Islam",
+			name: "Islam",
+			issues: [dataIssues.religiousFreedom,dataIssues.racialJustice,dataIssues.patriarchy,dataIssues.homophobia],
+		},
+	
+	nondenominationalIslam: {
+			denomination: "Muslim",
+			sect: "Islam",
+			name: "Islam",
+			issues: [dataIssues.religiousFreedom,dataIssues.racialJustice,dataIssues.patriarchy,dataIssues.homophobia],
+		},
+	
+	neopagan: {
+			denomination: "Pagan",
+			sect: "Neopagan",
+			name: "Pagan",
+			issues: [dataIssues.religiousFreedom,dataIssues.environmentalism],
+		},
+	
+	odinist: {
+			denomination: "Odinist",
+			sect: "Norse Pagan",
+			name: "Pagan",
+			issues: [dataIssues.religiousFreedom,dataIssues.patriarchy,dataIssues.homophobia,dataIssues.whiteSupremacy,dataIssues.environmentalism],
+		},
+	
+	unitarianUniversalist: {
+			denomination: "Unitarian-Universalist",
+			sect: "Unitarian-Universalist",
+			name: "Unitarian-Universalist",
+			issues: [dataIssues.religiousFreedom,dataIssues.economicEquity,dataIssues.queerRights,dataIssues.genderEquity,dataIssues.racialJustice],
+		},
+
+	};
+	
+var conversionConservative = [
+		dataFaiths.lutheran,
+		dataFaiths.baptist,
+		dataFaiths.methodist,
+		dataFaiths.romanCatholic,
+		dataFaiths.sunniIslam,
+		dataFaiths.odinist
+	];
+
+var conversionLiberal = [
+		dataFaiths.unitedChurchChrist,
+		dataFaiths.bahai,
+		dataFaiths.reformJudaism,
+		dataFaiths.sufiIslam,
+		dataFaiths.neopagan,
+		dataFaiths.unitarianUniversalist,
+	]; 
+
+var conversionNonChristian = [
+		dataFaiths.bahai,
+		dataFaiths.sunniIslam,
+		dataFaiths.shiaIslam,
+		dataFaiths.sufiIslam,
+		dataFaiths.neopagan,
+		dataFaiths.odinist,
+		dataFaiths.unitarianUniversalist		
+	]; 
+
+var conversionLoss = [
+		dataFaiths.atheist
+	]; 
+
 var dataBackstories = {
 
 	singleMom: {
@@ -210,8 +421,9 @@ var dataBackstories = {
 		name: "Religious Upbringing",
 		values: ["purity","loyalty","authority"],
 		issues: [dataIssues.patriarchy,dataIssues.homophobia,dataIssues.stateReligion],
-		resources: ["network"],
+		resources: ["network","devotion"],
 		resourceLosses: [],
+		updateDemo: ["faith",conversionConservative],
 		},
 
 	poorUpbringing: {
@@ -231,7 +443,7 @@ var dataBackstories = {
 		},
 
 	familyOfColor: {
-		name: "Family of Color",
+		name: "Family Members of Color",
 		values: ["care","liberty"],
 		issues: [dataIssues.racialJustice],
 		resources: [],
@@ -258,7 +470,7 @@ var dataBackstories = {
 		name: "Foreign Born",
 		values: [],
 		issues: [dataIssues.immigration],
-		resources: [],
+		resources: ["immigrant"],
 		resourceLosses: ["network"],
 		},
 
@@ -267,7 +479,7 @@ var dataBackstories = {
 		values: ["liberty","ambition","authority"],
 		issues: [],
 		resources: ["education","education","network","status"],
-		resourceLosses: [],
+		resourceLosses: ["devotion"],
 		},
 
 	higherEducationLoans: {
@@ -275,6 +487,14 @@ var dataBackstories = {
 		values: ["liberty","ambition","authority"],
 		issues: [],
 		resources: ["education","education","network","status"],
+		resourceLosses: ["money"],
+		},
+
+	higherEducationDropOut: {
+		name: "Higher Education Drop Out",
+		values: ["liberty","ambition","authority"],
+		issues: [dataIssues.economicEquity,dataIssues.schoolReform],
+		resources: ["education","network"],
 		resourceLosses: ["money"],
 		},
 
@@ -314,24 +534,27 @@ var dataBackstories = {
 		name: "Old Time Religion",
 		values: ["purity","loyalty"],
 		issues: [dataIssues.homophobia,dataIssues.patriarchy,dataIssues.stateReligion],
-		resources: ["network"],
+		resources: ["network","devotion","devotion"],
 		resourceLosses: [],
+		updateDemo: ["faith",conversionConservative],
 		},
 	
 	nonChristianReligion: {
 		name: "Non-Christian Religion",
 		values: ["purity","loyalty"],
 		issues: [dataIssues.homophobia,dataIssues.patriarchy,dataIssues.religiousFreedom],
-		resources: ["network"],
+		resources: ["network","devotion"],
 		resourceLosses: [],
+		updateDemo: ["faith",conversionNonChristian],
 		},
 	
 	liberalReligion: {
 		name: "Liberal Religion",
 		values: ["purity","liberty"],
 		issues: [dataIssues.religiousFreedom],
-		resources: ["network"],
+		resources: ["network","devotion"],
 		resourceLosses: [],
+		updateDemo: ["faith",conversionLiberal],
 		},
 		
 	lossOfFaith: {
@@ -339,7 +562,8 @@ var dataBackstories = {
 		values: ["liberty","care"],
 		issues: [dataIssues.religiousFreedom],
 		resources: [],
-		resourceLosses: ["network"],
+		resourceLosses: ["network","devotion"],
+		updateDemo: ["faith",conversionLoss],
 		},
 
 	crime: {
@@ -355,7 +579,17 @@ var dataBackstories = {
 		values: ["liberty","loyalty"],
 		issues: [dataIssues.queerRights],
 		resources: [],
-		resourceLosses: ["network"],
+		resourceLosses: ["network","devotion"],
+		updateDemo: ["orientation"],
+		},
+
+	transition: {
+		name: "Gender Transition",
+		values: ["liberty","loyalty"],
+		issues: [dataIssues.queerRights],
+		resources: [],
+		resourceLosses: ["network","devotion"],
+		updateDemo: ["gender"],
 		},
 
 	stableEmployment: {
@@ -402,7 +636,7 @@ var dataBackstories = {
 		name: "Crime & Punishment",
 		values: ["liberty","ambition"],
 		issues: [dataIssues.prisonReform],
-		resources: [],
+		resources: ["devotion"],
 		resourceLosses: ["status","network"],
 		},
 
@@ -504,6 +738,7 @@ var backstoriesFamily = [
 var backstoriesYouth = [
 		dataBackstories.higherEducation,
 		dataBackstories.higherEducationLoans,
+		dataBackstories.higherEducationDropOut,
 		dataBackstories.activism,
 		dataBackstories.outdoors,
 		dataBackstories.friendsOfColor,
@@ -513,7 +748,8 @@ var backstoriesYouth = [
 		dataBackstories.liberalReligion,
 		dataBackstories.crime,
 		dataBackstories.comingOut,
-		dataBackstories.lossOfFaith,
+		dataBackstories.transition,
+		dataBackstories.lossOfFaith
 	];
 
 var backstoriesMature = [
@@ -537,4 +773,53 @@ var backstoriesMature = [
 		dataBackstories.backToSchool,
 		dataBackstories.lossOfFaith,
 		dataBackstories.obsolescence,
+		dataBackstories.comingOut,
+		dataBackstories.transition
+	];
+
+var backstoriesMatureEducation = [
+		dataBackstories.stableEmployment,
+		dataBackstories.bigPromotion,
+		dataBackstories.unemployment,
+		dataBackstories.divorce,
+		dataBackstories.nonChristianReligion,
+		dataBackstories.liberalReligion,
+		dataBackstories.outdoors,
+		dataBackstories.backToSchool,
+		dataBackstories.lossOfFaith,
+		dataBackstories.obsolescence
+	];
+
+
+var backstoriesMatureStatus = [
+		dataBackstories.stableEmployment,
+		dataBackstories.bigPromotion,
+		dataBackstories.marriage,
+		dataBackstories.addiction
+	];
+
+var backstoriesMatureMoney = [
+		dataBackstories.stableEmployment,
+		dataBackstories.bigPromotion,
+		dataBackstories.unemployment,
+		dataBackstories.parenthood,
+		dataBackstories.parentOfQueer,
+		dataBackstories.parentOfDisabled,
+		dataBackstories.addiction,
+		dataBackstories.outdoors,
+		dataBackstories.backToSchool
+	];
+
+var backstoriesMatureNetwork = [
+		dataBackstories.stableEmployment,
+		dataBackstories.bigPromotion,
+		dataBackstories.marriage,
+		dataBackstories.divorce,
+		dataBackstories.addiction
+	];
+
+var backstoriesMatureChild = [
+		dataBackstories.parentOfQueer,
+		dataBackstories.parentOfDisabled,
+		dataBackstories.medicalHardship,
 	];

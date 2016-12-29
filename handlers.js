@@ -53,7 +53,6 @@ var handlers = {
 	},
 
 	newPerson: function() {
-		console.log("New!");
 		var newGuy = new Person();
 		view.refreshContacts();
 	},
