@@ -402,19 +402,21 @@ var conversionLoss = [
 var dataBackstories = {
 
 	singleMom: {
-		name: "Single Mom",
+		name: "Raised by Single Mom",
 		values: ["care","fairness"],
 		issues: [dataIssues.genderEquity],
 		resources: [],
 		resourceLosses: [],
+		updateDemo: [],
 		},
 
 	singleDad: {
-		name: "Single Dad",
+		name: "Raised by Single Dad",
 		values: ["care","authority"],
 		issues: [dataIssues.patriarchy],
 		resources: [],
 		resourceLosses: [],
+		updateDemo: [],
 		},
 
 	religiousUpbringing: {
@@ -432,6 +434,7 @@ var dataBackstories = {
 		issues: [dataIssues.economicEquity,dataIssues.schoolReform],
 		resources: [],
 		resourceLosses: ["money"],
+		updateDemo: [],
 		},
 
 	privilegedUpbringing: {
@@ -440,6 +443,7 @@ var dataBackstories = {
 		issues: [dataIssues.whiteSupremacy,dataIssues.laissezFaire],
 		resources: ["network","money","education","status"],
 		resourceLosses: [],
+		updateDemo: [],
 		},
 
 	familyOfColor: {
@@ -448,6 +452,7 @@ var dataBackstories = {
 		issues: [dataIssues.racialJustice],
 		resources: [],
 		resourceLosses: [],
+		updateDemo: [],
 		},
 
 	disabledFamily: {
@@ -456,6 +461,7 @@ var dataBackstories = {
 		issues: [dataIssues.healthcare],
 		resources: [],
 		resourceLosses: ["money"],
+		updateDemo: [],
 		},
 
 	queerFamily: {
@@ -464,6 +470,7 @@ var dataBackstories = {
 		issues: [dataIssues.queerRights],
 		resources: [],
 		resourceLosses: [],
+		updateDemo: [],
 		},
 	
 	foreignBorn: {
@@ -472,6 +479,7 @@ var dataBackstories = {
 		issues: [dataIssues.immigration],
 		resources: ["immigrant"],
 		resourceLosses: ["network"],
+		updateDemo: [],
 		},
 
 	higherEducation: {
@@ -480,6 +488,7 @@ var dataBackstories = {
 		issues: [],
 		resources: ["education","education","network","status"],
 		resourceLosses: ["devotion"],
+		updateDemo: [],
 		},
 
 	higherEducationLoans: {
@@ -488,6 +497,7 @@ var dataBackstories = {
 		issues: [],
 		resources: ["education","education","network","status"],
 		resourceLosses: ["money"],
+		updateDemo: [],
 		},
 
 	higherEducationDropOut: {
@@ -496,6 +506,7 @@ var dataBackstories = {
 		issues: [dataIssues.economicEquity,dataIssues.schoolReform],
 		resources: ["education","network"],
 		resourceLosses: ["money"],
+		updateDemo: [],
 		},
 
 	activism: {
@@ -504,6 +515,7 @@ var dataBackstories = {
 		issues: [],
 		resources: ["network"],
 		resourceLosses: [],
+		updateDemo: [],
 		},
 
 	outdoors: {
@@ -512,6 +524,7 @@ var dataBackstories = {
 		issues: [dataIssues.environmentalism],
 		resources: [],
 		resourceLosses: [],
+		updateDemo: [],
 		},
 
 	friendsOfColor: {
@@ -520,6 +533,7 @@ var dataBackstories = {
 		issues: [dataIssues.racialJustice],
 		resources: [],
 		resourceLosses: [],
+		updateDemo: [],
 		},
 
 	queerFriend: {
@@ -528,6 +542,7 @@ var dataBackstories = {
 		issues: [dataIssues.queerRights],
 		resources: [],
 		resourceLosses: [],
+		updateDemo: [],
 		},
 
 	oldTimeReligion: {
@@ -572,15 +587,160 @@ var dataBackstories = {
 		issues: [dataIssues.economicEquity,dataIssues.prisonReform],
 		resources: ["network"],
 		resourceLosses: [],
+		updateDemo: [],
+		},
+
+	stableEmployment: {
+		name: "Stable Employment",
+		values: ["authority","loyalty"],
+		issues: [dataIssues.localEconomy,dataIssues.laissezFaire],
+		resources: ["money","money"],
+		resourceLosses: [],
+		updateDemo: [],
+		},
+
+	bigPromotion: {
+		name: "Big Promotion",
+		values: ["authority","loyalty"],
+		issues: [dataIssues.localEconomy,dataIssues.laissezFaire],
+		resources: ["money","money","status"],
+		resourceLosses: [],
+		updateDemo: [],
+		},
+
+	homemaker: {
+		name: "Homemaker",
+		values: ["care","purity"],
+		issues: [],
+		resources: [],
+		resourceLosses: [],
+		updateDemo: [],
+		},
+
+	unemployment: {
+		name: "Unemployment",
+		values: ["care","ambition"],
+		issues: [dataIssues.economicEquity],
+		resources: [],
+		resourceLosses: ["money"],
+		updateDemo: [],
+		},
+
+	homeless: {
+		name: "Homelessness",
+		values: ["care","liberty"],
+		issues: [dataIssues.economicEquity,dataIssues.healthcare],
+		resources: [],
+		resourceLosses: ["status","network","money"],
+		updateDemo: [],
+		},
+
+	imprisonment: {
+		name: "Crime & Punishment",
+		values: ["liberty","ambition"],
+		issues: [dataIssues.prisonReform],
+		resources: ["devotion"],
+		resourceLosses: ["status","network"],
+		updateDemo: [],
+		},
+
+	marriage: {
+		name: "Marriage",
+		values: ["loyalty","ambition"],
+		issues: [],
+		resources: ["money","network"],
+		resourceLosses: [],
+		updateDemo: [],
+		},
+
+	divorce: {
+		name: "Messy Divorce",
+		values: ["care","liberty"],
+		issues: [],
+		resources: [],
+		resourceLosses: ["money","network"],
+		updateDemo: [],
+		},
+
+	parenthood: {
+		name: "Parenthood",
+		values: ["care","fairness"],
+		issues: [dataIssues.schoolReform],
+		resources: ["child","money"],
+		resourceLosses: [],
+		updateDemo: [],
+		},
+
+	parentOfQueer: {
+		name: "Parent of a Queer Kid",
+		values: ["care","fairness"],
+		issues: [dataIssues.schoolReform,dataIssues.queerRights],
+		resources: ["child"],
+		resourceLosses: ["network","money"],
+		updateDemo: [],
+		},
+
+	parentOfDisabled: {
+		name: "Parent of a Disabled Kid",
+		values: ["care","fairness"],
+		issues: [dataIssues.schoolReform,dataIssues.healthcare],
+		resources: ["child"],
+		resourceLosses: ["network","money"],
+		updateDemo: [],
+		},
+
+	addiction: {
+		name: "Addiction",
+		values: ["care","purity"],
+		issues: [dataIssues.healthcare],
+		resources: [],
+		resourceLosses: ["money"],
+		updateDemo: [],
+		},
+
+	medicalHardship: {
+		name: "Medical Hardship",
+		values: ["care","fairness"],
+		issues: [dataIssues.healthcare,dataIssues.economicEquity],
+		resources: [],
+		resourceLosses: ["money"],
+		updateDemo: [],
+		},
+
+	obsolescence: {
+		name: "Skills Obsolescence",
+		values: ["fairness","ambition"],
+		issues: [dataIssues.schoolReform,dataIssues.economicEquity],
+		resources: [],
+		resourceLosses: ["education"],
+		updateDemo: [],
+		},
+
+	backToSchool: {
+		name: "Back to School",
+		values: ["fairness","ambition"],
+		issues: [dataIssues.schoolReform,dataIssues.electoralReform],
+		resources: ["education","network"],
+		resourceLosses: ["money"],
+		updateDemo: [],
 		},
 
 	comingOut: {
-		name: "Coming Out of the Closet",
+		name: "Came Out of the Closet",
 		values: ["liberty","loyalty"],
 		issues: [dataIssues.queerRights],
 		resources: [],
-		resourceLosses: ["network","devotion"],
-		updateDemo: ["orientation"],
+		resourceLosses: ["closet","network","devotion"],
+		updateDemo: [],
+		},
+
+	comingOutBad: {
+		name: "Came Out, Kicked Out",
+		values: ["liberty","loyalty"],
+		issues: [dataIssues.queerRights,dataIssues.economicEquity],
+		resources: [],
+		resourceLosses: ["closet","network","devotion","money"],
+		updateDemo: [],
 		},
 
 	transition: {
@@ -592,132 +752,13 @@ var dataBackstories = {
 		updateDemo: ["gender"],
 		},
 
-	stableEmployment: {
-		name: "Stable Employment",
-		values: ["authority","loyalty"],
-		issues: [dataIssues.localEconomy,dataIssues.laissezFaire],
-		resources: ["money","money"],
-		resourceLosses: [],
-		},
-
-	bigPromotion: {
-		name: "Big Promotion",
-		values: ["authority","loyalty"],
-		issues: [dataIssues.localEconomy,dataIssues.laissezFaire],
-		resources: ["money","money","status"],
-		resourceLosses: [],
-		},
-
-	homemaker: {
-		name: "Homemaker",
-		values: ["care","purity"],
-		issues: [],
-		resources: [],
-		resourceLosses: [],
-		},
-
-	unemployment: {
-		name: "Unemployment",
-		values: ["care","ambition"],
-		issues: [dataIssues.economicEquity],
-		resources: [],
-		resourceLosses: ["money"],
-		},
-
-	homeless: {
-		name: "Homelessness",
-		values: ["care","liberty"],
-		issues: [dataIssues.economicEquity,dataIssues.healthcare],
-		resources: [],
-		resourceLosses: ["status","network","money"],
-		},
-
-	imprisonment: {
-		name: "Crime & Punishment",
-		values: ["liberty","ambition"],
-		issues: [dataIssues.prisonReform],
-		resources: ["devotion"],
-		resourceLosses: ["status","network"],
-		},
-
-	marriage: {
-		name: "Marriage",
-		values: ["loyalty","ambition"],
-		issues: [],
-		resources: ["money","network"],
-		resourceLosses: [],
-		},
-
-	divorce: {
-		name: "Messy Divorce",
-		values: ["care","liberty"],
-		issues: [],
-		resources: [],
-		resourceLosses: ["money","network"],
-		},
-
-	parenthood: {
-		name: "Parenthood",
-		values: ["care","fairness"],
-		issues: [dataIssues.schoolReform],
-		resources: ["child","money"],
-		resourceLosses: [],
-		},
-
-	parentOfQueer: {
-		name: "Parent of a Queer Kid",
-		values: ["care","fairness"],
-		issues: [dataIssues.schoolReform,dataIssues.queerRights],
-		resources: ["child"],
-		resourceLosses: ["network","money"],
-		},
-
-	parentOfDisabled: {
-		name: "Parent of a Disabled Kid",
-		values: ["care","fairness"],
-		issues: [dataIssues.schoolReform,dataIssues.healthcare],
-		resources: ["child"],
-		resourceLosses: ["network","money"],
-		},
-
-	addiction: {
-		name: "Addiction",
-		values: ["care","purity"],
-		issues: [dataIssues.healthcare],
-		resources: [],
-		resourceLosses: ["money"],
-		},
-
-	medicalHardship: {
-		name: "Medical Hardship",
-		values: ["care","fairness"],
-		issues: [dataIssues.healthcare,dataIssues.economicEquity],
-		resources: [],
-		resourceLosses: ["money"],
-		},
-
-	obsolescence: {
-		name: "Skills Obsolescence",
-		values: ["fairness","ambition"],
-		issues: [dataIssues.schoolReform,dataIssues.economicEquity],
-		resources: [],
-		resourceLosses: ["education"],
-		},
-
-	backToSchool: {
-		name: "Back to School",
-		values: ["fairness","ambition"],
-		issues: [dataIssues.schoolReform,dataIssues.electoralReform],
-		resources: ["education","network"],
-		resourceLosses: ["money"],
-		},
-
 	template: {
 		name: "Template",
 		values: ["one","two"],
 		issues: [dataIssues.patriarchy],
 		resources: [],
 		resourceLosses: [],
+		updateDemo: [],
 		},
 
 	};
@@ -747,9 +788,49 @@ var backstoriesYouth = [
 		dataBackstories.nonChristianReligion,
 		dataBackstories.liberalReligion,
 		dataBackstories.crime,
-		dataBackstories.comingOut,
-		dataBackstories.transition,
 		dataBackstories.lossOfFaith
+	];
+
+var backstoriesQueer = [
+		dataBackstories.comingOut,
+		dataBackstories.comingOutBad,
+		dataBackstories.comingOut,
+		dataBackstories.comingOutBad,
+		dataBackstories.comingOut,
+		dataBackstories.comingOutBad,
+		dataBackstories.comingOut,
+		dataBackstories.comingOutBad,
+		dataBackstories.comingOut,
+		dataBackstories.comingOutBad,
+		dataBackstories.comingOut,
+		dataBackstories.comingOutBad,
+		dataBackstories.comingOut,
+		dataBackstories.comingOutBad,
+		dataBackstories.comingOut,
+		dataBackstories.comingOutBad,
+		dataBackstories.comingOut,
+		dataBackstories.comingOutBad,
+	];
+
+var backstoriesTrans = [
+		dataBackstories.comingOut,
+		dataBackstories.comingOutBad,
+		dataBackstories.transition,
+		dataBackstories.comingOut,
+		dataBackstories.comingOutBad,
+		dataBackstories.transition,
+		dataBackstories.comingOut,
+		dataBackstories.comingOutBad,
+		dataBackstories.transition,
+		dataBackstories.comingOut,
+		dataBackstories.comingOutBad,
+		dataBackstories.transition,
+		dataBackstories.comingOut,
+		dataBackstories.comingOutBad,
+		dataBackstories.transition,
+		dataBackstories.comingOut,
+		dataBackstories.comingOutBad,
+		dataBackstories.transition,
 	];
 
 var backstoriesMature = [
@@ -773,8 +854,6 @@ var backstoriesMature = [
 		dataBackstories.backToSchool,
 		dataBackstories.lossOfFaith,
 		dataBackstories.obsolescence,
-		dataBackstories.comingOut,
-		dataBackstories.transition
 	];
 
 var backstoriesMatureEducation = [

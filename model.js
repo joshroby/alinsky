@@ -64,26 +64,32 @@ function Person(block) {
 		purity: 1 + Math.random() * 3 << 0,
 		ambition: 1 + Math.random() * 3 << 0,
 		};
-	var resources = {status:1,money:1,education:1,network:0,child:0,devotion:0};
+	var resources = {status:1,money:1,education:1,network:0,child:0,devotion:0,closet:0};
 	
 	var faith = dataFaiths[ethnicity.majorityFaith];
 	
 	var age = Math.round(Math.max(Math.random()*20+Math.random()*20+Math.random()*20+Math.random()*20,18));
 	
+	// Here's where we change the randomly-generated information in order to fit the arguments of the Person() call
+	
 	var backstories = [];
 	var backstoriesPickList = [];
 	var newBackstory;
 	
-	// Adding new Backstory Blocks Here
-		// Will need to incorporate the effects into the add code so that the add code can take the current totals of resources to determine what the next block should be
-		// Maybe build the pick-from list by adding in Stable and Promotion entries equal to Network & Status
-		// Also maybe add Unemployment and Homeless in Inverse of Network and Money?	
+	// Adding Family and Youth Backstory Blocks
+	
+	backstoriesPickList = backstoriesFamily;
 	for (i = 0; i < 3; i++) {
-		backstories.push(backstoriesFamily[backstoriesFamily.length * Math.random() << 0]);
+		backstories.push(backstoriesPickList[backstoriesPickList.length * Math.random() << 0]);
 		}
 		
 	for (i = 0; i < 2; i++) {
-		backstories.push(backstoriesYouth[backstoriesYouth.length * Math.random() << 0]);
+		backstoriesPickList = backstoriesYouth;
+		if (orientation === "Queer" && resources.closet === 0) {backstoriesPickList=backstoriesPickList.concat(backstoriesQueer)};
+		if (genderIdentity.name !== genderPublic.name) {backstoriesPickList=backstoriesPickList.concat(backstoriesTrans)};
+		backstories.push(backstoriesPickList[backstoriesPickList.length * Math.random() << 0]);
+		if (backstories[backstories.length-1].resourceLosses[0] === "closet") {resources.closet--};
+		if (backstories[backstories.length-1].updateDemo[0] === "gender") {genderPublic = genderIdentity};
 		}
 
 	// Processing Youth+Family Backstory Blocks' Effects Here
@@ -108,15 +114,7 @@ function Person(block) {
 			if (type === "faith") {
 				var newFaith = list[list.length * Math.random() << 0];
 				faith = newFaith;
-			} else if (type === "orientation") {
-				orientation = "Queer";
-				if (genderIdentity !== "Man") {attraction.push(dataGenders.woman)};
-				if (genderIdentity !== "Woman") {attraction.push(dataGenders.man)};
 			} else if (type === "gender") {
-				genders = [dataGenders.genderqueer];
-				if (genderIdentity.name !== "Man") {genders.push(dataGenders.man)};
-				if (genderIdentity.name !== "Woman") {genders.push(dataGenders.woman)};
-				genderIdentity = genders[genders.length * Math.random() << 0];
 				genderPublic = genderIdentity;
 				}
 			}
@@ -124,7 +122,9 @@ function Person(block) {
 
 	// Mature Phase Backstory Blocks	
 	for (y = 18; y < age; y += 12) {
-		backstoriesPickList = backstoriesMature.concat(backstoriesMature);
+		backstoriesPickList = backstoriesMature;
+		if (orientation === "Queer" && resources.closet === 0) {backstoriesPickList=backstoriesPickList.concat(backstoriesQueer)};
+		if (genderIdentity.name !== genderAssigned.name) {backstoriesPickList=backstoriesPickList.concat(backstoriesTrans)};
 		for (i=0;i<resources.education;i++) {
 			backstoriesPickList = backstoriesPickList.concat(backstoriesMatureEducation);
 		}
@@ -163,15 +163,7 @@ function Person(block) {
 			if (type === "faith") {
 				var newFaith = list[list.length * Math.random() << 0];
 				faith = newFaith;
-			} else if (type === "orientation") {
-				orientation = "Queer";
-				if (genderIdentity !== "Man") {attraction.push(dataGenders.woman)};
-				if (genderIdentity !== "Woman") {attraction.push(dataGenders.man)};
 			} else if (type === "gender") {
-				genders = [dataGenders.genderqueer];
-				if (genderIdentity.name !== "Man") {genders.push(dataGenders.man)};
-				if (genderIdentity.name !== "Woman") {genders.push(dataGenders.woman)};
-				genderIdentity = genders[genders.length * Math.random() << 0];
 				genderPublic = genderIdentity;
 				}
 			}
