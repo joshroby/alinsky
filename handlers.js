@@ -1,6 +1,6 @@
 var handlers = {
 
-	sidebarMapExpand: function(pane) {
+	sidebarPaneExpand: function(pane) {
 		var mapPane = document.getElementById('mapPane');
 		var mapBarContents = document.getElementById('mapBarContents');
 		var calPane = document.getElementById('calPane');
@@ -42,18 +42,38 @@ var handlers = {
 			}
 			
 	},
-
-	sidebarCalExpand: function() {
+	
+	displayContact: function(index) {
+		var contact = people[index];
+		view.displayContact(contact);
 	},
-
-	sidebarContactExpand: function() {
+	
+	displayNeighborhood: function(index) {
+		var neighborhood = neighborhoods[index];
+		view.displayNeighborhood(neighborhood);
 	},
-
-	sidebarActionExpand: function() {
+	
+	displayInstitution: function(index) {
+		var institution = view.focus.neighborhood.institutions[index];
+		view.displayInstitution(institution);
 	},
 
 	newPerson: function() {
 		var newGuy = new Person();
 		view.refreshContacts();
+	},
+
+	newNeighborhood: function() {
+		var newNeighborhood = new Neighborhood();
+		view.focus.neighborhood = newNeighborhood;
+		view.refreshMap();
+		view.displayNeighborhood(newNeighborhood);
+	},
+
+	newInstitution: function() {
+		var newInstitution = new Institution(view.focus.neighborhood);
+		view.refreshMap();
+		view.displayNeighborhood(view.focus.neighborhood);
+		view.displayInstitution(newInstitution);
 	},
 }

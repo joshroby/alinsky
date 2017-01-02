@@ -1,4 +1,8 @@
 var view = {
+
+	focus: {
+		neighborhood: '',
+		},
 	
 	refreshContacts: function() {
 		
@@ -16,17 +20,36 @@ var view = {
 				
 		for (n in contacts) {
 			contactItem = document.createElement('li');
-			contactItem.innerHTML = "<a onclick='view.displayContact(" + contacts[n][0] + ")'>" + contacts[n][1].name.first + " " + contacts[n][1].name.middle.charAt(0) + ". " + contacts[n][1].name.last + "</a>";
+			contactItem.innerHTML = "<a onclick='handlers.displayContact(" + contacts[n][0] + ")'>" + contacts[n][1].name.first + " " + contacts[n][1].name.middle.charAt(0) + ". " + contacts[n][1].name.last + "</a>";
 			contactList.appendChild(contactItem);
 			}
 
 	},
 	
-	displayContact: function(index) {
-	
-		console.log(people[index]);
+	refreshMap: function() {
 		
-		var contact = people[index];
+		var mapList = document.getElementById("mapList");
+		var mapItem;
+		
+		var neighborhoodsList = [];
+		for (n in neighborhoods) {
+			neighborhoodsList.push([n,neighborhoods[n]]);
+			}
+		// Change this later to 'known people'
+		// Also need to alphabetize the list
+
+		mapList.innerHTML = "";
+				
+		for (n in neighborhoodsList) {
+			mapItem = document.createElement('li');
+			mapItem.innerHTML = "<a onclick='handlers.displayNeighborhood(" + neighborhoodsList[n][0] + ")'>" + neighborhoodsList[n][1].name + "</a>";
+			mapList.appendChild(mapItem);
+			}
+	},
+	
+	displayContact: function(contact) {
+	
+		console.log(contact);
 		
 		var name = contact.name.first + " " + contact.name.middle + " " + contact.name.last;
 		var age = contact.age;
@@ -161,5 +184,81 @@ var view = {
 		
 	
 	},
+	
+	displayNeighborhood: function(neighborhood) {
+	
+		console.log(neighborhood);
+		
+		var neighborhoodName = document.getElementById('neighborhoodName');
+		var neighborhoodStatusCell = document.getElementById('neighborhoodStatusCell');
+		var neighborhoodMoneyCell = document.getElementById('neighborhoodMoneyCell');
+		var neighborhoodZoningCell = document.getElementById('neighborhoodZoningCell');
+		var neighborhoodRacesCell = document.getElementById('neighborhoodRacesCell');
+		var neighborhoodInstitutionsList = document.getElementById('neighborhoodInstitutionsList');
+		
+		neighborhoodName.innerHTML = neighborhood.name;
+		neighborhoodStatusCell.innerHTML = neighborhood.demographics.status;
+		neighborhoodMoneyCell.innerHTML = neighborhood.demographics.money;
+		
+		var zoning = '';
+		for (i in neighborhood.zoning) {
+			zoning += Math.round(neighborhood.zoning[i]*100) + "% " + i + "<br />";
+			}
+
+		
+		var races = '';
+		for (i in neighborhood.demographics.race) {
+			races += Math.round(neighborhood.demographics.race[i]*100) + "% " + i + "<br />";
+			}
+			
+		var institutions = '';
+		for (i in neighborhood.institutions) {
+			institutions += "<a onclick='handlers.displayInstitution("+i+")'>"+neighborhood.institutions[i].name + "</a>, ";
+			}
+					
+		neighborhoodZoningCell.innerHTML = zoning;
+		neighborhoodRacesCell.innerHTML = races;
+		neighborhoodInstitutionsList.innerHTML = institutions;
+		
+		// And then clear and un-display the Institutions Pane
+		var mapInstitutionPane = document.getElementById('mapInstitutionPane');
+		var institutionName = document.getElementById('institutionName');
+		var institutionStatusCell = document.getElementById('institutionStatusCell');
+		var institutionPaygradeCell = document.getElementById('institutionPaygradeCell');
+		var institutionTypicalClientsCell = document.getElementById('institutionTypicalClientsCell');
+		var institutionTypicalEmployeesCell = document.getElementById('institutionTypicalEmployeesCell');
+		var institutionUnionsCell = document.getElementById('institutionUnionsCell');
+		
+		institutionName.innerHTML = 'Null';
+		institutionStatusCell.innerHTML = '';
+		institutionPaygradeCell.innerHTML = '';
+		institutionTypicalClientsCell.innerHTML = '';
+		institutionTypicalEmployeesCell.innerHTML = '';
+		institutionUnionsCell.innerHTML = '';
+		mapInstitutionPane.style.display = 'none';
+		
+		view.focus.neighborhood = neighborhood;
+	},
+	
+	displayInstitution: function(institution) {
+		
+		var mapInstitutionPane = document.getElementById('mapInstitutionPane');
+		var institutionName = document.getElementById('institutionName');
+		var institutionStatusCell = document.getElementById('institutionStatusCell');
+		var institutionPaygradeCell = document.getElementById('institutionPaygradeCell');
+		var institutionTypicalClientsCell = document.getElementById('institutionTypicalClientsCell');
+		var institutionTypicalEmployeesCell = document.getElementById('institutionTypicalEmployeesCell');
+		var institutionUnionsCell = document.getElementById('institutionUnionsCell');
+		
+		institutionName.innerHTML = institution.name;
+		institutionStatusCell.innerHTML = institution.status;
+		institutionPaygradeCell.innerHTML = institution.paygrade.entry + " / " + institution.paygrade.management + " / " + institution.paygrade.executive;
+		institutionTypicalClientsCell.innerHTML = institution.typicalClientele;
+		institutionTypicalEmployeesCell.innerHTML = institution.typicalEmployees;
+		institutionUnionsCell.innerHTML = 'TK';
+		
+		mapInstitutionPane.style.display = 'block';
+	},
 
 }
+

@@ -126,6 +126,11 @@ var dataIssues = {
 		name: "Immigration Restriction",
 		value: valuation("loyalty","purity"),
 		},
+	
+	myNeighborhood: {
+		name: "My Neighborhood",
+		value: valuation("loyalty","purity"),
+		},
 
 	};
 
@@ -148,6 +153,22 @@ var dataGenders = {
 
 	};
 
+var dataRaces = {
+
+	white: {
+		name: "White",
+		key: "white",
+		issues: [dataIssues.whiteSupremacy],
+		},
+
+	black: {
+		name: "Black",
+		key: "black",
+		issues: [dataIssues.racialJustice],
+		},
+
+	};
+
 var dataEthnicities = {
 	
 	english: {
@@ -156,6 +177,7 @@ var dataEthnicities = {
 		feminineNames: ["Amelia","Olivia","Isla","Emily","Poppy","Ava","Isabella","Jessica","Lily","Sophie","Grace","Sophia","Mia","Eve","Ella","Scarlette","Chloe","Sienna","Freya","Phoebe","Charlotte","Daisy","Alice"],
 		neutralNames: ["Jack","Charlie","Freddie","Alex","Max","Mason","Riley","Finley","Toby"],
 		surnames: ["White","Jackson","Cooper"],
+		assignedRace: dataRaces.white,
 		majorityFaith: "anglican",
 		},
 	
@@ -165,6 +187,7 @@ var dataEthnicities = {
 		feminineNames: ["Mary","Sophie","Olivia","Emily","Isla","Lucy","Ava","Jessica","Ella","Amelia","Millie","Lily","Chloe","Eva","Emma","Sophia","Ellie","Mia","Erin","Freya","Grace","Charlotte","Ellidh","Holly","Anna","Hannah"],
 		neutralNames: ["Charlie","Riley","Finlay","Max","Cameron","Ryan","Jamie","Ruby"],
 		surnames: ["Smith","Brown","Wilson","Campbell","Stewart","Thomson","Robertson","Anderson","Macdonald","Scott","Reid","Murray","Taylor","Clark","Ross","Watson","Morrison","Paterson","Young","Mitchell","Walker","Fraser","Miller","Gray","Henderson","Hamilton","McTavish","McGuinness","MacDougal"],
+		assignedRace: dataRaces.white,
 		majorityFaith: "romanCatholic",
 		},
 	
@@ -174,6 +197,7 @@ var dataEthnicities = {
 		feminineNames: ["Maria","Beatrice","Giulia","Chiara","Sara","Martina","Francesca","Silvia","Elisa","Alice","Federica","Alessia","Laura","Elena","Giorgia","Valentina","Eleonora","Anna","Marta","Claudia","Ilaria","Sofia","Arianna","Irene"],
 		neutralNames: ["Luca","Ferrari","Rome","Messina","Andrea","Daniele","Simone","Michelle","Nicola"],
 		surnames: ["Rossi","Russo","Ferrari","Esposito","Bianchi","Romano","Caruso","Rizzo","Gallo","Greco","De Luca","Giordano","Lombardo","Leone","De Marco","Lombardi","Ferrarra","D'Amico","Vitale","Messina","Marino","Bruno"],
+		assignedRace: dataRaces.white,
 		majorityFaith: "romanCatholic",
 		},
 	
@@ -183,6 +207,7 @@ var dataEthnicities = {
 		feminineNames: ["Tanya","Chantelle","Monique","Shaniqua","Iesha","Kalisha","Kenya","Keisha","Ladonna","Latasha","Shanice","Shelena","Tajuana","Talisha","Tisha"],
 		neutralNames: ["Imani","Ivory","Jaylen","Lashawn"],
 		surnames: ["Williams","Johnson","Smith","Jones","Brown","Jackson","Davis","Thomas","Harris","Robinson","Taylor","Wilson","Moore","White","Washington"],
+		assignedRace: dataRaces.black,
 		majorityFaith: "africanMethodist",
 		},
 	
@@ -197,22 +222,6 @@ var common = {
 	neutralNames: ["Frank","Ryan","Terry","Sam","Alex","Bobby","Shaun","Chris","Dale","Ricky","Ronnie","Tommy","Avery","Charlie","Angel","Leslie","Adrien","Jamie","Jessie","Cody","Denver","Sydney","Madison","Kelly","Max","Casey"],
 
 	surnames: ["Smith","Johnson","Miller","Brown","Jones","Williams","Davis","Anderson","Wilson","Martin","Taylor","Moore","Thompson","White","Clark","Thomas","Hall","Baker","Nelson","Allen","Young","Harris","King","Adams"],
-
-	};
-
-var dataRaces = {
-
-	white: {
-		name: "White",
-		ethnicities: [dataEthnicities.english,dataEthnicities.scots,dataEthnicities.italian],
-		issues: [dataIssues.whiteSupremacy],
-		},
-
-	black: {
-		name: "Black",
-		ethnicities: [dataEthnicities.africanAmerican],
-		issues: [dataIssues.racialJustice],
-		},
 
 	};
 
@@ -902,3 +911,175 @@ var backstoriesMatureChild = [
 		dataBackstories.parentOfDisabled,
 		dataBackstories.medicalHardship,
 	];
+
+
+var dataNeighborhoodNames = {
+		first: [
+			"White",
+			"Green",
+			"Gold",
+			"Orange",
+			"Red",
+			"East",
+			"West",
+			"North",
+			"South",
+			"Shady",
+			"Berry",
+			"Oak",
+			"River",
+			"Upper",
+			"Lower",
+			"The",
+			"Lily",
+			"Rose",
+			"College",
+			"Deer",
+			],
+		last: [
+			" Hills",
+			" Hill",
+			" Acres",
+			" Glen",
+			"town",
+			" Side",
+			" River",
+			" Village",
+			" Springs",
+			" Park",
+			" Gardens",
+			"dale",
+			" Estates",
+			" Terrace",
+			"ville",
+			"port",
+			" East",
+			" West",
+			" South",
+			" North",
+			" Side",
+			" Ridge",
+			" Gate",
+			" Square",
+			"land",
+			" Manor",
+			" Plantation",
+			"wood",
+			" Row",
+			"side"
+			],
+	};
+
+var dataInstitutionNames = {
+	commerce: {
+		first: [
+			"Speedy",
+			"Quality",
+			"Economy",
+			"Luxury",
+			"Instant",
+			"Quik"
+			],
+		product: [
+			"Taco",
+			"Sandwich",
+			"Copy",
+			"Accounting",
+			"Oil Change",
+			"Rooter"
+			],
+		last: [
+			"Shop",
+			"Stand",
+			"Shack",
+			"International",
+			"Superstore",
+			"Planet"
+			],
+	},
+	industry: {
+		first: [
+			"Speedy",
+			"Quality",
+			"Economy",
+			"Luxury",
+			"Instant",
+			"Quik"
+			],
+		product: [
+			"Automotive",
+			"Building Materials",
+			"Furniture",
+			"Foods"
+			],
+		last: [
+			"Manufacturing",
+			"Limited",
+			"Shop",
+			"Exchange"
+			],
+	},
+	residential: {
+		first: [
+			"Tranquil",
+			"Shady",
+			"Green",
+			"Cozy"
+			],
+		product: [
+			"Hills",
+			"Grove",
+			"Glen",
+			"Dell",
+			"Retreat",
+			],
+		last: [
+			"Estates",
+			"Apartments",
+			"Condominiums",
+			"Homes"
+			],
+	},
+	municipal: {
+		first: [
+			"Regional",
+			"Central",
+			"Neighborhood",
+			"City",
+			"Municipal",
+			],
+		product: [
+			"Community",
+			"Motor Vehicle",
+			"Motorpool",
+			"Job Training",
+			"Utiities",
+			],
+		last: [
+			"Office",
+			"Department",
+			"Yard",
+			"Center"
+			],
+	},
+	greenspace: {
+		first: [
+			"Memorial",
+			"Green",
+			"Alabaster",
+			"Jackson"
+			],
+		product: [
+			"Oak",
+			"River",
+			"Grounds",
+			"Sporting",
+			"Recreational",
+			],
+		last: [
+			"Park",
+			"Field",
+			"Trail",
+			],
+	},
+};

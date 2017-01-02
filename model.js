@@ -1,7 +1,53 @@
 
 var people = [];
+var neighborhoods = [];
+var institutions = [];
 
-function Person(block) {
+function Community() {
+	
+	var ethnicities = Object.keys(dataEthnicities);
+	var residentsByEthnicity = {};
+	var total = 0;
+	for (i in ethnicities) {
+		residentsByEthnicity[ethnicities[i]] = Math.random();
+		total += residentsByEthnicity[ethnicities[i]];
+		}
+	
+	var races = Object.keys(dataRaces);
+	var residentsByRace = {};
+	for (i in races) {
+		residentsByRace[races[i]] = 0;
+		}
+	
+	for (i in ethnicities) {
+		residentsByRace[dataEthnicities[ethnicities[i]].assignedRace.key] += residentsByEthnicity[ethnicities[i]];
+		}
+	
+	var demographics = {ethnicity:{},race:{},}
+	for (i in ethnicities) {
+			demographics.ethnicity[ethnicities[i]] = residentsByEthnicity[ethnicities[i]]/total;
+		}
+	for (i in races) {
+			demographics.race[races[i]] = residentsByRace[races[i]]/total;
+		}
+	
+	ethnicitiesPickList = Array(100);
+	total = 0;
+	for (i in ethnicities) {
+			ethnicitiesPickList.fill(ethnicities[i],total,total + demographics.ethnicity[ethnicities[i]] * 100);
+			total += demographics.ethnicity[ethnicities[i]]*100;
+		}
+	
+	this.demographics = demographics;
+	this.pickList = {};
+	this.pickList.ethnicities = ethnicitiesPickList;
+	};
+
+function Person(neighborhood) {
+	
+	if (neighborhood === undefined) {
+		neighborhood = neighborhoods[neighborhoods.length * Math.random << 0];
+		}
 
 	var genders = Object.keys(dataGenders);
 	var n = Math.random();
@@ -33,11 +79,9 @@ function Person(block) {
 		var genderPublic = genderIdentity;
 		}
 	
-	var races = Object.keys(dataRaces);
-	var race = dataRaces[races[races.length * Math.random() << 0]];
-
-	var ethnicities = Object.keys(race.ethnicities);
-	var ethnicity = race.ethnicities[ethnicities[ethnicities.length * Math.random() << 0]];
+	var ethnicities = community.pickList.ethnicities;
+	var ethnicity = dataEthnicities[ethnicities[ethnicities.length * Math.random() << 0]];
+	var race = ethnicity.assignedRace;
 	
 	var attraction = [];
 	var orientation;
@@ -206,7 +250,7 @@ function Person(block) {
 	this.name.middle = middleName;
 	this.name.last = lastName;
 	
-	this.home = block;
+	this.neighborhood = neighborhood;
 	
 	this.race = race;
 	this.ethnicity = ethnicity;
@@ -234,5 +278,101 @@ function Person(block) {
 	// Functions
 	
 
-}
+};
 
+function Neighborhood() {
+
+	var statusDemographics = 1 + Math.random() * 6 << 0;
+	var moneyDemographics = Math.max(1,statusDemographics + [-2,-1,-1,-1,0,1,1,1,2][9 * Math.random() << 0]);
+	
+	var residential = Math.random() * 2 ;
+	var commerce = Math.random();
+	var industry = Math.random();
+	var municipal = Math.random() / 2 ;
+	var total = residential + commerce + industry + municipal;
+	var zoning = {
+		residential: residential/total,
+		commerce: commerce/total,
+		industry: industry/total,
+		municipal: municipal/total,
+		}
+	
+	var races = Object.keys(dataRaces);
+	var residents = {};
+	var total = 0;
+	for (i in races) {
+		residents[races[i]] = Math.random();
+		total += residents[races[i]];
+		}
+	var raceDemographics = {}
+	for (i in races) {
+			raceDemographics[races[i]] = residents[races[i]]/total;
+		}
+		
+	var name = dataNeighborhoodNames.first[dataNeighborhoodNames.first.length * Math.random() << 0] + dataNeighborhoodNames.last[dataNeighborhoodNames.last.length * Math.random() << 0];
+	
+	
+	this.demographics = {};
+	this.demographics.status = statusDemographics;
+	this.demographics.money = moneyDemographics;
+	this.demographics.race = raceDemographics;
+	
+	this.zoning = zoning;
+	
+	this.institutions = [];
+	
+	this.name = name;
+
+	neighborhoods.push(this);
+
+};
+
+function Institution(neighborhood,type) {
+
+	if (neighborhood == undefined) {
+		neighborhood = neighborhoods[neighborhoods.length * Math.random() << 0];
+	}
+
+	if (type == undefined) {
+		type = ["residential","commerce","industry","municipal","greenspace"][Math.random() * 4 << 0]
+	}
+	
+	var firstName = dataInstitutionNames[type].first[dataInstitutionNames[type].first.length * Math.random() << 0];
+	var productName = dataInstitutionNames[type].product[dataInstitutionNames[type].product.length * Math.random() << 0];
+	var lastName = dataInstitutionNames[type].last[dataInstitutionNames[type].last.length * Math.random() << 0];
+	
+	var name = firstName + " " + productName + " " + lastName;
+
+	var status = Math.random() * 3 << 0;
+	status += neighborhood.demographics.status - 1;
+	var rent = Math.random() * 3 << 0;
+	rent += neighborhood.demographics.money - 1;
+	
+	// Paygrade
+	var entry = Math.random() * 10 << 0;
+	var management = entry + 1 + Math.random() * 10 << 0;
+	var executive = management + 1 + Math.random() * 10 << 0;
+	
+	var typicalClientele = "Placeholder";
+	var typicalEmployees = "Placeholder";
+	
+	var activeUnions = [];
+
+	this.name = name;
+	this.type = type;
+	this.status = status;
+	this.rent = rent;
+	this.paygrade = {entry:entry,management:management,executive:executive};
+	this.typicalClientele = typicalClientele;
+	this.typicalEmployees = typicalEmployees;
+	
+	this.organizations = {};
+	this.organizations.unions = activeUnions;
+	
+	this.neighborhood = neighborhood;
+	
+	neighborhood.institutions.push(this);
+	
+	institutions.push(this);
+
+};

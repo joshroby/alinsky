@@ -35,7 +35,7 @@
 	<div class="sidebar">
 	
 		<div id="mapBar">
-			<h3 onclick="handlers.sidebarMapExpand('map')">Map</h3>
+			<h3 onclick="handlers.sidebarPaneExpand('map')">Map</h3>
 			<div id="mapBarContents" class="mapContent">
 				<div id="mapBarFilters" class="filterBar">
 					<div id="filterRes" class="filter">res</div>
@@ -43,7 +43,7 @@
 					<div id="filterGov" class="filter">gov</div>
 					<div id="filterMisc" class="filter">misc</div>
 				</div>
-				<ul class="barList">
+				<ul class="barList" id="mapList">
 					<li>City Hall</li>
 					<li>Brownstone</li>
 					<li>Shopping Plaza</li>
@@ -53,7 +53,7 @@
 		</div>
 	
 		<div id="calBar">
-			<h3 onclick="handlers.sidebarMapExpand('cal')">Calendar</h3>
+			<h3 onclick="handlers.sidebarPaneExpand('cal')">Calendar</h3>
 			<div id="calBarContents">
 				<table id="calendar">
 					<tr>
@@ -169,7 +169,7 @@
 		</div>
 	
 		<div id="contactBar">
-			<h3 onclick="handlers.sidebarMapExpand('contact')">Contacts</h3>
+			<h3 onclick="handlers.sidebarPaneExpand('contact')">Contacts</h3>
 			<div id="contactBarContents">
 				<div id="contactBarFilters" class="filterBar">
 					<div id="filterHires" class="filter">hires</div>
@@ -183,7 +183,7 @@
 		</div>
 	
 		<div id="actionBar">
-			<h3 onclick="handlers.sidebarMapExpand('action')">Actions</h3>
+			<h3 onclick="handlers.sidebarPaneExpand('action')">Actions</h3>
 			<div id="actionBarContents">
 				<ul class="barList">
 					<li>One-on-One</li>
@@ -204,23 +204,65 @@
 	
 	<div class="pane">
 		<div id="mapPane" class="mapContent">
-			<img src="Chicago-Neighborhoods-Map.jpg" height="600px" />
-			<div id="locationDetails">
-				<h3>Shopping Plaza</h3>
+			
+			<div id="mapImagePane">
+			</div>
+			
+			<div id="mapNeighborhoodPane">
+				<h3 id="neighborhoodName">Neighborhood Name</h3>
 				<table>
 					<tr>
-						<td class="tableHead">Quality Tier:</td>
-						<td>Upscale</td>
-						<td class="tableHead">Paygrades:</td>
-						<td>9/12/30</td>
+						<td class="tableHead">Status:</td>
+						<td id="neighborhoodStatusCell">X</td>
+						<td class="tableHead">Money:</td>
+						<td id="neighborhoodMoneyCell">X</td>
 					</tr>
 					<tr>
-						<td class="tableHead">Typical Clientele:</td>
-						<td>White Middle-Class Shoppers</td>
-						<td class="tableHead">Active Unions:</td>
-						<td>SIEU</td>
+						<td class="tableHead">Zoning:</td>
+						<td id="neighborhoodZoningCell">X</td>
+						<td class="tableHead">Demographics:</td>
+						<td id="neighborhoodRacesCell">X</td>
+					</tr>
+					<tr>
+						<td class="tableHead">Institutions:</td>
+						<td colspan="3" id="neighborhoodInstitutionsList"></td>
 					</tr>
 				</table>
+			</div>
+			
+			<div id="mapInstitutionPane">
+				<h3 id="institutionName">Shopping Plaza</h3>
+				<table>
+					<tr>
+						<td class="tableHead">Typical Clientele:</td>
+						<td id="institutionTypicalClientsCell">White Middle-Class Shoppers</td>
+						<td class="tableHead">Typical Employees:</td>
+						<td id="institutionTypicalEmployeesCell">Black Lower-Class</td>
+					</tr>
+					<tr>
+						<td class="tableHead">Quality Tier:</td>
+						<td id="institutionStatusCell">Upscale</td>
+						<td class="tableHead">Paygrades:</td>
+						<td id="institutionPaygradeCell">9/12/30</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td class="tableHead">Active Unions:</td>
+						<td id="institutionUnionsCell">SIEU</td>
+					</tr>
+					<tr>
+						<td class="tableHead" id="institutionResidentsHead">Known Residents:</td>
+						<td id="institutionResidentsCell">TK</td>
+						<td class="tableHead">Known Employees:</td>
+						<td id="institutionUnionsCell">TK (labor)<br>TK (management)</td>
+					</tr>
+				</table>
+			</div>
+			
+			<div class="debug">
+				<button onclick="handlers.newNeighborhood()">New Neighborhood</button>
+				<button onclick="handlers.newInstitution()">New Institution</button>
 			</div>
 		</div>
 		
@@ -369,5 +411,9 @@
 		</div>
 	
 	</div>
+	
+	<footer>
+		<script src="init.js"></script>
+	</footer>
 
 </html>

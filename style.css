@@ -6,6 +6,10 @@ body {
 ul {
 	margin-top: 0px;
 	}
+
+td {
+	vertical-align:top;
+	}
 	
 .header {
 	background: #BBB;
@@ -142,6 +146,15 @@ h3 {
 	display: none;
 	}
 
+#mapNeighborhoodPane {
+	float:left;
+	margin-right: 100px;
+	width: 40%;
+	}
+
+#mapInstitutionPane {
+	}
+
 dl {
 	padding-left:20px;
 	}
@@ -215,6 +228,10 @@ dd {
 
 .eventInfo {
 	margin-left: 30px;
+	}
+
+.debug {
+	clear: both;
 	}
 
 
