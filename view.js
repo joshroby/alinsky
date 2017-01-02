@@ -197,6 +197,9 @@ var view = {
 	
 		console.log(neighborhood);
 		
+		var mapImagePane = document.getElementById('mapImagePane');
+		mapImagePane.style.backgroundColor = dataColors[neighborhood.color];
+		
 		var neighborhoodName = document.getElementById('neighborhoodName');
 		var neighborhoodStatusCell = document.getElementById('neighborhoodStatusCell');
 		var neighborhoodMoneyCell = document.getElementById('neighborhoodMoneyCell');

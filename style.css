@@ -146,6 +146,13 @@ h3 {
 	display: none;
 	}
 
+#mapImagePane {
+	width: 400px;
+	height: 100px;
+	vertical-align: middle;
+	text-align: center;
+	}
+
 #mapNeighborhoodPane {
 	float:left;
 	margin-right: 100px;

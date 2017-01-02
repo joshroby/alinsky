@@ -79,6 +79,9 @@ var handlers = {
 
 	newPerson: function() {
 		var newGuy = new Person();
+		newGuy.findHousing();
+		newGuy.findJob();
+		if (newGuy.resources.devotion > 1) {newGuy.findChurch()};
 		view.refreshContacts();
 	},
 

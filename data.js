@@ -228,150 +228,192 @@ var common = {
 var dataFaiths = {
 
 	atheist: {
+			key: "atheist",
 			denomination: "Atheist",
 			sect: "Atheist",
 			name: "Atheist",
 			issues: [dataIssues.religiousFreedom],
+			congregation: ["Discussion Group"],
 		},
 
 	anglican: {
+			key: "anglican",
 			denomination: "Anglican",
 			sect: "Protestant",
 			name: "Christian",
 			issues: [dataIssues.patriarchy,dataIssues.homophobia],
+			congregation: ["Anglican Church"],
 		},
 
 	baptist: {
+			key: "baptist",
 			denomination: "Baptist",
 			sect: "Protestant",
 			name: "Christian",
 			issues: [dataIssues.patriarchy,dataIssues.homophobia],
+			congregation: ["Baptist Church","Bible Church"],
 		},
 
 	lutheran: {
+			key: "lutheran",
 			denomination: "Lutheran",
 			sect: "Protestant",
 			name: "Christian",
 			issues: [dataIssues.patriarchy,dataIssues.homophobia],
+			congregation: ["Lutheran Church"],
 		},
 
 	methodist: {
+			key: "methodist",
 			denomination: "Methodist",
 			sect: "Protestant",
 			name: "Christian",
 			issues: [dataIssues.patriarchy,dataIssues.homophobia],
+			congregation: ["Methodist Church"],
 		},
 	
 	unitedChurchChrist: {
+			key: "unitedChurchChrist",
 			denomination: "United Church of Christ",
 			sect: "Protestant",
 			name: "Christian",
 			issues: [dataIssues.religiousFreedom,dataIssues.racialJustice,dataIssues.queerRights],
+			congregation: ["UCC Church"],
 		},
 
 	africanMethodist: {
+			key: "africanMethodist",
 			denomination: "African Methodist",
 			sect: "Protestant",
 			name: "Christian",
 			issues: [dataIssues.patriarchy,dataIssues.homophobia,dataIssues.voterSuppression,dataIssues.racialJustice,dataIssues.economicEquity],
+			congregation: ["AME Church","African Methodist Church","African Methodist Episcopal Church"],
 		},
 
 	romanCatholic: {
+			key: "romanCatholic",
 			denomination: "Roman Catholic",
 			sect: "Roman Catholic",
 			name: "Christian",
 			issues: [dataIssues.patriarchy,dataIssues.homophobia],
+			congregation: ["Catholic Church","Cathedral"],
 		},
 
 	greekOrthodox: {
+			key: "greekOrthodox",
 			denomination: "Greek Orthodox",
 			sect: "Orthodox",
 			name: "Christian",
 			issues: [dataIssues.patriarchy,dataIssues.homophobia],
+			congregation: ["Greek Orthodox Church","Basilica"],
 		},
 
 	russianOrthodox: {
+			key: "russianOrthodox",
 			denomination: "Russian Orthodox",
 			sect: "Orthodox",
 			name: "Christian",
 			issues: [dataIssues.patriarchy,dataIssues.homophobia],
+			congregation: ["Russian Orthodox Church","Basilica"],
 		},
 		
 	bahai: {
+			key: "bahai",
 			denomination: "Baha'i",
 			sect: "Baha'i",
 			name: "Baha'i",
 			issues: [dataIssues.religiousFreedom,dataIssues.homophobia],
+			congregation: ["Baha'i Faith Center"],
 		},
 		
 	orthodoxJudaism: {
+			key: "orthodoxJudaism",
 			denomination: "Orthodox Judaism",
 			sect: "Judaism",
 			name: "Judaism",
 			issues: [dataIssues.religiousFreedom,dataIssues.racialJustice,dataIssues.patriarchy,dataIssues.homophobia],
+			congregation: ["Synagogue","Shul","Temple"],
 		},
 		
 	reformJudaism: {
+			key: "reformJudaism",
 			denomination: "Reform Judaism",
 			sect: "Judaism",
 			name: "Judaism",
 			issues: [dataIssues.religiousFreedom,dataIssues.racialJustice,dataIssues.patriarchy,dataIssues.homophobia],
+			congregation: ["Synagogue","Shul","Temple"],
 		},
 		
 	conservativeJudaism: {
+			key: "conservativeJudaism",
 			denomination: "Conservative Judaism",
 			sect: "Judaism",
 			name: "Judaism",
 			issues: [dataIssues.religiousFreedom,dataIssues.racialJustice,dataIssues.patriarchy,dataIssues.homophobia],
+			congregation: ["Synagogue","Shul","Temple"],
 		},
 	
 	sunniIslam: {
+			key: "sunniIslam",
 			denomination: "Sunni Muslim",
 			sect: "Islam",
 			name: "Islam",
 			issues: [dataIssues.religiousFreedom,dataIssues.racialJustice,dataIssues.patriarchy,dataIssues.homophobia],
+			congregation: ["Mosque","Islamic Center"],
 		},
 	
 	shiaIslam: {
+			key: "shiaIslam",
 			denomination: "Shia Muslim",
 			sect: "Islam",
 			name: "Islam",
 			issues: [dataIssues.religiousFreedom,dataIssues.racialJustice,dataIssues.patriarchy,dataIssues.homophobia],
+			congregation: ["Mosque","Islamic Center"],
 		},
 	
 	sufiIslam: {
+			key: "sufiIslam",
 			denomination: "Sufi",
 			sect: "Islam",
 			name: "Islam",
 			issues: [dataIssues.religiousFreedom,dataIssues.racialJustice,dataIssues.patriarchy,dataIssues.homophobia],
+			congregation: ["Mosque","Islamic Center"],
 		},
 	
 	nondenominationalIslam: {
+			key: "nondenominationalIslam",
 			denomination: "Muslim",
 			sect: "Islam",
 			name: "Islam",
 			issues: [dataIssues.religiousFreedom,dataIssues.racialJustice,dataIssues.patriarchy,dataIssues.homophobia],
+			congregation: ["Mosque","Islamic Center"],
 		},
 	
 	neopagan: {
+			key: "neopagan",
 			denomination: "Pagan",
 			sect: "Neopagan",
 			name: "Pagan",
 			issues: [dataIssues.religiousFreedom,dataIssues.environmentalism],
+			congregation: ["Circle","Coven"],
 		},
 	
 	odinist: {
+			key: "odinist",
 			denomination: "Odinist",
 			sect: "Norse Pagan",
 			name: "Pagan",
 			issues: [dataIssues.religiousFreedom,dataIssues.patriarchy,dataIssues.homophobia,dataIssues.whiteSupremacy,dataIssues.environmentalism],
+			congregation: ["Fellowship"],
 		},
 	
 	unitarianUniversalist: {
+			key: "unitarianUniversalist",
 			denomination: "Unitarian-Universalist",
 			sect: "Unitarian-Universalist",
 			name: "Unitarian-Universalist",
 			issues: [dataIssues.religiousFreedom,dataIssues.economicEquity,dataIssues.queerRights,dataIssues.genderEquity,dataIssues.racialJustice],
+			congregation: ["Unitarian-Universalists","Unitarian-Universalist Congregation","Unitarian-Universalist Community","Unitarian-Universalist Church","Community Church"],
 		},
 
 	};
@@ -1094,3 +1136,18 @@ var dataInstitutionNames = {
 			],
 	},
 };
+
+var dataColors = [
+	"red",
+	"yellow",
+	"lime",
+	"aqua",
+	"blue",
+	"navy",
+	"fuschia",
+	"maroon",
+	"olive",
+	"green",
+	"teal",
+	"purple",
+];
