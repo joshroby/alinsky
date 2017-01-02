@@ -57,6 +57,25 @@ var handlers = {
 		var institution = view.focus.neighborhood.institutions[index];
 		view.displayInstitution(institution);
 	},
+	
+	jumpToInstitution: function(index) {
+		var institution = view.focus.contact.connections[index][0];
+		view.displayNeighborhood(institution.neighborhood);
+		view.displayInstitution(institution);
+		handlers.sidebarPaneExpand("map");
+	},
+	
+	jumpToClient: function(index) {
+		var contact = view.focus.institution.clients[index][0];
+		view.displayContact(contact);
+		handlers.sidebarPaneExpand("contact");
+	},
+	
+	jumpToEmployee: function(index) {
+		var contact = view.focus.institution.employees[index][0];
+		view.displayContact(contact);
+		handlers.sidebarPaneExpand("contact");
+	},
 
 	newPerson: function() {
 		var newGuy = new Person();

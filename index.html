@@ -34,6 +34,20 @@
 	
 	<div class="sidebar">
 	
+		<div id="contactBar">
+			<h3 onclick="handlers.sidebarPaneExpand('contact')">Contacts</h3>
+			<div id="contactBarContents">
+				<div id="contactBarFilters" class="filterBar">
+					<div id="filterHires" class="filter">hires</div>
+					<div id="filterVolunteers" class="filter">vols</div>
+					<div id="filterSubscribers" class="filter">subs</div>
+					<div id="filterAllies" class="filter">allies</div>
+				</div>
+				<ul id="contactList" class="barList">
+				</ul>
+			</div>
+		</div>
+	
 		<div id="mapBar">
 			<h3 onclick="handlers.sidebarPaneExpand('map')">Map</h3>
 			<div id="mapBarContents" class="mapContent">
@@ -168,20 +182,6 @@
 			</div>
 		</div>
 	
-		<div id="contactBar">
-			<h3 onclick="handlers.sidebarPaneExpand('contact')">Contacts</h3>
-			<div id="contactBarContents">
-				<div id="contactBarFilters" class="filterBar">
-					<div id="filterHires" class="filter">hires</div>
-					<div id="filterVolunteers" class="filter">vols</div>
-					<div id="filterSubscribers" class="filter">subs</div>
-					<div id="filterAllies" class="filter">allies</div>
-				</div>
-				<ul id="contactList" class="barList">
-				</ul>
-			</div>
-		</div>
-	
 		<div id="actionBar">
 			<h3 onclick="handlers.sidebarPaneExpand('action')">Actions</h3>
 			<div id="actionBarContents">
@@ -252,10 +252,10 @@
 						<td id="institutionUnionsCell">SIEU</td>
 					</tr>
 					<tr>
-						<td class="tableHead" id="institutionResidentsHead">Known Residents:</td>
-						<td id="institutionResidentsCell">TK</td>
+						<td class="tableHead" id="institutionClientsHead">Known Clients:</td>
+						<td id="institutionClientsCell"><ul id="institutionClientsList"></ul></td>
 						<td class="tableHead">Known Employees:</td>
-						<td id="institutionUnionsCell">TK (labor)<br>TK (management)</td>
+						<td id="institutionEmployeesCell"><ul id="institutionEmployeesList"></ul></td>
 					</tr>
 				</table>
 			</div>
@@ -329,7 +329,7 @@
 				</tr>
 			</table>
 			<h3>Network Connections</h3>
-			<ul id="contactAffiliations">
+			<ul id="contactConnections">
 				<li id="contactJob">Shopping Plaza, entry level</li>
 				<li id="contactChurch">First Manichean, board member</li>
 				<li id="contactUnion">SIEU, member</li>
@@ -348,7 +348,7 @@
 					<td id="contactNetwork"></td>
 				</tr>
 			</table>
-			<h3>Known Backstory</h3>
+			<h3>Backstory Blocks</h3>
 			<ul id="contactStory">
 				<li class="contactStory">Raised in Poverty</li>
 				<li class="contactStory">Queer Friend</li>
@@ -396,7 +396,7 @@
 				</tr>
 			</table>
 			
-			<h3>Causes</h3>
+			<h3>Appeal of Causes</h3>
 			<ul id="issuesList">
 				<li></li>
 			</ul>

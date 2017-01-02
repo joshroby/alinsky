@@ -108,8 +108,14 @@ var view = {
 		contactOrientation.innerHTML = orientation;
 		contactEthnicity.innerHTML = ethnicity;
 		
-		var contactAffiliations = document.getElementById('contactAffiliations');
-		contactAffiliations.innerHTML = "";
+		var contactConnections = document.getElementById('contactConnections');
+		contactConnections.innerHTML = "";
+		var connections = contact.connections;
+		for (i in connections) {
+			connectionItem = document.createElement('li');
+			connectionItem.innerHTML = "<a onclick='handlers.jumpToInstitution("+i+")'>" + connections[i][1] + " " + connections[i][0].name + " (" + connections[i][2] + ")</a>";
+			contactConnections.appendChild(connectionItem);
+			};
 		
 		var contactStatus = document.getElementById('contactStatus');
 		var contactMoney = document.getElementById('contactMoney');
@@ -181,6 +187,8 @@ var view = {
 			issuesItem.innerHTML =  contact.issues[n].name + " [" + issueStrength + "]";
 			issuesList.appendChild(issuesItem);
 			}
+			
+		view.focus.contact = contact;
 		
 	
 	},
@@ -249,6 +257,8 @@ var view = {
 		var institutionTypicalClientsCell = document.getElementById('institutionTypicalClientsCell');
 		var institutionTypicalEmployeesCell = document.getElementById('institutionTypicalEmployeesCell');
 		var institutionUnionsCell = document.getElementById('institutionUnionsCell');
+		var institutionClientsList = document.getElementById('institutionClientsList');
+		var institutionEmployeesList = document.getElementById('institutionEmployeesList');
 		
 		institutionName.innerHTML = institution.name;
 		institutionStatusCell.innerHTML = institution.status;
@@ -257,7 +267,24 @@ var view = {
 		institutionTypicalEmployeesCell.innerHTML = institution.typicalEmployees;
 		institutionUnionsCell.innerHTML = 'TK';
 		
+		institutionClientsList.innerHTML = "";
+		var clients = institution.clients;
+		for (i in clients) {
+			clientItem = document.createElement('li');
+			clientItem.innerHTML = "<a onclick='handlers.jumpToClient("+i+")'>" + clients[i][0].name.first + " " + clients[i][0].name.last + " (" + clients[i][1] + ")</a>";
+			institutionClientsList.appendChild(clientItem);
+			};
+		
+		institutionEmployeesList.innerHTML = "";
+		var employees = institution.employees;
+		for (i in employees) {
+			employeeItem = document.createElement('li');
+			employeeItem.innerHTML = "<a onclick='handlers.jumpToEmployee("+i+")'>" + employees[i][0].name.first + " " + employees[i][0].name.last + " (" + employees[i][1] + ")</a>";
+			institutionEmployeesList.appendChild(employeeItem);
+			};
+		
 		mapInstitutionPane.style.display = 'block';
+		view.focus.institution = institution;
 	},
 
 }

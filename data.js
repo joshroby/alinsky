@@ -657,7 +657,7 @@ var dataBackstories = {
 		name: "Marriage",
 		values: ["loyalty","ambition"],
 		issues: [],
-		resources: ["money","network"],
+		resources: ["money","network","spouse"],
 		resourceLosses: [],
 		updateDemo: [],
 		},
@@ -667,7 +667,7 @@ var dataBackstories = {
 		values: ["care","liberty"],
 		issues: [],
 		resources: [],
-		resourceLosses: ["money","network"],
+		resourceLosses: ["money","network","spouse"],
 		updateDemo: [],
 		},
 
@@ -1080,6 +1080,17 @@ var dataInstitutionNames = {
 			"Park",
 			"Field",
 			"Trail",
+			],
+	},
+	religious: {
+		first: [
+			"Mc"
+			],
+		product: [
+			"Churchy",
+			],
+		last: [
+			"Church",
 			],
 	},
 };

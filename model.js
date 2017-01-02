@@ -244,6 +244,46 @@ function Person(neighborhood) {
 	var middleName = firstNames[firstNames.length * Math.random() << 0];
 	var lastName = ethnicity.surnames[ethnicity.surnames.length * Math.random() << 0];
 	
+	
+	// Network Connection Functions
+	this.connections = [];
+	if (resources.spouse > 0 || Math.random() > 0.5) {
+		console.log('Add Spouse');
+	}
+	
+	this.findJob = function(job,level) {
+		if (job == undefined) {
+			var job = institutions[institutions.length * Math.random() << 0];
+		};
+		if (level == undefined) {	
+			var level = ["volunteer","entry","management","executive"][4 * Math.random() << 0];
+		};
+		this.connections.push([job,"works at",level]);
+		job.employees.push([this,level]);
+	};
+	
+	this.findHousing = function(housing,level) {
+		if (housing == undefined) {
+			housing = institutions[institutions.length * Math.random() << 0];
+		};
+		if (level == undefined) {	
+			var level = ["squatter","renter","leaser","owner"][4 * Math.random() << 0];
+		}
+		this.connections.push([housing,"lives at",level]);
+		housing.clients.push([this,level]);
+	};
+	
+	this.findChurch = function(church,level) {
+		if (church == undefined) {
+			church = institutions[institutions.length * Math.random() << 0];
+		};
+		if (level == undefined) {	
+			var level = ["friend","member","volunteer","officer"][4 * Math.random() << 0];
+		}
+		this.connections.push([church,"attends",level]);
+		church.employees.push([this,level]);
+	};
+	
 	// Sticking stuff on the actual object for later reference now
 	this.name = {};
 	this.name.first = firstName;
@@ -334,7 +374,7 @@ function Institution(neighborhood,type) {
 	}
 
 	if (type == undefined) {
-		type = ["residential","commerce","industry","municipal","greenspace"][Math.random() * 4 << 0]
+		type = ["residential","commerce","industry","municipal","greenspace","religious"][Math.random() * 6 << 0]
 	}
 	
 	var firstName = dataInstitutionNames[type].first[dataInstitutionNames[type].first.length * Math.random() << 0];
@@ -365,6 +405,9 @@ function Institution(neighborhood,type) {
 	this.paygrade = {entry:entry,management:management,executive:executive};
 	this.typicalClientele = typicalClientele;
 	this.typicalEmployees = typicalEmployees;
+	
+	this.employees = [];
+	this.clients = [];
 	
 	this.organizations = {};
 	this.organizations.unions = activeUnions;
