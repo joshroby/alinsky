@@ -254,9 +254,19 @@
 					</tr>
 					<tr>
 						<td class="tableHead" id="institutionClientsHead">Known Clients:</td>
-						<td id="institutionClientsCell"><ul id="institutionClientsList"></ul></td>
-						<td class="tableHead">Known Employees:</td>
-						<td id="institutionEmployeesCell"><ul id="institutionEmployeesList"></ul></td>
+						<td id="institutionClientsCell">
+							<ul id="institutionClientsList"></ul>
+							<div class="debug">
+								<button onclick='handlers.newClient()'>New Client</button>
+							</div>
+						</td>
+						<td class="tableHead" id="institutionEmployeesHead">Known Employees:</td>
+						<td id="institutionEmployeesCell">
+							<ul id="institutionEmployeesList"></ul>
+							<div class="debug">
+								<button onclick='handlers.newEmployee()'>New Employee</button>
+							</div>
+						</td>
 					</tr>
 				</table>
 			</div>
@@ -265,6 +275,7 @@
 				<button onclick="handlers.newNeighborhood()">New Neighborhood</button>
 				<button onclick="handlers.newInstitution()">New Institution</button>
 			</div>
+			
 		</div>
 		
 		<div id="calPane" class="calContent">

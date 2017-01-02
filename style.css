@@ -3,8 +3,16 @@ body {
 	cursor: default;
 	}
 
+a {
+	color: teal;
+	}
+
 ul {
 	margin-top: 0px;
+	}
+
+li {
+	font-size: .8em;
 	}
 
 td {

@@ -296,7 +296,7 @@ function Person(neighborhood) {
 	// findJob() pays no attention to money, status, or education, and it should
 	this.findJob = function(institution,level) {
 		if (institution == undefined && Math.random() < 0.8) {
-			var institution = institutions[institutions.length * Math.random() << 0];
+			var institution = institutions[1+ (institutions.length-1) * Math.random() << 0];
 		} else if (institution == undefined) {
 			institution = new Institution();
 		};
@@ -315,7 +315,7 @@ function Person(neighborhood) {
 			institution = new Institution(undefined,"residential");
 		};
 		if (level == undefined) {	
-			var level = ["squatter","renter","leaser","owner"][4 * Math.random() << 0];
+			var level = ["squatter","renter","lessee","homeowner"][4 * Math.random() << 0];
 		}
 		this.connections.push([institution,"lives at",level]);
 		institution.clients.push([this,level]);
@@ -340,7 +340,7 @@ function Person(neighborhood) {
 			var level = ["friend","member","volunteer","officer"][Math.min(3,Math.max(0,this.resources.devotion))];
 		}
 		this.connections.push([church,"attends",level]);
-		church.employees.push([this,level]);
+		church.clients.push([this,level]);
 	};
 	
 	// Sticking stuff on the actual object for later reference now
@@ -449,7 +449,7 @@ function Institution(neighborhood,type,faith) {
 		var lastName = dataInstitutionNames[type].last[dataInstitutionNames[type].last.length * Math.random() << 0];
 		var name = firstName + " " + productName + " " + lastName;
 	} else {
-		var name = "First " + faith.congregation[faith.congregation.length * Math.random() << 0 ];
+		var name = ["","First "][2 * Math.random() << 0] + faith.congregation[faith.congregation.length * Math.random() << 0 ] + [" of "," at "," in "," of "][4 * Math.random() << 0] + neighborhood.name;
 		this.faith = faith;
 	}
 

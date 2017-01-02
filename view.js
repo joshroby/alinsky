@@ -262,6 +262,8 @@ var view = {
 		var institutionUnionsCell = document.getElementById('institutionUnionsCell');
 		var institutionClientsList = document.getElementById('institutionClientsList');
 		var institutionEmployeesList = document.getElementById('institutionEmployeesList');
+		var institutionClientsHead = document.getElementById('institutionClientsHead');
+		var institutionEmployeesHead = document.getElementById('institutionEmployeesHead');
 		
 		institutionName.innerHTML = institution.name;
 		institutionStatusCell.innerHTML = institution.status;
@@ -269,6 +271,17 @@ var view = {
 		institutionTypicalClientsCell.innerHTML = institution.typicalClientele;
 		institutionTypicalEmployeesCell.innerHTML = institution.typicalEmployees;
 		institutionUnionsCell.innerHTML = 'TK';
+		
+		if (institution.type === "religious") {
+			institutionClientsHead.innerHTML = "Known Congregants";
+			institutionEmployeesHead.innerHTML = "Known Staff";
+		} else if (institution.type === "residential") {
+			institutionClientsHead.innerHTML = "Known Residents";
+			institutionEmployeesHead.innerHTML = "Known Employees";
+		} else {
+			institutionClientsHead.innerHTML = "Known Clients";
+			institutionEmployeesHead.innerHTML = "Known Employees";
+		}
 		
 		institutionClientsList.innerHTML = "";
 		var clients = institution.clients;

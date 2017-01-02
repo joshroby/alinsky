@@ -98,4 +98,26 @@ var handlers = {
 		view.displayNeighborhood(view.focus.neighborhood);
 		view.displayInstitution(newInstitution);
 	},
+	
+	newClient: function() {
+		var newGuy = new Person();
+		newGuy.findJob();
+		if (view.focus.institution.type === "religious") {
+			newGuy.findChurch(view.focus.institution);
+			newGuy.faith = view.focus.institution.faith;
+			newGuy.findJob();
+		} else if (view.focus.institution.type === "residential") {
+			newGuy.findChurch();
+			newGuy.findHousing(view.focus.institution);
+		}
+		view.displayInstitution(view.focus.institution);
+	},
+	
+	newEmployee: function() {
+		var newGuy = new Person();
+		newGuy.findHousing();
+		newGuy.findChurch();
+		newGuy.findJob(view.focus.institution);
+		view.displayInstitution(view.focus.institution);
+	},
 }
