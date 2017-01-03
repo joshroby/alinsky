@@ -83,6 +83,7 @@ function Community() {
 	this.pickList = {};
 	this.pickList.ethnicities = ethnicitiesPickList;
 	this.pickList.faiths = faithsPickList;
+	this.population = 100;
 	};
 
 function Person(neighborhood) {
@@ -122,6 +123,7 @@ function Person(neighborhood) {
 		}
 	
 	var ethnicities = community.pickList.ethnicities;
+	console.log(ethnicities);
 	var ethnicity = dataEthnicities[ethnicities[ethnicities.length * Math.random() << 0]];
 	var race = ethnicity.assignedRace;
 	
@@ -255,6 +257,8 @@ function Person(neighborhood) {
 			}
 		
 		}
+		
+	console.log(issues);
 	
 	// Identity-based Issues not handled in Backstory
 	var identityIssues = [];
@@ -263,10 +267,12 @@ function Person(neighborhood) {
 	identityIssues = identityIssues.concat(faith.issues);
 	if (orientation === "Queer") {identityIssues = identityIssues.concat(dataIssues.queerRights)};
 	for (i in identityIssues) {
-		if (issues.indexOf(identityIssues[n]) == -1) {
-			issues.push(identityIssues[n]);
+		if (issues.indexOf(identityIssues[i]) == -1) {
+			issues.push(identityIssues[i]);
 			}
 	}
+	console.log(identityIssues);
+	console.log(issues);
 	
 		
 	// Picking Names, now that we've established current Gender Identity in Backstory	
@@ -284,7 +290,8 @@ function Person(neighborhood) {
 	firstNames = firstNames.concat(common.neutralNames);
 	var firstName = firstNames[firstNames.length * Math.random() << 0];
 	var middleName = firstNames[firstNames.length * Math.random() << 0];
-	var lastName = ethnicity.surnames[ethnicity.surnames.length * Math.random() << 0];
+	var surnames = ethnicity.surnames.concat(common.surnames);
+	var lastName = surnames[surnames.length * Math.random() << 0];
 	
 	
 	// Network Connection Functions
@@ -293,7 +300,6 @@ function Person(neighborhood) {
 		console.log('Add Spouse');
 	}
 	
-	// findJob() pays no attention to money, status, or education, and it should
 	this.findJob = function(institution,level) {
 		if (institution == undefined && level == undefined) {
 			var jobSearchPower = (1+Math.max(0,this.resources.status))*(1+Math.max(0,this.resources.education))*(1+Math.max(0,this.resources.network));
@@ -334,7 +340,6 @@ function Person(neighborhood) {
 		}
 	};
 
-	// findHousing() pays no attention to money or status, and it should
 	this.findHousing = function(institution,level) {
 		if (institution == undefined) {
 			var vacancies = [];
@@ -359,6 +364,7 @@ function Person(neighborhood) {
 		institution.clients.push([this,level]);
 	};
 	
+	// Needs to privilege churches with similar ethnicities, races, status, money
 	this.findChurch = function(church,level) {
 		if (church == undefined && this.faith.denomination !== "Athiest") {
 			if (congregationsByFaith[this.faith.key] !== undefined && Math.random() > 0.1) {
@@ -427,14 +433,14 @@ function Neighborhood() {
 	var moneyDemographics = Math.max(1,statusDemographics + [-2,-1,-1,-1,0,1,1,1,2][9 * Math.random() << 0]);
 	
 	var residential = Math.random() * 2 ;
-	var commerce = Math.random();
-	var industry = Math.random();
+	var commercial = Math.random();
+	var industrial = Math.random();
 	var municipal = Math.random() / 2 ;
-	var total = residential + commerce + industry + municipal;
+	var total = residential + commercial + industrial + municipal;
 	var zoning = {
 		residential: residential/total,
-		commerce: commerce/total,
-		industry: industry/total,
+		commercial: commercial/total,
+		industrial: industrial/total,
 		municipal: municipal/total,
 		}
 	
@@ -442,12 +448,8 @@ function Neighborhood() {
 	var residents = {};
 	var total = 0;
 	for (i in races) {
-		residents[races[i]] = Math.random();
+		residents[races[i]] = Math.random()*Math.random();
 		total += residents[races[i]];
-		}
-	var raceDemographics = {}
-	for (i in races) {
-			raceDemographics[races[i]] = residents[races[i]]/total;
 		}
 		
 	var name = dataNeighborhoodNames.first[dataNeighborhoodNames.first.length * Math.random() << 0] + dataNeighborhoodNames.last[dataNeighborhoodNames.last.length * Math.random() << 0];
@@ -456,7 +458,7 @@ function Neighborhood() {
 	this.demographics = {};
 	this.demographics.status = statusDemographics;
 	this.demographics.money = moneyDemographics;
-	this.demographics.race = raceDemographics;
+	this.demographics.race = residents;
 	
 	this.zoning = zoning;
 	
@@ -477,7 +479,7 @@ function Institution(neighborhood,type,faith) {
 	}
 
 	if (type == undefined) {
-		type = ["residential","commerce","industry","municipal","greenspace","religious"][Math.random() * 6 << 0]
+		type = ["residential","commercial","industrial","municipal","greenspace","religious"][Math.random() * 6 << 0]
 	}
 	
 	if (type === "religious" && faith == undefined) {

@@ -117,7 +117,7 @@ var dataIssues = {
 		value: valuation("care","purity"),
 		},
 	
-	immigration: {
+	immigrationReform: {
 		name: "Immigration",
 		value: valuation("liberty","care"),
 		},
@@ -155,6 +155,12 @@ var dataGenders = {
 
 var dataRaces = {
 
+	firstNations: {
+		name: "First Nations",
+		key: "firstNations",
+		issues: [dataIssues.racialJustice,dataIssues.healthcare,dataIssues.environmentalism],
+		},
+
 	white: {
 		name: "White",
 		key: "white",
@@ -165,6 +171,24 @@ var dataRaces = {
 		name: "Black",
 		key: "black",
 		issues: [dataIssues.racialJustice],
+		},
+
+	asian: {
+		name: "Asian",
+		key: "asian",
+		issues: [dataIssues.racialJustice],
+		},
+
+	middleEastern: {
+		name: "Middle Eastern",
+		key: "middleEastern",
+		issues: [dataIssues.racialJustice],
+		},
+
+	latinx: {
+		name: "Latinx",
+		key: "latinx",
+		issues: [dataIssues.racialJustice,dataIssues.immigrationReform],
 		},
 
 	};
@@ -209,6 +233,186 @@ var dataEthnicities = {
 		surnames: ["Williams","Johnson","Smith","Jones","Brown","Jackson","Davis","Thomas","Harris","Robinson","Taylor","Wilson","Moore","White","Washington"],
 		assignedRace: dataRaces.black,
 		majorityFaith: "africanMethodist",
+		},
+	
+	greek: {
+		name: "Greek",
+		masculineNames: [],
+		feminineNames: [],
+		neutralNames: [],
+		surnames: [],
+		assignedRace: dataRaces.white,
+		majorityFaith: "greekOrthodox",
+		},
+	
+	russian: {
+		name: "Russian",
+		masculineNames: [],
+		feminineNames: [],
+		neutralNames: [],
+		surnames: [],
+		assignedRace: dataRaces.white,
+		majorityFaith: "russianOrthodox",
+		},
+	
+	arab: {
+		name: "Arab",
+		masculineNames: [],
+		feminineNames: [],
+		neutralNames: [],
+		surnames: [],
+		assignedRace: dataRaces.middleEastern,
+		majorityFaith: "sunniIslam",
+		},
+	
+	iranian: {
+		name: "Iranian",
+		masculineNames: [],
+		feminineNames: [],
+		neutralNames: [],
+		surnames: [],
+		assignedRace: dataRaces.middleEastern,
+		majorityFaith: "shiaIslam",
+		},
+	
+	afghani: {
+		name: "Afghani",
+		masculineNames: [],
+		feminineNames: [],
+		neutralNames: [],
+		surnames: [],
+		assignedRace: dataRaces.middleEastern,
+		majorityFaith: "sunniIslam",
+		},
+	
+	pakistani: {
+		name: "Pakistani",
+		masculineNames: [],
+		feminineNames: [],
+		neutralNames: [],
+		surnames: [],
+		assignedRace: dataRaces.middleEastern,
+		majorityFaith: "sunniIslam",
+		},
+	
+	indonesian: {
+		name: "Indonesian",
+		masculineNames: [],
+		feminineNames: [],
+		neutralNames: [],
+		surnames: [],
+		assignedRace: dataRaces.asian,
+		majorityFaith: "nondenominationalIslam",
+		},
+	
+	mexican: {
+		name: "Mexican",
+		masculineNames: [],
+		feminineNames: [],
+		neutralNames: [],
+		surnames: [],
+		assignedRace: dataRaces.latinx,
+		majorityFaith: "romanCatholic",
+		},
+	
+	cuban: {
+		name: "Cuban",
+		masculineNames: [],
+		feminineNames: [],
+		neutralNames: [],
+		surnames: [],
+		assignedRace: dataRaces.latinx,
+		majorityFaith: "romanCatholic",
+		},
+	
+	puertoRican: {
+		name: "Puerto Rican",
+		masculineNames: [],
+		feminineNames: [],
+		neutralNames: [],
+		surnames: [],
+		assignedRace: dataRaces.latinx,
+		majorityFaith: "romanCatholic",
+		},
+	
+	cherokee: {
+		name: "Cherokee",
+		masculineNames: [],
+		feminineNames: [],
+		neutralNames: [],
+		surnames: [],
+		assignedRace: dataRaces.firstNations,
+		majorityFaith: "nondenominationalChristian",
+		},
+	
+	navaho: {
+		name: "Navaho",
+		masculineNames: [],
+		feminineNames: [],
+		neutralNames: [],
+		surnames: [],
+		assignedRace: dataRaces.firstNations,
+		majorityFaith: "nondenominationalChristian",
+		},
+	
+	choctaw: {
+		name: "Choctaw",
+		masculineNames: [],
+		feminineNames: [],
+		neutralNames: [],
+		surnames: [],
+		assignedRace: dataRaces.firstNations,
+		majorityFaith: "nondenominationalChristian",
+		},
+	
+	lakotaSioux: {
+		name: "Lakota Sioux",
+		masculineNames: [],
+		feminineNames: [],
+		neutralNames: [],
+		surnames: [],
+		assignedRace: dataRaces.firstNations,
+		majorityFaith: "nondenominationalChristian",
+		},
+	
+	wampanoag: {
+		name: "Wampanoag",
+		masculineNames: [],
+		feminineNames: [],
+		neutralNames: [],
+		surnames: [],
+		assignedRace: dataRaces.firstNations,
+		majorityFaith: "nondenominationalChristian",
+		},
+	
+	ashkenazim: {
+		name: "Ashkenazi Jew",
+		masculineNames: ["Ansel","Berman","Hirschel","Hirsh","Lieb","Lieber","Zemel","Abraham","David","Zeke","Ezekiel","Gabriel","Israel","Moishe","Moses","Mordecai","Tobiah","Zusman"],
+		feminineNames: ["Bluma","Golda","Shayna","Charna","Faigal","Freyde","Hannah","Judith","Miriam","Rachel","Yentl","Zelda"],
+		neutralNames: [],
+		surnames: ["Cohen","Kohn","Kahn","Kaplan","Levi","Levine","Levitt","Lewinsky","Aronson","Hirsh","Applebaum","Rosen","Mendelsohn","Abramson","Avromovitch","Manishewitz","Itskowitz","Berliner","Kessler","Gold","Gulden","Malkov","Perlman","Rivken","Soronsohn","Orbach","Bayer","Eisenberg","Epstein","Litwak","Oppenheimer","Shapiro"],
+		assignedRace: dataRaces.middleEastern,
+		majorityFaith: "conservativeJudaism",
+		},
+	
+	sephardim: {
+		name: "Sephardic Jew",
+		masculineNames: ["Abadian","Amadio","Astruc","Barcelay","Bechor","Bonastruc","Bueno","Calahadi","Galaf","Gento","Hualit","Jaco","Marcoch","Mevorach","Moshico","Solal","Zalema"],
+		feminineNames: ["Amadh","Aster","Ayna","Basseva","Bechora","Bellida","Benvenuta","Bida","Blanqua","Bona","Bonastruga","Cadin","Ceti","Chera","Cima","Cleret","Dolcha","Duena","Ezter","Gaya","Jamilla","Mati","Mazaltov","Mima","Mira","Orovida","Poncella","Preciosa","Reina","Tita","Ventura","Yerussa"],
+		neutralNames: ["Gentile","Mazal"],
+		surnames: ["Ashkenazi","Abolofia","Abrevaya","Absaradel","Abulafia","Acher","Alalouf","Alazraki","Alcana","Alderoqui","Alfici","Algazi","Alhadeff","Alkana","Alvo","Amato","Angel","Anreader","Ardity","Arkless","Arnow","Arougheti","Avdalovo","Avzaradel","Azvaradel","Babani","Baigun","Balbach","Barbaimon","Bardavid","Barki","Barokas","Baron","Behar","Bejar","Benatar","Bendjuya","Benezra","Benhabib","Benoun","Benveniste","Benyacar","Berro","Bienn","Binoun","Beton","Buchuk","Cadranel","Cadrone","Calderon","Calvo","Camhi","Capelluto","Capeloto","Capelouto","Capeluto","Capilouto","Capuano","Caston","Cazes","Chalme","Chara","Chertkow","Codron","Coen","Cohen","Cordoba/Cordova","Crain","Curiel","Danon","Elias","Elkana","Eryol","Eskenazi","Esperanza","Fainstein","Farji","Fils","Franco","Galamidi","Galante/Galanti","Gateno","Genni","Girard","Glazer","Gluckman","Goldberg","Goldstein","Greenspan","Grife","Gross","Grossman","Guini","Habib","Hahn","Haki/Haky","Halfon","Hanan","Hart","Hasson","Hazan","Huerin","Huniu/Hunio","Israel","Jason","Jassen","Kaplan","Katz","Lanchano","Levi","Levin","Levy","Louza","Mainardis","Mandel","Marincik","Matorin","Maya","Mayesh","Meir","Menache","Mezistrano","Michaud","Mintzer","Miron","Mizrahi","Mosafir","Moscatel","Moscona","Munter","Musafir","Nahmias","Negrin","Nof","Notrica","Palombo","Peha","Piha","Pizante","Policar","Posner","Rackner","Ramsey","Rava","Russo","Salfati","Salmoni","Saul","Scapa","Shapiro","Shemaria","Solam","Soriano","Sourmany","Stern","Surmani","Tarica","Tastassa","Varon","Ventura","Yaffe","Yaras","Yohai","Zlotorynski"],
+		assignedRace: dataRaces.middleEastern,
+		majorityFaith: "orthodoxJudaism",
+		},
+	
+	mizrahim: {
+		name: "Mizrahic Jew",
+		masculineNames: ["Ibrahim","Haroun","Daoud","Moussa","Salman","Latif","Mansour","Ghareeb","Maimun","Said","Hassan","Hayek","Naggar","Sabban","Sannoua","Shenhav","Taeizi","Chorath"],
+		feminineNames: ["Sara","Anat","Abigail","Beulah","Hina","Nihla","Astir","Laya","Maryam","Yahuda"],
+		neutralNames: [],
+		surnames: ["Al-Abrach","Abramchik","Abramtzik","Abocassis","Aborjil","Abotbol","Abramidou","Abu","Agmy","Ajami","Alpron","Amroon","Anijar","Atiya","Avitan","Avramidou","Banay","Barany","Barzani","Ben-abu","Bengio","Biton","Chriqui","Elharar","Fahima","Gozlan","Habibi","Hadad","Hagababa","Harush","Haziz","Hrusch","Hruschov","Russov","Hysh","Jamil","Kashny","Khalili","Khardun","Hardoon","Maimon","Maklof","Mofaz","Mograbi","Nazarian","Naqqash","Sabag","Sassoon","Shamy","Sharabani","Sheriki","Shirazy","Soliman","Soomekh","Yarkoni","Zangi","Zeitouni"],
+		assignedRace: dataRaces.middleEastern,
+		majorityFaith: "reformJudaism",
 		},
 	
 	};
@@ -270,6 +474,15 @@ var dataFaiths = {
 			name: "Christian",
 			issues: [dataIssues.patriarchy,dataIssues.homophobia],
 			congregation: ["Methodist Church"],
+		},
+
+	nondenominationalChristian: {
+			key: "nondenominationalChristian",
+			denomination: "Non Denominational Christian",
+			sect: "Protestant",
+			name: "Christian",
+			issues: [dataIssues.patriarchy,dataIssues.homophobia],
+			congregation: ["Christian Church"],
 		},
 	
 	unitedChurchChrist: {
@@ -470,6 +683,15 @@ var dataBackstories = {
 		updateDemo: [],
 		},
 
+	orphan: {
+		name: "Orphaned",
+		values: ["care","fairness"],
+		issues: [dataIssues.economicEquity],
+		resources: [],
+		resourceLosses: ["money","money","network","status"],
+		updateDemo: [],
+		},
+
 	religiousUpbringing: {
 		name: "Religious Upbringing",
 		values: ["purity","loyalty","authority"],
@@ -536,7 +758,7 @@ var dataBackstories = {
 	foreignBorn: {
 		name: "Foreign Born",
 		values: [],
-		issues: [dataIssues.immigration],
+		issues: [dataIssues.immigrationReform],
 		resources: ["immigrant"],
 		resourceLosses: ["network"],
 		updateDemo: [],
@@ -844,6 +1066,7 @@ var dataBackstories = {
 var backstoriesFamily = [
 		dataBackstories.singleMom,
 		dataBackstories.singleDad,
+		dataBackstories.orphan,
 		dataBackstories.religiousUpbringing,
 		dataBackstories.nonChristianReligion,
 		dataBackstories.liberalReligion,
@@ -1051,7 +1274,7 @@ var dataNeighborhoodNames = {
 	};
 
 var dataInstitutionNames = {
-	commerce: {
+	commercial: {
 		first: [
 			"Speedy",
 			"Quality",
@@ -1077,7 +1300,7 @@ var dataInstitutionNames = {
 			"Planet"
 			],
 	},
-	industry: {
+	industrial: {
 		first: [
 			"Speedy",
 			"Quality",

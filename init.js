@@ -5,7 +5,7 @@ console.log(community);
 var downtown = new Neighborhood();
 downtown.name = "Downtown";
 
-for (qwe=0;qwe<10;qwe++) {
+for (qwe=0;qwe<11;qwe++) {
 	new Neighborhood();
 	}
 

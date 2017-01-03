@@ -1,52 +1,40 @@
 ALINSKY TO DO LIST
 
-Bury backstories in Person() object to allow for known/unknown toggle and details
-
-Display faith/sect/religion on congregations
-
-Client capacity for all institutions
-	- for congregations, that's total membership
-	- for greenspace, it's how many folks can use it
-
-Employee cap for institutions to prevent overflow
-	- figure way to get good number for employee cap
-
-Amend paygrade to unskilled / skilled / management / executive
-
-Person.findHousing() needs to take money into account
-	also needs to take capacity into account
-
-Person.findJob() needs to take money/education/network into account
-	also needs to take payroll cap into account
-	split payroll cap into categories to fit paygrades
-	
-Debt (instead of loss of money)
-	displayContact displays debt
-
-
-
-	
-	
-	
-	
-	
-	
-
 Split up Institutions list on displayNeighborhood() into zoning categories
-
-Network in Church: create weak coupling of ethnicity and faith so Jews tend to be Jews
 
 Add ethnicities: Jews, Arabs, various Asians, etc
 Add races: Asian, First Nations, Middle Eastern, Latinx
+
+Fixed neighborhood racial demographics so that they sync with community-wide racial demographics.  This should also create more neighborhoods dominated by single races (without blowing the community-wide totals).
+
+
+
+
+
+Finish populating names for ethnicities!
+Add asian ethnicities besides indonesian
+
+Fix findJob() to take institution argument but not level argument.
+
+Generate people with multiple ethnicities / heritages
+
+Network in Church: create weak coupling of ethnicity and faith so Jews tend to be Jews
+
+Alphabetize sidebar
+	add maximum height and scrollbar
+
 Flesh out institution names
 
 "New Game" customization screen
-Smarter Community/Neighborhood build to create ghettos
+	some preselects ("Southern California","New England","South","Rural","Urban",etc)
+	total community population (currently stuck at 100)
 
 Actual list of industries for institutions (retail being an industry)
 
 Family connections
+
 Unions (in institutions and memberships on people)
+	- key into industry categories
 
 Gender, marriage, and orientation requirements for employment
 	- clergy for an institutionalized explicit example

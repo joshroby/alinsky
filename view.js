@@ -200,31 +200,71 @@ var view = {
 		var neighborhoodMoneyCell = document.getElementById('neighborhoodMoneyCell');
 		var neighborhoodZoningCell = document.getElementById('neighborhoodZoningCell');
 		var neighborhoodRacesCell = document.getElementById('neighborhoodRacesCell');
-		var neighborhoodInstitutionsList = document.getElementById('neighborhoodInstitutionsList');
+		var neighborhoodResidentialSpan = document.getElementById('neighborhoodResidentialSpan');
+		var neighborhoodCommercialSpan = document.getElementById('neighborhoodCommercialSpan');
+		var neighborhoodIndustrialSpan = document.getElementById('neighborhoodIndustrialSpan');
+		var neighborhoodMunicipalSpan = document.getElementById('neighborhoodMunicipalSpan');
+		var neighborhoodResidentialList = document.getElementById('neighborhoodResidentialList');
+		var neighborhoodCommercialList = document.getElementById('neighborhoodCommercialList');
+		var neighborhoodIndustrialList = document.getElementById('neighborhoodIndustrialList');
+		var neighborhoodMunicipalList = document.getElementById('neighborhoodMunicipalList');
 		
 		neighborhoodName.innerHTML = neighborhood.name;
 		neighborhoodStatusCell.innerHTML = neighborhood.demographics.status;
 		neighborhoodMoneyCell.innerHTML = neighborhood.demographics.money;
 		
-		var zoning = '';
-		for (i in neighborhood.zoning) {
-			zoning += Math.round(neighborhood.zoning[i]*100) + "% " + i + "<br />";
-			}
+		neighborhoodResidentialSpan.innerHTML = Math.round(neighborhood.zoning.residential*100) + "%";
+		neighborhoodCommercialSpan.innerHTML = Math.round(neighborhood.zoning.commercial*100) + "%";
+		neighborhoodIndustrialSpan.innerHTML = Math.round(neighborhood.zoning.industrial*100) + "%";
+		neighborhoodMunicipalSpan.innerHTML = Math.round(neighborhood.zoning.municipal*100) + "%";
 
 		
-		var races = '';
+		var neighborhoodResidentsByRace = {};
+		var neighborhoodsTotal;
+		var share;
 		for (i in neighborhood.demographics.race) {
-			races += Math.round(neighborhood.demographics.race[i]*100) + "% " + i + "<br />";
+			neighborhoodsTotal = 0;
+			for (n in neighborhoods) {
+				neighborhoodsTotal += neighborhoods[n].demographics.race[i]; 
+			}
+			share = neighborhood.demographics.race[i]/neighborhoodsTotal;
+			share = Math.round(share * community.demographics.race[i] * community.population);
+			neighborhoodResidentsByRace[i] = share;
+			}
+		var races = Object.keys(neighborhoodResidentsByRace);
+		var neighborhoodPopulation = 0;
+		for (i in neighborhoodResidentsByRace) {
+			neighborhoodPopulation += neighborhoodResidentsByRace[i];
+		}
+		for (i in neighborhoodResidentsByRace) {
+			neighborhoodResidentsByRace[i] = neighborhoodResidentsByRace[i] / neighborhoodPopulation;
+		}
+		races.sort(function(a,b) {return (neighborhoodResidentsByRace[a] > neighborhoodResidentsByRace[b]) ? -1 : ((neighborhoodResidentsByRace[b] > neighborhoodResidentsByRace[a]) ? 1 : 0);} );
+		var raceDemographicsList = '';
+		for (i in races) {
+			raceDemographicsList += "<li>" + Math.round(neighborhoodResidentsByRace[races[i]]*100) + "% " + dataRaces[races[i]].name + "</li>";
+		}
+					
+		neighborhoodRacesCell.innerHTML = "<ul>"+raceDemographicsList+"</ul>";
+			
+		neighborhoodResidentialList.innerHTML = '';
+		neighborhoodCommercialList.innerHTML = '';
+		neighborhoodIndustrialList.innerHTML = '';
+		neighborhoodMunicipalList.innerHTML = '';
+		for (i in neighborhood.institutions) {
+			var newInstitution = document.createElement('li');
+			newInstitution.innerHTML = "<a onclick='handlers.displayInstitution("+i+")'>"+neighborhood.institutions[i].name + "</a>";
+			if (neighborhood.institutions[i].type === "residential") {
+				neighborhoodResidentialList.appendChild(newInstitution);
+			} else if (neighborhood.institutions[i].type === "commercial") {
+				neighborhoodCommercialList.appendChild(newInstitution);
+			} else if (neighborhood.institutions[i].type === "industrial") {
+				neighborhoodIndustrialList.appendChild(newInstitution);
+			} else {
+				neighborhoodMunicipalList.appendChild(newInstitution);
+			}
 			}
 			
-		var institutions = '';
-		for (i in neighborhood.institutions) {
-			institutions += "<a onclick='handlers.displayInstitution("+i+")'>"+neighborhood.institutions[i].name + "</a>, ";
-			}
-					
-		neighborhoodZoningCell.innerHTML = zoning;
-		neighborhoodRacesCell.innerHTML = races;
-		neighborhoodInstitutionsList.innerHTML = institutions;
 		
 		// And then clear and un-display the Institutions Pane
 		var mapInstitutionPane = document.getElementById('mapInstitutionPane');
