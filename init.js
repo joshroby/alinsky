@@ -13,9 +13,10 @@ var player = new Person();
 
 var playerOrganization = new Institution(undefined,"greenspace");
 playerOrganization.name = "Organize Now!";
-playerOrganization.paygrade = {entry:0,management:0,executive:0};
+playerOrganization.paygrade = {unskiled:0,skilled:0,management:0,executive:0};
+playerOrganization.payroll = 1;
 playerOrganization.neighborhood = player.neighborhood;
-player.findJob(playerOrganization,"director");
+player.findJob(playerOrganization,"executive");
 
 var playerDayJob = new Institution();
 player.findJob(playerDayJob);

@@ -4,9 +4,9 @@ var neighborhoods = [];
 var institutions = [];
 var housing = [];
 
-var churchesByFaith = {};
-var churchesBySect = {};
-var churchesByReligion = {};
+var congregationsByFaith = {};
+var congregationsBySect = {};
+var congregationsByReligion = {};
 
 function Community() {
 	
@@ -150,7 +150,7 @@ function Person(neighborhood) {
 		purity: 1 + Math.random() * 3 << 0,
 		ambition: 1 + Math.random() * 3 << 0,
 		};
-	var resources = {status:1,money:1,education:1,network:0,child:0,devotion:0,closet:0};
+	var resources = {status:1,money:1,debt:0,education:1,network:0,child:0,devotion:0,closet:0,tourOfDuty:0};
 	
 	var faith = dataFaiths[ethnicity.majorityFaith];
 	
@@ -166,39 +166,39 @@ function Person(neighborhood) {
 	
 	backstoriesPickList = backstoriesFamily;
 	for (i = 0; i < 3; i++) {
-		backstories.push(backstoriesPickList[backstoriesPickList.length * Math.random() << 0]);
+		backstories.push({type:backstoriesPickList[backstoriesPickList.length * Math.random() << 0],known:0,details:[Math.random(),Math.random(),Math.random()]});
 		}
 		
 	for (i = 0; i < 2; i++) {
 		backstoriesPickList = backstoriesYouth;
 		if (orientation === "Queer" && resources.closet === 0) {backstoriesPickList=backstoriesPickList.concat(backstoriesQueer)};
 		if (genderIdentity.name !== genderPublic.name) {backstoriesPickList=backstoriesPickList.concat(backstoriesTrans)};
-		backstories.push(backstoriesPickList[backstoriesPickList.length * Math.random() << 0]);
-		if (backstories[backstories.length-1].resourceLosses[0] === "closet") {resources.closet--};
-		if (backstories[backstories.length-1].updateDemo[0] === "gender") {genderPublic = genderIdentity};
+		backstories.push({type:backstoriesPickList[backstoriesPickList.length * Math.random() << 0],known:0,details:[Math.random(),Math.random(),Math.random()]});
+		if (backstories[backstories.length-1].type.resourceLosses[0] === "closet") {resources.closet--};
+		if (backstories[backstories.length-1].type.updateDemo[0] === "gender") {genderPublic = genderIdentity};
 		}
 
 	// Processing Youth+Family Backstory Blocks' Effects Here
 	for (i in backstories) {
-		for (n in backstories[i].values) {
-			values[backstories[i].values[n]]++;
+		for (n in backstories[i].type.values) {
+			values[backstories[i].type.values[n]]++;
 			}
-		for (n in backstories[i].resources) {
-			resources[backstories[i].resources[n]]++;
+		for (n in backstories[i].type.resources) {
+			resources[backstories[i].type.resources[n]]++;
 			}
-		for (n in backstories[i].resourceLosses) {
-			resources[backstories[i].resourceLosses[n]]--;
+		for (n in backstories[i].type.resourceLosses) {
+			resources[backstories[i].type.resourceLosses[n]]--;
 			}
 		for (n in backstories[i].issues) {
-			if (issues.indexOf(backstories[i].issues[n]) == -1) {
-				issues.push(backstories[i].issues[n]);
+			if (issues.indexOf(backstories[i].type.issues[n]) == -1) {
+				issues.push(backstories[i].type.issues[n]);
 				}
 			}
 		if (backstories[i].updateDemo !== undefined) {
-			var type = backstories[i].updateDemo[0];
-			var list = backstories[i].updateDemo[1];
+			var type = backstories[i].type.updateDemo[0];
+			var list = backstories[i].type.updateDemo[1];
 			if (type === "faith") {
-				var newFaith = list[list.length * Math.random() << 0];
+				var newFaith = list[list.length * backstories[i].details[0] << 0];
 				faith = newFaith;
 			} else if (type === "gender") {
 				genderPublic = genderIdentity;
@@ -227,7 +227,7 @@ function Person(neighborhood) {
 			backstoriesPickList = backstoriesPickList.concat(backstoriesMatureChild);
 		}
 		newBackstory = backstoriesPickList[backstoriesPickList.length * Math.random() << 0];
-		backstories.push(newBackstory);
+		backstories.push({type:newBackstory,known:0,details:[Math.random(),Math.random(),Math.random()]});
 		
 		for (n in newBackstory.values) {
 			values[newBackstory.values[n]]++;
@@ -295,25 +295,63 @@ function Person(neighborhood) {
 	
 	// findJob() pays no attention to money, status, or education, and it should
 	this.findJob = function(institution,level) {
-		if (institution == undefined && Math.random() < 0.8) {
-			var institution = institutions[1+ (institutions.length-1) * Math.random() << 0];
-		} else if (institution == undefined) {
-			institution = new Institution();
+		if (institution == undefined && level == undefined) {
+			var jobSearchPower = (1+Math.max(0,this.resources.status))*(1+Math.max(0,this.resources.education))*(1+Math.max(0,this.resources.network));
+			var openings = [];
+			for (i in institutions) {
+				for (l in {unskilled:"unskilled",skilled:"skilled",management:"management",executive:"executive"})
+					if (institutions[i].employees[l].length < institutions[i].payroll[l] && institutions[i].paygrade[l] < jobSearchPower) {
+						openings.push([institutions[i],l]);
+						}
+			}
+			var opening = openings[openings.length * Math.random() << 0];
+			if (opening !== undefined) {
+				institution = opening[0];
+				level = opening[1];
+			} else {
+				institution = new Institution();
+				if (institution.paygrade.unskilled > jobSearchPower) {
+					institution = undefined;
+					level = undefined;
+				} else if (institution.paygrade.skilled > jobSearchPower) {
+					level = "unskilled";
+				} else if (institution.paygrade.management > jobSearchPower) {
+					level = "management";
+				} else {
+					level = "executive";
+				}
+			}
+		} else if (level == undefined) {	
+			console.log("ONLY level undefined; set level");
+			level = "unskilled";
 		};
-		if (level == undefined) {	
-			var level = ["volunteer","entry","management","executive"][4 * Math.random() << 0];
-		};
-		this.connections.push([institution,"works at",level]);
-		institution.employees.push([this,level]);
+		if (institution !== undefined) {
+			this.connections.push([institution,"works at",level]);
+			institution.employees[level].push(this);
+			console.log(this.name.first + " " + this.name.last + "'s jobSeachPower of " + jobSearchPower + " pulled down a " + institution.paygrade[level] + " " + level + " job at " + institution.name);
+		} else {
+			console.log(this.name.first + " " + this.name.last + "'s jobSeachPower of " + jobSearchPower + " cannot find a job and is unemployed!");
+		}
 	};
 
 	// findHousing() pays no attention to money or status, and it should
 	this.findHousing = function(institution,level) {
-		if (institution == undefined && Math.random() < 0.8) {
-			institution = housing[housing.length * Math.random() << 0];
-		} else if (institution == undefined) {
-			institution = new Institution(undefined,"residential");
-		};
+		if (institution == undefined) {
+			var vacancies = [];
+			for (i in housing) {
+				if (housing[i].capacity > housing[i].clients.length && housing[i].rent < this.resources.money) {
+					vacancies.push(housing[i])
+				}
+			}
+			
+			if (vacancies.length === 0) {
+				institution = new Institution(undefined,"residential");
+				institution.rent = this.resources.money;
+				institution.status = Math.ceil(institution.status / 2 )
+			} else {
+				institution = vacancies[vacancies.length * Math.random() << 0];
+			}
+		}
 		if (level == undefined) {	
 			var level = ["squatter","renter","lessee","homeowner"][4 * Math.random() << 0];
 		}
@@ -322,25 +360,29 @@ function Person(neighborhood) {
 	};
 	
 	this.findChurch = function(church,level) {
-		if (church == undefined) {
-			if (churchesByFaith[this.faith.key] !== undefined && Math.random() > 0.1) {
-				var churches = churchesByFaith[this.faith.key];
+		if (church == undefined && this.faith.denomination !== "Athiest") {
+			if (congregationsByFaith[this.faith.key] !== undefined && Math.random() > 0.1) {
+				var churches = congregationsByFaith[this.faith.key];
 				church = churches[churches.length * Math.random() << 0];
-			} else if (churchesBySect[this.faith.sect] !== undefined && Math.random() > 0.3) {
-				var churches = churchesBySect[this.faith.sect];
+			} else if (congregationsBySect[this.faith.sect] !== undefined && Math.random() > 0.3) {
+				var churches = congregationsBySect[this.faith.sect];
 				church = churches[churches.length * Math.random() << 0];
-			} else if (churchesByReligion[this.faith.name] !== undefined && Math.random() > 0.5) {
-				var churches = churchesByReligion[this.faith.name];
+			} else if (congregationsByReligion[this.faith.name] !== undefined && Math.random() > 0.5) {
+				var churches = congregationsByReligion[this.faith.name];
 				church = churches[churches.length * Math.random() << 0];
 			} else {
 				church = new Institution(undefined,"religious",this.faith);
 			}
+		} else if (this.faith.denomination == "Athiest") {
+			church = undefined;
 		};
 		if (level == undefined) {	
 			var level = ["friend","member","volunteer","officer"][Math.min(3,Math.max(0,this.resources.devotion))];
 		}
-		this.connections.push([church,"attends",level]);
-		church.clients.push([this,level]);
+		if (church !== undefined) {
+			this.connections.push([church,"attends",level]);
+			church.clients.push([this,level]);
+		}
 	};
 	
 	// Sticking stuff on the actual object for later reference now
@@ -447,9 +489,10 @@ function Institution(neighborhood,type,faith) {
 		var firstName = dataInstitutionNames[type].first[dataInstitutionNames[type].first.length * Math.random() << 0];
 		var productName = dataInstitutionNames[type].product[dataInstitutionNames[type].product.length * Math.random() << 0];
 		var lastName = dataInstitutionNames[type].last[dataInstitutionNames[type].last.length * Math.random() << 0];
+		if (Math.random() < 0.3) {firstName = neighborhood.name};
 		var name = firstName + " " + productName + " " + lastName;
 	} else {
-		var name = ["","First "][2 * Math.random() << 0] + faith.congregation[faith.congregation.length * Math.random() << 0 ] + [" of "," at "," in "," of "][4 * Math.random() << 0] + neighborhood.name;
+		var name = ["","First ","The "][3 * Math.random() << 0] + faith.congregation[faith.congregation.length * Math.random() << 0 ] + [" of "," at "," in "," of "][4 * Math.random() << 0] + neighborhood.name;
 		this.faith = faith;
 	}
 
@@ -458,13 +501,32 @@ function Institution(neighborhood,type,faith) {
 	var rent = Math.random() * 3 << 0;
 	rent += neighborhood.demographics.money - 1;
 	
+	var capacity = 1 + Math.random() * 6 << 0;
+	capacity *= Math.max(1,rent);
+	if (type === "religious") {capacity *= 20};
+	
+	if (type === "religious" || type === "greenspace") {
+			var payroll = capacity / 50;
+		} else {
+			var payroll = 2 ^ Math.random() * 10 << 0;
+			payroll *= Math.max(1,rent);
+		}
+	
+	var unskilledCap = Math.ceil(payroll * 0.3);
+	var skilledCap = Math.ceil(payroll * 0.3);
+	var managementCap = Math.ceil(payroll * 0.2);
+	var executiveCap = Math.ceil(payroll * 0.1);
+	
 	// Paygrade
-	var entry = Math.random() * 10 << 0;
-	var management = entry + 1 + Math.random() * 10 << 0;
-	var executive = management + 1 + Math.random() * 10 << 0;
+	var unskilled = 5 + Math.random() * 5 << 0;
+	var skilled = Math.round(unskilled * (1 + Math.random()));
+	var management = Math.round(skilled * (1 + Math.random()));
+	var executive = Math.round(management * (1 + Math.random()));
 	
 	var typicalClientele = "Placeholder";
 	var typicalEmployees = "Placeholder";
+	
+	if (type === "religious") {typicalClientele = faith.denomination + 's'};
 	
 	var activeUnions = [];
 
@@ -472,11 +534,13 @@ function Institution(neighborhood,type,faith) {
 	this.type = type;
 	this.status = status;
 	this.rent = rent;
-	this.paygrade = {entry:entry,management:management,executive:executive};
+	this.capacity = capacity;
+	this.payroll = {unskilled:unskilledCap,skilled:skilledCap,management:managementCap,executive:executiveCap};
+	this.paygrade = {unskilled:unskilled,skilled:skilled,management:management,executive:executive};
 	this.typicalClientele = typicalClientele;
 	this.typicalEmployees = typicalEmployees;
 	
-	this.employees = [];
+	this.employees = {unskilled:[],skilled:[],management:[],executive:[]};
 	this.clients = [];
 	
 	this.organizations = {};
@@ -491,21 +555,23 @@ function Institution(neighborhood,type,faith) {
 	if (type === "residential") {
 		housing.push(this);
 	} else if (type === "religious") {
-		if (churchesByFaith[faith.key] == undefined) {
-			churchesByFaith[faith.key] = [this];
+		if (congregationsByFaith[faith.key] == undefined) {
+			congregationsByFaith[faith.key] = [this];
 		} else {
-			churchesByFaith[faith.key].push(this);
+			congregationsByFaith[faith.key].push(this);
 		}
-		if (churchesBySect[faith.sect] == undefined) {
-			churchesBySect[faith.sect] = [this];
+		if (congregationsBySect[faith.sect] == undefined) {
+			congregationsBySect[faith.sect] = [this];
 		} else {
-			churchesBySect[faith.sect].push(this);
+			congregationsBySect[faith.sect].push(this);
 		}
-		if (churchesByReligion[faith.name] == undefined) {
-			churchesByReligion[faith.name] = [this];
+		if (congregationsByReligion[faith.name] == undefined) {
+			congregationsByReligion[faith.name] = [this];
 		} else {
-			churchesByReligion[faith.name].push(this);
+			congregationsByReligion[faith.name].push(this);
 		}
 	}
+	
+	view.refreshMap();
 
 };

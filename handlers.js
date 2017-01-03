@@ -72,7 +72,7 @@ var handlers = {
 	},
 	
 	jumpToEmployee: function(index) {
-		var contact = view.focus.institution.employees[index][0];
+		var contact = view.focus.institution.employees.all[index];
 		view.displayContact(contact);
 		handlers.sidebarPaneExpand("contact");
 	},

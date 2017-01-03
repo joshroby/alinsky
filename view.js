@@ -43,6 +43,7 @@ var view = {
 		for (n in neighborhoodsList) {
 			mapItem = document.createElement('li');
 			mapItem.innerHTML = "<a onclick='handlers.displayNeighborhood(" + neighborhoodsList[n][0] + ")'>" + neighborhoodsList[n][1].name + "</a>";
+			if (neighborhoodsList[n][1].institutions.length > 0) {mapItem.innerHTML += " (" +neighborhoodsList[n][1].institutions.length+ ")"}
 			mapList.appendChild(mapItem);
 			}
 	},
@@ -84,13 +85,6 @@ var view = {
 			}
 		
 		var faith = contact.faith.denomination;
-		if (contact.resources.devotion > 2) {
-				faith += " (devout)"
-			} else if (contact.resources.devotion > 0) {
-				faith += " (nominally)"
-			} else {
-				faith += " (non-practicing)"
-			}
 		
 		var contactName = document.getElementById('contactName');
 		var contactAge = document.getElementById('contactAge');
@@ -113,7 +107,7 @@ var view = {
 		var connections = contact.connections;
 		for (i in connections) {
 			connectionItem = document.createElement('li');
-			connectionItem.innerHTML = "<a onclick='handlers.jumpToInstitution("+i+")'>" + connections[i][1] + " " + connections[i][0].name + " (" + connections[i][2] + ")</a>";
+			connectionItem.innerHTML = connections[i][1] + " " + "<a onclick='handlers.jumpToInstitution("+i+")'>" + connections[i][0].name + "</a> (" + connections[i][2] + ")";
 			contactConnections.appendChild(connectionItem);
 			};
 		
@@ -123,7 +117,8 @@ var view = {
 		var contactEducation = document.getElementById('contactEducation');
 		
 		contactStatus.innerHTML = descStatus[Math.max(0,contact.resources.status)] + " (" + contact.resources.status + ")";
-		contactMoney.innerHTML = descMoney[Math.max(0,contact.resources.money)] + " (" + contact.resources.money + ")";
+		contactMoney.innerHTML = descMoney[Math.max(0,contact.resources.money)] + " (" + Math.max(0,contact.resources.money) + ")";
+		if (contact.resources.debt > 0) {contactMoney.innerHTML += " (" + contact.resources.debt + " debt)"};
 		contactNetwork.innerHTML = descNetwork[Math.max(0,contact.resources.network)] + " (" + contact.resources.network + ")";
 		contactEducation.innerHTML = descEducation[Math.max(0,contact.resources.education)] + " (" + contact.resources.education + ")";
 
@@ -133,7 +128,7 @@ var view = {
 		var backstories = [];
 		for (n in contact.backstories) {
 			backstoryItem = document.createElement('li');
-			backstoryItem.innerHTML = contact.backstories[n].name;
+			backstoryItem.innerHTML = contact.backstories[n].type.name;
 			contactBackstory.appendChild(backstoryItem);
 			}
 		
@@ -259,6 +254,7 @@ var view = {
 		var institutionPaygradeCell = document.getElementById('institutionPaygradeCell');
 		var institutionTypicalClientsCell = document.getElementById('institutionTypicalClientsCell');
 		var institutionTypicalEmployeesCell = document.getElementById('institutionTypicalEmployeesCell');
+		var institutionCapacityCell = document.getElementById('institutionCapacityCell');
 		var institutionUnionsCell = document.getElementById('institutionUnionsCell');
 		var institutionClientsList = document.getElementById('institutionClientsList');
 		var institutionEmployeesList = document.getElementById('institutionEmployeesList');
@@ -267,22 +263,24 @@ var view = {
 		
 		institutionName.innerHTML = institution.name;
 		institutionStatusCell.innerHTML = institution.status;
-		institutionPaygradeCell.innerHTML = institution.paygrade.entry + " / " + institution.paygrade.management + " / " + institution.paygrade.executive;
+		institutionPaygradeCell.innerHTML = institution.paygrade.unskilled + " / " + institution.paygrade.skilled + " / " + institution.paygrade.management + " / " + institution.paygrade.executive;
 		institutionTypicalClientsCell.innerHTML = institution.typicalClientele;
 		institutionTypicalEmployeesCell.innerHTML = institution.typicalEmployees;
+		institutionCapacityCell.innerHTML = institution.capacity;
 		institutionUnionsCell.innerHTML = 'TK';
 		
 		if (institution.type === "religious") {
-			institutionClientsHead.innerHTML = "Known Congregants";
-			institutionEmployeesHead.innerHTML = "Known Staff";
+			institutionClientsHead.innerHTML = "Congregants";
+			institutionEmployeesHead.innerHTML = "Staff";
 		} else if (institution.type === "residential") {
-			institutionClientsHead.innerHTML = "Known Residents";
-			institutionEmployeesHead.innerHTML = "Known Employees";
+			institutionClientsHead.innerHTML = "Residents";
+			institutionEmployeesHead.innerHTML = "Employees";
 		} else {
-			institutionClientsHead.innerHTML = "Known Clients";
-			institutionEmployeesHead.innerHTML = "Known Employees";
+			institutionClientsHead.innerHTML = "";
+			institutionEmployeesHead.innerHTML = "Employees";
 		}
 		
+		var unknown = 0;
 		institutionClientsList.innerHTML = "";
 		var clients = institution.clients;
 		for (i in clients) {
@@ -290,14 +288,51 @@ var view = {
 			clientItem.innerHTML = "<a onclick='handlers.jumpToClient("+i+")'>" + clients[i][0].name.first + " " + clients[i][0].name.last + " (" + clients[i][1] + ")</a>";
 			institutionClientsList.appendChild(clientItem);
 			};
+		if (institution.type === "religious" || institution.type === "residential") {
+			var unknownClients = document.createElement('li');
+			unknown = institution.capacity - institution.clients.length;
+			if (institution.clients.length === 0) {
+				unknownClients.innerHTML = unknown + " unknown people";
+			} else {
+				unknownClients.innerHTML = "...and " + unknown + " more";
+			}
+			institutionClientsList.appendChild(unknownClients);
+		}
 		
 		institutionEmployeesList.innerHTML = "";
-		var employees = institution.employees;
+		var employees = institution.employees.executive.concat(institution.employees.management.concat(institution.employees.skilled.concat(institution.employees.unskilled.concat())));
+		institution.employees.all = employees;
+		var levels = [];
+		for (i in institution.employees.executive) {
+			levels.push("executive");
+		}
+		for (i in institution.employees.management) {
+			levels.push("management");
+		}
+		for (i in institution.employees.skilled) {
+			levels.push("skilled");
+		}
+		for (i in institution.employees.unskilled) {
+			levels.push("unskilled");
+		}
+		
 		for (i in employees) {
 			employeeItem = document.createElement('li');
-			employeeItem.innerHTML = "<a onclick='handlers.jumpToEmployee("+i+")'>" + employees[i][0].name.first + " " + employees[i][0].name.last + " (" + employees[i][1] + ")</a>";
+			employeeItem.innerHTML = "<a onclick='handlers.jumpToEmployee("+i+")'>" + employees[i].name.first + " " + employees[i].name.last + " ("+levels[i]+")</a>";
 			institutionEmployeesList.appendChild(employeeItem);
 			};
+		
+		unknown = institution.payroll.skilled + institution.payroll.unskilled + institution.payroll.management + institution.payroll.executive - (institution.employees.unskilled.length + institution.employees.skilled.length + institution.employees.management.length + institution.employees.executive.length);
+			if (employees.length === 0) {
+				var unknownEmployees = document.createElement('li');
+				unknownEmployees.innerHTML = unknown + " unknown people";
+				institutionEmployeesList.appendChild(unknownEmployees);
+			} else if (unknown == 0) {
+			} else {
+				var unknownEmployees = document.createElement('li');
+				unknownEmployees.innerHTML = "...and " + unknown + " more";
+				institutionEmployeesList.appendChild(unknownEmployees);
+			}
 		
 		mapInstitutionPane.style.display = 'block';
 		view.focus.institution = institution;

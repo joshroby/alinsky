@@ -1,0 +1,73 @@
+ALINSKY TO DO LIST
+
+Bury backstories in Person() object to allow for known/unknown toggle and details
+
+Display faith/sect/religion on congregations
+
+Client capacity for all institutions
+	- for congregations, that's total membership
+	- for greenspace, it's how many folks can use it
+
+Employee cap for institutions to prevent overflow
+	- figure way to get good number for employee cap
+
+Amend paygrade to unskilled / skilled / management / executive
+
+Person.findHousing() needs to take money into account
+	also needs to take capacity into account
+
+Person.findJob() needs to take money/education/network into account
+	also needs to take payroll cap into account
+	split payroll cap into categories to fit paygrades
+	
+Debt (instead of loss of money)
+	displayContact displays debt
+
+
+
+	
+	
+	
+	
+	
+	
+
+Split up Institutions list on displayNeighborhood() into zoning categories
+
+Network in Church: create weak coupling of ethnicity and faith so Jews tend to be Jews
+
+Add ethnicities: Jews, Arabs, various Asians, etc
+Add races: Asian, First Nations, Middle Eastern, Latinx
+Flesh out institution names
+
+"New Game" customization screen
+Smarter Community/Neighborhood build to create ghettos
+
+Actual list of industries for institutions (retail being an industry)
+
+Family connections
+Unions (in institutions and memberships on people)
+
+Gender, marriage, and orientation requirements for employment
+	- clergy for an institutionalized explicit example
+	- everywhere else for the reality of things
+
+Pollution
+Transit Access
+Prisons
+Government
+Healthcare
+Schools (both K-12 and upper ed)
+Media Outlets
+
+Gameplay (taking actions as an organization)
+	- interviewing contacts to reveal backstory blocks
+
+Backstory details
+Toggle known/unknown backstories in displayContact
+
+Fuckin' Save Game
+
+Expansions
+Hatred (violence, theft, extortion, intimidation)
+Franchise/chains (main office plus franchise locations)

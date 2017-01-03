@@ -9,7 +9,7 @@ var dataValues = [
 	];
 
 var descStatus = ["underclass","lower class","lower-middle class","upper-middle class","upper class","celebrity"];
-var descMoney = ["in debt","poor","struggling","comfortable","well-off","wealthy","very wealthy"];
+var descMoney = ["poor","struggling","comfortable","well-off","wealthy","very wealthy"];
 var descEducation = ["illiterate","high school diploma","BA","graduate degree","PhD","multiple PhDs"];
 var descNetwork = ["outcast","weak","small","medium","connected","well-connected","power networker"];
 
@@ -488,6 +488,15 @@ var dataBackstories = {
 		updateDemo: [],
 		},
 
+	militaryBrat: {
+		name: "Military Brat",
+		values: ["authority","loyalty"],
+		issues: [dataIssues.healthcare,dataIssues.homophobia,dataIssues.patriarchy],
+		resources: ["tourOfDuty"],
+		resourceLosses: [],
+		updateDemo: [],
+		},
+
 	privilegedUpbringing: {
 		name: "Raised in Privilege",
 		values: ["liberty","loyalty"],
@@ -546,8 +555,8 @@ var dataBackstories = {
 		name: "Higher Education via Loans",
 		values: ["liberty","ambition","authority"],
 		issues: [],
-		resources: ["education","education","network","status"],
-		resourceLosses: ["money"],
+		resources: ["education","education","network","status","debt","debt"],
+		resourceLosses: [],
 		updateDemo: [],
 		},
 
@@ -555,8 +564,8 @@ var dataBackstories = {
 		name: "Higher Education Drop Out",
 		values: ["liberty","ambition","authority"],
 		issues: [dataIssues.economicEquity,dataIssues.schoolReform],
-		resources: ["education","network"],
-		resourceLosses: ["money"],
+		resources: ["education","network","debt"],
+		resourceLosses: [],
 		updateDemo: [],
 		},
 
@@ -655,7 +664,7 @@ var dataBackstories = {
 		values: ["authority","loyalty"],
 		issues: [dataIssues.localEconomy,dataIssues.laissezFaire],
 		resources: ["money","money","status"],
-		resourceLosses: [],
+		resourceLosses: ["debt"],
 		updateDemo: [],
 		},
 
@@ -668,11 +677,20 @@ var dataBackstories = {
 		updateDemo: [],
 		},
 
+	militaryService: {
+		name: "Military Service",
+		values: ["loyalty","authority"],
+		issues: [dataIssues.patriarchy,dataIssues.homophobia,dataIssues.healthcare],
+		resources: ["network","tourOfDuty"],
+		resourceLosses: [],
+		updateDemo: [],
+		},
+
 	unemployment: {
 		name: "Unemployment",
 		values: ["care","ambition"],
 		issues: [dataIssues.economicEquity],
-		resources: [],
+		resources: ["debt"],
 		resourceLosses: ["money"],
 		updateDemo: [],
 		},
@@ -753,8 +771,17 @@ var dataBackstories = {
 		name: "Medical Hardship",
 		values: ["care","fairness"],
 		issues: [dataIssues.healthcare,dataIssues.economicEquity],
+		resources: ["debt"],
+		resourceLosses: [],
+		updateDemo: [],
+		},
+
+	deathOfChild: {
+		name: "Death of Child",
+		values: ["care","fairness"],
+		issues: [dataIssues.healthcare],
 		resources: [],
-		resourceLosses: ["money"],
+		resourceLosses: ["child"],
 		updateDemo: [],
 		},
 
@@ -771,8 +798,8 @@ var dataBackstories = {
 		name: "Back to School",
 		values: ["fairness","ambition"],
 		issues: [dataIssues.schoolReform,dataIssues.electoralReform],
-		resources: ["education","network"],
-		resourceLosses: ["money"],
+		resources: ["education","network","debt"],
+		resourceLosses: [],
 		updateDemo: [],
 		},
 
@@ -820,6 +847,7 @@ var backstoriesFamily = [
 		dataBackstories.religiousUpbringing,
 		dataBackstories.nonChristianReligion,
 		dataBackstories.liberalReligion,
+		dataBackstories.militaryBrat,
 		dataBackstories.poorUpbringing,
 		dataBackstories.privilegedUpbringing,
 		dataBackstories.disabledFamily,
@@ -888,6 +916,7 @@ var backstoriesMature = [
 		dataBackstories.stableEmployment,
 		dataBackstories.bigPromotion,
 		dataBackstories.homemaker,
+		dataBackstories.militaryService,
 		dataBackstories.unemployment,
 		dataBackstories.homeless,
 		dataBackstories.imprisonment,
@@ -952,6 +981,15 @@ var backstoriesMatureChild = [
 		dataBackstories.parentOfQueer,
 		dataBackstories.parentOfDisabled,
 		dataBackstories.medicalHardship,
+		dataBackstories.deathOfChild,
+	];
+
+var backstoriesMatureTourOfDuty = [
+		dataBackstories.militaryService,
+		dataBackstories.militaryService,
+		dataBackstories.militaryService,
+		dataBackstories.militaryService,
+		dataBackstories.medicalHardship
 	];
 
 
