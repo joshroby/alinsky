@@ -1,11 +1,16 @@
 ALINSKY TO DO LIST
 
-Split up Institutions list on displayNeighborhood() into zoning categories
+alphabetized contacts and neighborhood lists
 
-Add ethnicities: Jews, Arabs, various Asians, etc
-Add races: Asian, First Nations, Middle Eastern, Latinx
+Generate people with multiple ethnicities / heritages
 
-Fixed neighborhood racial demographics so that they sync with community-wide racial demographics.  This should also create more neighborhoods dominated by single races (without blowing the community-wide totals).
+add denonyms to faiths (jews, muslims, christians, etc)
+
+Alphabetize sidebar
+add maximum height and scrollbar
+
+Added personal networks to Person() model and view
+
 
 
 
@@ -14,20 +19,16 @@ Fixed neighborhood racial demographics so that they sync with community-wide rac
 Finish populating names for ethnicities!
 Add asian ethnicities besides indonesian
 
+reduce indent on unordered lists?  Only in Map pane?
+
 Fix findJob() to take institution argument but not level argument.
 
-Generate people with multiple ethnicities / heritages
+Fix findHousing() to take money into account
+	Add roommates to findHousing()
 
 Network in Church: create weak coupling of ethnicity and faith so Jews tend to be Jews
 
-Alphabetize sidebar
-	add maximum height and scrollbar
-
 Flesh out institution names
-
-"New Game" customization screen
-	some preselects ("Southern California","New England","South","Rural","Urban",etc)
-	total community population (currently stuck at 100)
 
 Actual list of industries for institutions (retail being an industry)
 
@@ -40,6 +41,21 @@ Gender, marriage, and orientation requirements for employment
 	- clergy for an institutionalized explicit example
 	- everywhere else for the reality of things
 
+Gameplay (taking actions as an organization)
+	- interviewing contacts to reveal backstory blocks
+
+"New Game" customization screen
+	some preselects ("Southern California","New England","South","Rural","Urban",etc)
+	total community population (currently stuck at 100)
+	some link between race money/status and neighborhood money/status
+	Toggle known/unknown backstories in displayContact
+
+Filter Contacts list for people who player has actually been introduced to (or are public figures?)
+
+Backstory details
+
+Fuckin' Save Game
+
 Pollution
 Transit Access
 Prisons
@@ -47,14 +63,6 @@ Government
 Healthcare
 Schools (both K-12 and upper ed)
 Media Outlets
-
-Gameplay (taking actions as an organization)
-	- interviewing contacts to reveal backstory blocks
-
-Backstory details
-Toggle known/unknown backstories in displayContact
-
-Fuckin' Save Game
 
 Expansions
 Hatred (violence, theft, extortion, intimidation)

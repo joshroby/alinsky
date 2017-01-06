@@ -2,6 +2,8 @@ var view = {
 
 	focus: {
 		neighborhood: '',
+		institution: '',
+		person: '',
 		},
 	
 	refreshContacts: function() {
@@ -13,14 +15,18 @@ var view = {
 		for (n in people) {
 			contacts.push([n,people[n]]);
 			}
+
 		// Change this later to 'known people'
-		// Also need to alphabetize the list
+				
+		contacts.sort(function(a,b) {return (a[1].name.last > b[1].name.last) ? 1 : ((b[1].name.last > a[1].name.last) ? -1 : 0);});
 
 		contactList.innerHTML = "";
 				
 		for (n in contacts) {
 			contactItem = document.createElement('li');
-			contactItem.innerHTML = "<a onclick='handlers.displayContact(" + contacts[n][0] + ")'>" + contacts[n][1].name.first + " " + contacts[n][1].name.middle.charAt(0) + ". " + contacts[n][1].name.last + "</a>";
+			var you = '';
+			if (contacts[n][0] == 0) {you = " (you)"};
+			contactItem.innerHTML = "<a onclick='handlers.displayContact(" + contacts[n][0] + ")'>" + contacts[n][1].name.first + " " + contacts[n][1].name.middle.charAt(0) + ". " + contacts[n][1].name.last + "</a>" + you;
 			contactList.appendChild(contactItem);
 			}
 
@@ -35,8 +41,8 @@ var view = {
 		for (n in neighborhoods) {
 			neighborhoodsList.push([n,neighborhoods[n]]);
 			}
-		// Change this later to 'known people'
-		// Also need to alphabetize the list
+
+		neighborhoodsList.sort(function(a,b) {return (a[1].name > b[1].name) ? 1 : ((b[1].name > a[1].name) ? -1 : 0);});
 
 		mapList.innerHTML = "";
 				
@@ -56,7 +62,18 @@ var view = {
 		var age = contact.age;
 		
 		var race = contact.race.name;
-		var ethnicity = contact.ethnicity.name;
+		
+		if (contact.ethnicity[0].name !== contact.ethnicity[2].name && contact.ethnicity[1].name !== contact.ethnicity[3].name) {
+			var ethnicity = contact.ethnicity[0].name + ", " + contact.ethnicity[1].name + ", " + contact.ethnicity[2].name + ", and " + contact.ethnicity[3].name;
+		} else if (contact.ethnicity[0].name !== contact.ethnicity[2].name && contact.ethnicity[1].name === contact.ethnicity[3].name) {
+			var ethnicity = "Half " + contact.ethnicity[1].name + ", quarter " + contact.ethnicity[0].name + ", quarter " + contact.ethnicity[2].name;
+		} else if (contact.ethnicity[0].name === contact.ethnicity[2].name && contact.ethnicity[1].name !== contact.ethnicity[3].name) {
+			var ethnicity = "Half " + contact.ethnicity[0].name + ", quarter " + contact.ethnicity[1].name + ", quarter " + contact.ethnicity[3].name;
+		} else if (contact.ethnicity[0].name !== contact.ethnicity[1].name) {
+			var ethnicity = contact.ethnicity[0].name + " and " + contact.ethnicity[1].name;
+		} else {
+			var ethnicity = contact.ethnicity[0].name;
+		}
 		
 		if (contact.gender.identity.name === contact.gender.assigned.name) {
 				var gender = "Cisgender " + contact.gender.identity.name;
@@ -106,9 +123,22 @@ var view = {
 		contactConnections.innerHTML = "";
 		var connections = contact.connections;
 		for (i in connections) {
-			connectionItem = document.createElement('li');
+			var connectionItem = document.createElement('li');
 			connectionItem.innerHTML = connections[i][1] + " " + "<a onclick='handlers.jumpToInstitution("+i+")'>" + connections[i][0].name + "</a> (" + connections[i][2] + ")";
 			contactConnections.appendChild(connectionItem);
+			};
+		
+		var contactPersonalNetwork = document.getElementById('contactPersonalNetwork');
+		contactPersonalNetwork.innerHTML = '';
+		var personalNetwork = contact.personalNetwork;
+		for (i in personalNetwork) {
+			var personalNetworkItem = document.createElement('li');
+			if (personalNetwork[i].length === 1) {
+				personalNetworkItem.innerHTML = personalNetwork[i][0] + " <button disabled>Meet</button>";
+			} else {
+				personalNetworkItem.innerHTML = personalNetwork[i][0] + ", <a onclick='handlers.jumpToPerson(" + personalNetwork[i][1] + ")'>" + people[personalNetwork[i][1]].name.first + "</a>";
+				}
+			contactPersonalNetwork.appendChild(personalNetworkItem);
 			};
 		
 		var contactStatus = document.getElementById('contactStatus');
@@ -118,7 +148,7 @@ var view = {
 		
 		contactStatus.innerHTML = descStatus[Math.max(0,contact.resources.status)] + " (" + contact.resources.status + ")";
 		contactMoney.innerHTML = descMoney[Math.max(0,contact.resources.money)] + " (" + Math.max(0,contact.resources.money) + ")";
-		if (contact.resources.debt > 0) {contactMoney.innerHTML += " (" + contact.resources.debt + " debt)"};
+		if (contact.resources.debt > 0) {contactMoney.innerHTML += ", in debt (" + contact.resources.debt + ")"};
 		contactNetwork.innerHTML = descNetwork[Math.max(0,contact.resources.network)] + " (" + contact.resources.network + ")";
 		contactEducation.innerHTML = descEducation[Math.max(0,contact.resources.education)] + " (" + contact.resources.education + ")";
 

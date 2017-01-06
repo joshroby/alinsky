@@ -65,6 +65,12 @@ var handlers = {
 		handlers.sidebarPaneExpand("map");
 	},
 	
+	jumpToPerson: function(index) {
+		var contact = people[index];
+		view.displayContact(contact);
+		handlers.sidebarPaneExpand("contact");
+	},
+	
 	jumpToClient: function(index) {
 		var contact = view.focus.institution.clients[index][0];
 		view.displayContact(contact);

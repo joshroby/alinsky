@@ -27,6 +27,10 @@ player.findHousing(playerHome);
 var playerChurch = new Institution(undefined,"religious",player.faith);
 player.findChurch(playerChurch);
 
+// for (qwe=0;qwe<100;qwe++) {
+// 	handlers.newPerson();
+// 	}
+
 view.refreshMap();
 view.displayContact(player);
 view.displayNeighborhood(downtown);

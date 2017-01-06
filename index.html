@@ -223,8 +223,6 @@
 					<tr>
 						<td class="tableHead">Demographics:</td>
 						<td id="neighborhoodRacesCell" colspan="5">X</td>
-						<td class="tableHead"></td>
-						<td></td>
 					</tr>
 					<tr>
 						<td class="tableHead">Residential (<span id="neighborhoodResidentialSpan">X</span>):</td>
@@ -251,9 +249,9 @@
 				<h3 id="institutionName">Shopping Plaza</h3>
 				<table>
 					<tr>
-						<td class="tableHead">Typical Clientele:</td>
+						<td class="tableHead" width="15%">Typical Clientele:</td>
 						<td id="institutionTypicalClientsCell">White Middle-Class Shoppers</td>
-						<td class="tableHead">Typical Employees:</td>
+						<td class="tableHead" width="15%">Typical Employees:</td>
 						<td id="institutionTypicalEmployeesCell">Black Lower-Class</td>
 					</tr>
 					<tr>
@@ -356,13 +354,24 @@
 				<tr>
 				</tr>
 			</table>
-			<h3>Network Connections</h3>
-			<ul id="contactConnections">
-				<li id="contactJob">Shopping Plaza, entry level</li>
-				<li id="contactChurch">First Manichean, board member</li>
-				<li id="contactUnion">SIEU, member</li>
-				<li>Downtown Shelter, volunteer</li>
-			</ul>
+			<table width="80%">
+				<tr>
+					<td width="50%">
+						<h3>Institutional Network</h3>
+						<ul id="contactConnections">
+							<li id="contactJob">Shopping Plaza, entry level</li>
+							<li id="contactChurch">First Manichean, board member</li>
+							<li id="contactUnion">SIEU, member</li>
+							<li>Downtown Shelter, volunteer</li>
+						</ul>
+					</td>
+					<td>
+						<h3>Personal Network</h3>
+							<ul id="contactPersonalNetwork">
+							</ul>
+					</td>
+				</tr>
+			</table>
 			<h3>Resources</h3>
 			<table>
 				<tr>
@@ -437,6 +446,28 @@
 		<div id="actionPane" class="actionContent">
 			<h1>Action</h1>
 		</div>
+	
+	</div>
+	
+	<div class="header">
+	
+		<div class="resourceTracker">
+			<span id="time">Oct 5, 2018</span>
+		</div>
+	
+		<div class="resourceTracker">
+			<span id="resourceMana">X</span> mana
+		</div>
+	
+		<div class="resourceTracker">
+			<span id="resourceCash">X</span> cash
+		</div>
+	
+		<div class="resourceTracker">
+			<span id="resourceTreasury">X</span> treasury
+		</div>
+		
+		<ul class="barList" />
 	
 	</div>
 	

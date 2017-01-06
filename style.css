@@ -42,11 +42,12 @@ h3 {
 	text-align: right;
 	padding-left: 40px;
 	color: #999;
+	font-size: 80%;
 	}
 	
 .sidebar {
 	width: 20%;
-	height: 90vh;
+	height: 80vh;
 	float:left;
 	}
 
@@ -118,6 +119,8 @@ h3 {
 	border-right: 3px solid #B39948;
 	border-bottom: 3px solid #B39948;
 	display: none;
+	max-height: 60vh;
+	overflow-y: scroll;
 	}
 
 #actionBar {
