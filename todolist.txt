@@ -1,19 +1,7 @@
 ALINSKY TO DO LIST
 
-Queers in closer to proper proportions.
-
-Finish populating names for ethnicities!
-Add asian ethnicities besides indonesian
-
-reduce indent on unordered lists?  Only in Map pane?
-
-Now makes gay bars
-
-Typical Clients and findClient()
-	Network in Church: create weak coupling of ethnicity and faith so Jews tend to be Jews
-
-
-
+Fix findHousing() to take money into account
+	Add roommates to findHousing()
 
 
 
@@ -22,12 +10,18 @@ Need to split Person() constructor into two bits:
 	b) then doing backstory, naming, issues, etc
 
 Fix findJob() to take institution argument but not level argument.
-	remove openings based on TypicalEmployees criteria
+	remove openings based on TypicalEmployees criteria (missed criteria increase number)
 
-Fix findHousing() to take money into account
-	Add roommates to findHousing()
 
 Fix findChurch() to seek out a church with similar people
+
+Fix displayContact() to handle any combination of ethnicities
+
+Update the OldTimeReligion and LiberalReligion lists
+
+Community() pickLists are getting defined with one too few items (sometimes?)
+
+Personal Network kids should only be grown adult kids.
 
 Rework the Neighborhood() init so that it produces random shares of ethnicities, not races.  Then rework the view.displayNeighborhood to figure ethnicity demographics, then figure race demographics, then display that.
 	Then fix Institution() so that its typical clientele pulls from its neighborhood picklist.
@@ -40,6 +34,10 @@ Typical Employees and findEmployee()
 Flesh out institution names
 
 Family connections
+
+Add Institution type 'shelter' for homeless
+
+Typical Clientele doesn't include status or money, and it probably should.
 
 Actual list of industries for institutions (retail being an industry)
 
@@ -68,6 +66,12 @@ Government
 Healthcare
 Schools (both K-12 and upper ed)
 Media Outlets
+
+Scandinavians
+Eastern Europeans
+Africans
+South Americans
+Southeast Asians
 
 Expansions
 Hatred (violence, theft, extortion, intimidation)

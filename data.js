@@ -226,6 +226,39 @@ var dataEthnicities = {
 		endogamy: 0.8,
 		},
 	
+	german: {
+		name: "German",
+		masculineNames: ["Ben","Louis","Paul","Lukas","Jonas","Leon","Fynn","Noah","Elias","Luka","Maximilian","Felix","Max","Henry","Moritz","Julian","Tim","Jakob","Emil","Philipp","Niklas"],
+		feminineNames: ["Emma","Mia","Hanna","Sophia","Emilia","Anna","Lena","Lea","Emile","Marie","Lina","Leonie","Amelie","Sophie","Louisa","Johanna","Neele","Laura","Lilli","Lara"],
+		neutralNames: [],
+		surnames: ["Muller","Schmidt","Schneider","Fischer","Weber","Meyer","Wagner","Becker","Schulz","Hoffman","Schafer","Koch","Bauer","Richter","Klein","Wolf","Schroder","Neumann","Schwartz","Zimmerman"],
+		assignedRace: dataRaces.white,
+		majorityFaith: "lutheran",
+		endogamy: 0.8,
+		},
+	
+	french: {
+		name: "French",
+		masculineNames: ["Nathan","Lucas","Enzo","Leo","Louis","Hugo","Gabriel","Ethan","Mathis","Jules","Raphael","Arthur","Tom","Theo","Noah","Timeo","Matheo","Clement","Maxime","Yanis"],
+		feminineNames: ["Emma","Lea","Chloe","Manon","Ines","Lola","Jade","Camille","Sarah","Louise","Zoe","Lilou","Lena","Maelys","Clara","Eva","Lina","Anais","Louna","Romane","Juliette"],
+		neutralNames: [],
+		surnames: ["Martin","Bernard","Dubois","Thomas","Robert","Richard","Petit","Durand","Leroy","Moreau","Simon","Laurent","Lefebvre","Michel","Garcia","David","Bertrand","Roux","Vincent","Fourier"],
+		assignedRace: dataRaces.white,
+		majorityFaith: "romanCatholic",
+		endogamy: 0.8,
+		},
+	
+	spanish: {
+		name: "Spanish",
+		masculineNames: ["Daniel","Alejandro","Pablo","Hugo","Alvaro","Adrian","David","Javier","Diego","Mario","Marcos","Sergio","Iker","Ivan","Manuel","Jorge","Aitor","Miguel","Carlos","Samuel"],
+		feminineNames: ["Lucia","Paula","Maria","Daniela","Sara","Carla","Claudia","Sofia","Alba","Irene","Marta","Laura","Julia","Martina","Carmen","Adriana","Aitana","Elena","Ana","Noa"],
+		neutralNames: [],
+		surnames: ["Garcia","Fernandez","Gonzalez","Rodriguez","Lopez","Martinez","Sanchez","Perez","Martin","Gomez"],
+		assignedRace: dataRaces.white,
+		majorityFaith: "romanCatholic",
+		endogamy: 0.8,
+		},
+	
 	italian: {
 		name: "Italian",
 		masculineNames: ["Ignacio","Antonio","Marco","Francesco","Matteo","Davide","Federico","Lorenzo","Stefano","Giuseppe","Riccardo","Christian","Alberto","Fabio","Emmanuele","Giovanni","Roberto","Filippo","Edoardo","Giorgio"],
@@ -396,7 +429,7 @@ var dataEthnicities = {
 		masculineNames: [],
 		feminineNames: [],
 		neutralNames: [],
-		surnames: ["Acosta","Agustín","Albino","Alicea","Almodóvar","Alvarez","Arroyo","Ayala","Báez","Bermúdez","Bonilla","Busigó","Camacho","Casiano","Castro","Colón","Correa","Cortés","Cruz","Cumel","Dávila","Feliciano","Fernández","Ferrer","Figueroa","Galarza","González","Irizarry","Lamboi","Lebrón","López","Lugo","Madera","Malavé","Martin","Martínez","Mercado","Millán","Miranda","Molina","Montalvo","Morales","Nazario","Negrón","Ocasio","Ortiz","OrtizdelaRenta","Pacheco","Padilla","Pagán","Pérez","Ramos","Ramírez","Ríos","Rivera","Rodríguez","Rosa","Ruiz","Sáez","Salcedo","Sánchez","Santana","Santiago","Silva","Soltero","Soto","Tirado","Toro","Torres","Valle","Vargas","Vázquez","Vega","Villarinos","Zaragoza"],
+		surnames: ["Acosta","Agustin","Albino","Alicea","Almodovar","Alvarez","Arroyo","Ayala","Báez","Bermúdez","Bonilla","Busigo","Camacho","Casiano","Castro","Colon","Correa","Cortes","Cruz","Cumel","Davila","Feliciano","Fernández","Ferrer","Figueroa","Galarza","González","Irizarry","Lamboi","Lebron","Lopez","Lugo","Madera","Malave","Martin","Martinez","Mercado","Millán","Miranda","Molina","Montalvo","Morales","Nazario","Negron","Ocasio","Ortiz","OrtizdelaRenta","Pacheco","Padilla","Pagán","Perez","Ramos","Ramirez","Rios","Rivera","Rodriguez","Rosa","Ruiz","Sáez","Salcedo","Sánchez","Santana","Santiago","Silva","Soltero","Soto","Tirado","Toro","Torres","Valle","Vargas","Vázquez","Vega","Villarinos","Zaragoza"],
 		assignedRace: dataRaces.latinx,
 		majorityFaith: "romanCatholic",
 		endogamy: 0.8,

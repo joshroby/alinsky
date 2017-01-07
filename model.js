@@ -3,6 +3,7 @@ var people = [];
 var neighborhoods = [];
 var institutions = [];
 var housing = [];
+var shelters = [];
 
 var congregationsByFaith = {};
 var congregationsBySect = {};
@@ -65,25 +66,27 @@ function Community() {
 			demographics.religion[i] = residentsByReligion[i]/totalFaiths;
 		}
 	
-	ethnicitiesPickList = Array(100);
+	var ethnicitiesPickList = Array(100);
 	total = 0;
 	for (i in ethnicities) {
 			ethnicitiesPickList.fill(ethnicities[i],total,total + demographics.ethnicity[ethnicities[i]] * 100);
 			total += demographics.ethnicity[ethnicities[i]]*100;
 		}
+	if (ethnicitiesPickList[99] === undefined) {ethnicitiesPickList[99] = "scots";};
 	
-	faithsPickList = Array(100);
+	var faithsPickList = Array(100);
 	total = 0;
 	for (i in faiths) {
 			faithsPickList.fill(faiths[i],total,total + demographics.faith[faiths[i]] * 100);
 			total += demographics.faith[faiths[i]]*100;
 		}
+	if (faithsPickList[99] === undefined) {faithsPickList[99] = "unitarianUniversalist";};
 	
 	this.demographics = demographics;
 	this.pickList = {};
 	this.pickList.ethnicities = ethnicitiesPickList;
 	this.pickList.faiths = faithsPickList;
-	this.population = 100;
+	this.population = 10000;
 	};
 
 function Person(neighborhood) {
@@ -348,8 +351,8 @@ function Person(neighborhood) {
 	// Network Connection Functions	
 	this.connections = [];
 	this.findJob = function(institution,level) {
+		var jobSearchPower = (1+Math.max(0,this.resources.status))*(1+Math.max(0,this.resources.education))*(1+Math.max(0,this.resources.network));
 		if (institution == undefined && level == undefined) {
-			var jobSearchPower = (1+Math.max(0,this.resources.status))*(1+Math.max(0,this.resources.education))*(1+Math.max(0,this.resources.network));
 			var openings = [];
 			for (i in institutions) {
 				for (l in {unskilled:"unskilled",skilled:"skilled",management:"management",executive:"executive"})
@@ -380,8 +383,6 @@ function Person(neighborhood) {
 		};
 		if (institution !== undefined) {
 			this.connections.push([institution,"works at",level]);
-			console.log(level);
-			console.log(institution);
 			institution.employees[level].push(this);
 			console.log(this.name.first + " " + this.name.last + "'s jobSeachPower of " + jobSearchPower + " pulled down a " + institution.paygrade[level] + " " + level + " job at " + institution.name);
 		} else {
@@ -394,21 +395,44 @@ function Person(neighborhood) {
 		if (institution == undefined) {
 			var vacancies = [];
 			for (i in housing) {
-				if (housing[i].capacity > housing[i].clients.length && housing[i].rent < this.resources.money) {
+				if (housing[i].capacity > housing[i].clients.length && housing[i].rent * 0.33 < this.resources.money) {
 					vacancies.push(housing[i])
 				}
 			}
 			
 			if (vacancies.length === 0) {
 				institution = new Institution(undefined,"residential");
-				institution.rent = this.resources.money;
-				institution.status = Math.ceil(institution.status / 2 )
+// 				institution.rent = this.resources.money;
+// 				institution.status = Math.ceil(institution.status / 2 )
 			} else {
 				institution = vacancies[vacancies.length * Math.random() << 0];
 			}
 		}
-		if (level == undefined) {	
-			var level = ["squatter","renter","lessee","homeowner"][4 * Math.random() << 0];
+		if (level == undefined) {
+			if (this.resources.money - this.resources.debt >= institution.rent) {
+				var level = "homeowner";
+			} else if (this.resources.money >= institution.rent * 0.8) {
+				var level = "lessee";
+			} else if (this.resources.money + this.resources.network >= institution.rent * 0.8) {
+				var level = "lessee";
+				this.personalNetwork.push(["a roomate"])
+			} else if (this.resources.money >= institution.rent * 0.4) {
+				var level = "renter";
+			} else if (this.resources.money + this.resources.network >= institution.rent * 0.4) {
+				var level = "renter";
+				this.personalNetwork.push(["a roomate"])
+			} else if (this.resources.network >= institution.rent * 0.2) {
+				var level = "guest";
+				this.personalNetwork.push(["a roomate"])
+			} else {
+				var level = "homeless";
+			}
+		}
+		if (level === "homeless") {
+			institution = shelters[shelters.length * Math.random() << 0];
+			if (institution === undefined || Math.random() > 0.5) {
+				institution = new Institution(undefined,"greenspace");
+				}
 		}
 		this.connections.push([institution,"lives at",level]);
 		institution.clients.push([this,level]);
@@ -575,6 +599,7 @@ function Institution(neighborhood,type,faith) {
 	var management = Math.round(skilled * (1 + Math.random()));
 	var executive = Math.round(management * (1 + Math.random()));
 	
+	// Demographics
 	var typicalClientele = {};
 	var typicalEmployees = {unskilled:{},skilled:{},management:{},executive:{}};
 	var clientGenders = [undefined,undefined,undefined,undefined,undefined,[dataGenders.man],[dataGenders.man],[dataGenders.woman],[dataGenders.woman],[dataGenders.woman,dataGenders.genderqueer]][Math.random()* 10 << 0];
@@ -600,6 +625,7 @@ function Institution(neighborhood,type,faith) {
 	
 	var activeUnions = [];
 	
+	// Functions
 	this.newClient = function() {
 
 		var newClient = new Person();
@@ -661,6 +687,7 @@ function Institution(neighborhood,type,faith) {
 		
 		};
 
+	// And now sticking data on the object for later reference
 	this.name = name;
 	this.type = type;
 	this.status = status;
@@ -687,6 +714,8 @@ function Institution(neighborhood,type,faith) {
 	
 	if (type === "residential") {
 		housing.push(this);
+	} else if (type === "greenspace" || type === "shelter") {
+		shelters.push(this);
 	} else if (type === "religious") {
 		if (congregationsByFaith[faith.key] == undefined) {
 			congregationsByFaith[faith.key] = [this];
