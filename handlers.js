@@ -89,6 +89,7 @@ var handlers = {
 		newGuy.findJob();
 		if (newGuy.resources.devotion > 1) {newGuy.findChurch()};
 		view.refreshContacts();
+		handlers.jumpToPerson(people.length-1);
 	},
 
 	newNeighborhood: function() {
@@ -106,16 +107,7 @@ var handlers = {
 	},
 	
 	newClient: function() {
-		var newGuy = new Person();
-		newGuy.findJob();
-		if (view.focus.institution.type === "religious") {
-			newGuy.findChurch(view.focus.institution);
-			newGuy.faith = view.focus.institution.faith;
-			newGuy.findJob();
-		} else if (view.focus.institution.type === "residential") {
-			newGuy.findChurch();
-			newGuy.findHousing(view.focus.institution);
-		}
+		view.focus.institution.newClient();
 		view.displayInstitution(view.focus.institution);
 	},
 	

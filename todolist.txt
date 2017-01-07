@@ -1,45 +1,50 @@
 ALINSKY TO DO LIST
 
-alphabetized contacts and neighborhood lists
-
-Generate people with multiple ethnicities / heritages
-
-add denonyms to faiths (jews, muslims, christians, etc)
-
-Alphabetize sidebar
-add maximum height and scrollbar
-
-Added personal networks to Person() model and view
-
-
-
-
-
+Queers in closer to proper proportions.
 
 Finish populating names for ethnicities!
 Add asian ethnicities besides indonesian
 
 reduce indent on unordered lists?  Only in Map pane?
 
+Now makes gay bars
+
+Typical Clients and findClient()
+	Network in Church: create weak coupling of ethnicity and faith so Jews tend to be Jews
+
+
+
+
+
+
+Need to split Person() constructor into two bits:
+	a) setting up the basic demographics, which can be edited by newClient() and newEmployee()
+	b) then doing backstory, naming, issues, etc
+
 Fix findJob() to take institution argument but not level argument.
+	remove openings based on TypicalEmployees criteria
 
 Fix findHousing() to take money into account
 	Add roommates to findHousing()
 
-Network in Church: create weak coupling of ethnicity and faith so Jews tend to be Jews
+Fix findChurch() to seek out a church with similar people
 
+Rework the Neighborhood() init so that it produces random shares of ethnicities, not races.  Then rework the view.displayNeighborhood to figure ethnicity demographics, then figure race demographics, then display that.
+	Then fix Institution() so that its typical clientele pulls from its neighborhood picklist.
+
+Typical Employees and findEmployee()
+	Gender, marriage, and orientation requirements for employment
+		- clergy for an institutionalized explicit example
+		- everywhere else for the reality of things
+	
 Flesh out institution names
-
-Actual list of industries for institutions (retail being an industry)
 
 Family connections
 
+Actual list of industries for institutions (retail being an industry)
+
 Unions (in institutions and memberships on people)
 	- key into industry categories
-
-Gender, marriage, and orientation requirements for employment
-	- clergy for an institutionalized explicit example
-	- everywhere else for the reality of things
 
 Gameplay (taking actions as an organization)
 	- interviewing contacts to reveal backstory blocks

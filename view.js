@@ -272,10 +272,12 @@ var view = {
 		races.sort(function(a,b) {return (neighborhoodResidentsByRace[a] > neighborhoodResidentsByRace[b]) ? -1 : ((neighborhoodResidentsByRace[b] > neighborhoodResidentsByRace[a]) ? 1 : 0);} );
 		var raceDemographicsList = '';
 		for (i in races) {
-			raceDemographicsList += "<li>" + Math.round(neighborhoodResidentsByRace[races[i]]*100) + "% " + dataRaces[races[i]].name + "</li>";
+			if (neighborhoodResidentsByRace[races[i]] > 0.01) {
+				raceDemographicsList += "<li>" + Math.round(neighborhoodResidentsByRace[races[i]]*100) + "% " + dataRaces[races[i]].name + "</li>";
+				}
 		}
 					
-		neighborhoodRacesCell.innerHTML = "<ul>"+raceDemographicsList+"</ul>";
+		neighborhoodRacesCell.innerHTML = raceDemographicsList;
 			
 		neighborhoodResidentialList.innerHTML = '';
 		neighborhoodCommercialList.innerHTML = '';
@@ -318,6 +320,8 @@ var view = {
 	
 	displayInstitution: function(institution) {
 		
+		console.log(institution);
+		
 		var mapInstitutionPane = document.getElementById('mapInstitutionPane');
 		var institutionName = document.getElementById('institutionName');
 		var institutionStatusCell = document.getElementById('institutionStatusCell');
@@ -334,11 +338,52 @@ var view = {
 		institutionName.innerHTML = institution.name;
 		institutionStatusCell.innerHTML = institution.status;
 		institutionPaygradeCell.innerHTML = institution.paygrade.unskilled + " / " + institution.paygrade.skilled + " / " + institution.paygrade.management + " / " + institution.paygrade.executive;
-		institutionTypicalClientsCell.innerHTML = institution.typicalClientele;
-		institutionTypicalEmployeesCell.innerHTML = institution.typicalEmployees;
 		institutionCapacityCell.innerHTML = institution.capacity;
 		institutionUnionsCell.innerHTML = 'TK';
 		
+		var typicalClienteleText = '';
+		if (institution.typicalClientele.faiths === undefined && institution.typicalClientele.genders === undefined && institution.typicalClientele.orientation === undefined && institution.typicalClientele.ethnicities[0] === undefined) {
+			typicalClienteleText = 'various';
+			}
+		if (institution.typicalClientele.orientation !== undefined) {
+			typicalClienteleText += ' ' + institution.typicalClientele.orientation;
+			}
+		if (institution.typicalClientele.faiths !== undefined && institution.typicalClientele.genders !== undefined) {
+			for (i in institution.typicalClientele.faiths) {
+				typicalClienteleText += ' ' + institution.typicalClientele.faiths[i].denonyms[0];
+				if (i == institution.typicalClientele.faiths.length-2) {
+					typicalClienteleText += " and";
+					}
+				}
+			}
+		if (institution.typicalClientele.ethnicities !== undefined && institution.typicalClientele.ethnicities[0] !== undefined) {
+			for (i in institution.typicalClientele.ethnicities) {
+				typicalClienteleText += ' ' + institution.typicalClientele.ethnicities[i].name;
+				if (i == institution.typicalClientele.ethnicities.length-2) {
+					typicalClienteleText += " and";
+					}
+				}
+			}
+		if (institution.typicalClientele.genders !== undefined) {
+			for (i in institution.typicalClientele.genders) {
+				typicalClienteleText += ' ' + institution.typicalClientele.genders[i].plural;
+				if (i == institution.typicalClientele.genders.length-2) {
+					typicalClienteleText += " and";
+					}
+				}
+			} else if (institution.typicalClientele.faiths !== undefined) {
+				for (i in institution.typicalClientele.faiths) {
+					typicalClienteleText += ' ' + institution.typicalClientele.faiths[i].denonyms[1];
+				if (i == institution.typicalClientele.faiths.length-2) {
+					typicalClienteleText += " and";
+					}
+					}
+			} else {
+				typicalClienteleText += " people";
+			}
+		institutionTypicalClientsCell.innerHTML = typicalClienteleText;
+		institutionTypicalEmployeesCell.innerHTML = institution.typicalEmployees;
+
 		if (institution.type === "religious") {
 			institutionClientsHead.innerHTML = "Congregants";
 			institutionEmployeesHead.innerHTML = "Staff";

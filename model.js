@@ -143,10 +143,13 @@ function Person(neighborhood) {
 	
 	var attraction = [];
 	var orientation;
-	var attractions = Math.round(Math.random()*3)
+	var attractions = [Math.random()*3 << 0];
 	for (i = 0; i < attractions; i++) {
 		attraction.push(dataGenders[genders[genders.length * Math.random() << 0]]);
 		}
+	if (genderIdentity.name === "Man") {var opposite = dataGenders.woman}
+	else if (genderIdentity.name === "Woman") {var opposite = dataGenders.man}
+	if (Math.random() > 0.1 && opposite !== undefined) {attraction = [opposite]};
 	
 	if (attraction.length === 1 && genderIdentity.name === "Man" && attraction[0].name === "Woman") {
 			orientation = "Straight";
@@ -166,7 +169,7 @@ function Person(neighborhood) {
 		purity: 1 + Math.random() * 3 << 0,
 		ambition: 1 + Math.random() * 3 << 0,
 		};
-	var resources = {status:1,money:1,debt:0,education:1,network:0,child:0,devotion:0,closet:0,tourOfDuty:0};
+	var resources = {status:1,money:1,debt:0,education:1,network:0,spouse:0,child:0,devotion:0,closet:0,tourOfDuty:0};
 	
 	
 	var age = Math.round(Math.max(Math.random()*20+Math.random()*20+Math.random()*20+Math.random()*20,18));
@@ -377,6 +380,8 @@ function Person(neighborhood) {
 		};
 		if (institution !== undefined) {
 			this.connections.push([institution,"works at",level]);
+			console.log(level);
+			console.log(institution);
 			institution.employees[level].push(this);
 			console.log(this.name.first + " " + this.name.last + "'s jobSeachPower of " + jobSearchPower + " pulled down a " + institution.paygrade[level] + " " + level + " job at " + institution.name);
 		} else {
@@ -570,12 +575,91 @@ function Institution(neighborhood,type,faith) {
 	var management = Math.round(skilled * (1 + Math.random()));
 	var executive = Math.round(management * (1 + Math.random()));
 	
-	var typicalClientele = "Placeholder";
-	var typicalEmployees = "Placeholder";
+	var typicalClientele = {};
+	var typicalEmployees = {unskilled:{},skilled:{},management:{},executive:{}};
+	var clientGenders = [undefined,undefined,undefined,undefined,undefined,[dataGenders.man],[dataGenders.man],[dataGenders.woman],[dataGenders.woman],[dataGenders.woman,dataGenders.genderqueer]][Math.random()* 10 << 0];
+	var clientOrientation = [undefined,undefined,undefined,undefined,undefined,undefined,"Straight","Straight","Straight","Queer"][Math.random()* 10 << 0];
+
+	var clientEthnicities = [dataEthnicities[community.pickList.ethnicities[community.pickList.ethnicities.length * Math.random() << 0]]];
+	if (neighborhood.demographics.race[clientEthnicities[0].assignedRace.key] < 0.2) {
+		clientEthnicities = [];
+	} else if (neighborhood.demographics.race[clientEthnicities[0].assignedRace.key] > 0.5) {
+		clientEthnicities = [clientEthnicities.assignedRace];
+		};
 	
-	if (type === "religious") {typicalClientele = faith.denonyms[1]};
+	if (type === "religious") {
+		var clientFaiths = [faith];
+		clientEthnicities = [];
+		for (n=0;n<faith.typicalEthnicities.length/3;n++) {
+			clientEthnicities.push(faith.typicalEthnicities[faith.typicalEthnicities.length * Math.random() << 0]);
+			}
+		if (faith.issues.indexOf(dataIssues.homophobia) !== -1 && Math.random() < 0.8) {
+				clientOrientation = "Straight";
+			}
+		};
 	
 	var activeUnions = [];
+	
+	this.newClient = function() {
+
+		var newClient = new Person();
+		
+		// These are all lock-step and need a random factor added so clients aren't always exact copies
+		if (this.typicalClientele.genders !== undefined && Math.random() < 0.8) {
+			var gender = this.typicalClientele.genders[this.typicalClientele.genders.length * Math.random() << 0];
+			newClient.gender.public = gender;
+			if (Math.random() < 0.8) {newClient.gender.identity = gender};
+			if (Math.random() < 0.8) {newClient.gender.assigned = gender};
+			};
+		
+		if (this.typicalClientele.ethnicities[0] !== undefined) {
+			var ethnicity = this.typicalClientele.ethnicities[this.typicalClientele.ethnicities.length * Math.random() << 0];
+			if (Math.random() < 0.8) {newClient.ethnicity[0] = ethnicity};
+			if (Math.random() < 0.8) {newClient.ethnicity[1] = ethnicity};
+			if (Math.random() < 0.8) {newClient.ethnicity[2] = ethnicity};
+			if (Math.random() < 0.8) {newClient.ethnicity[3] = ethnicity};
+// 			Need to update race based on changed ethnicity
+// 			Need to change names to match ethnicity, too!
+			};
+		
+		if (this.typicalClientele.orientation !== undefined && newClient.orientation.name !== this.typicalClientele.orientation && Math.random() < 0.8) {
+			newClient.orientation.name = this.typicalClientele.orientation;
+			if (this.typicalClientele.orientation === "Queer") {
+				// Missing code here
+			} else {
+				var opposite = dataGenders.man;
+				if (newClient.gender.identity.name === "Man") {opposite = dataGenders.woman};
+				newClient.orientation.attractions = [opposite];
+				}
+			};
+		
+		if (this.typicalClientele.faiths !== undefined && Math.random() < 0.8) {
+				newClient.faith = this.typicalClientele.faiths[this.typicalClientele.faiths * Math.random() << 0];
+			};
+		
+		
+		// Need to add issues for ethnicity, race, gender, faith, and orientation!
+		
+		if (this.type === "religious") {
+			newClient.findChurch(this);
+			newClient.findJob();
+			newClient.findHousing();
+		} else if (this.type = "residential") {
+			newClient.findHousing(this);
+			newClient.findChurch();
+			newClient.findJob();
+		} else {
+			level = "regular";
+			this.clients.push([newClient,level]);
+			newClient.findHousing();
+			newClient.findChurch();
+			newClient.findJob();
+			};
+		
+		view.displayNeighborhood(this.neighborhood);
+		view.displayInstitution(this);
+		
+		};
 
 	this.name = name;
 	this.type = type;
@@ -584,11 +668,13 @@ function Institution(neighborhood,type,faith) {
 	this.capacity = capacity;
 	this.payroll = {unskilled:unskilledCap,skilled:skilledCap,management:managementCap,executive:executiveCap};
 	this.paygrade = {unskilled:unskilled,skilled:skilled,management:management,executive:executive};
-	this.typicalClientele = typicalClientele;
+
 	this.typicalEmployees = typicalEmployees;
 	
 	this.employees = {unskilled:[],skilled:[],management:[],executive:[]};
 	this.clients = [];
+	
+	this.typicalClientele = {genders:clientGenders,orientation:clientOrientation,faiths:clientFaiths,ethnicities:clientEthnicities};
 	
 	this.organizations = {};
 	this.organizations.unions = activeUnions;

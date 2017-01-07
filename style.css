@@ -18,6 +18,10 @@ li {
 td {
 	vertical-align:top;
 	}
+
+.noIndent {
+	padding-left: 25px;
+	}
 	
 .header {
 	background: #BBB;
@@ -166,7 +170,7 @@ h3 {
 
 #mapNeighborhoodPane {
 	float:left;
-	margin-right: 100px;
+	margin-right: 50px;
 	width: 40%;
 	}
 

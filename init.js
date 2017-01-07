@@ -16,6 +16,7 @@ playerOrganization.name = "Organize Now!";
 playerOrganization.paygrade = {unskiled:0,skilled:0,management:0,executive:0};
 playerOrganization.payroll = 1;
 playerOrganization.neighborhood = player.neighborhood;
+playerOrganization.typicalClientele = {genders:undefined,orientation:undefined,faiths:undefined,ethnicities:[]};;
 player.findJob(playerOrganization,"executive");
 
 var playerDayJob = new Institution();

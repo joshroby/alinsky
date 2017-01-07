@@ -138,16 +138,19 @@ var dataGenders = {
 
 	man: {
 		name: "Man",
+		plural: "Men",
 		issues: [dataIssues.patriarchy],
 		},
 
 	woman: {
 		name: "Woman",
+		plural: "Women",
 		issues: [dataIssues.genderEquity],
 		},
 
 	genderqueer: {
 		name: "Genderqueer",
+		plural: "Genderqueers",
 		issues: [dataIssues.genderEquity,dataIssues.queerRights],
 		},
 
@@ -247,10 +250,10 @@ var dataEthnicities = {
 	
 	greek: {
 		name: "Greek",
-		masculineNames: [],
-		feminineNames: [],
+		masculineNames: ["Georgios","Ioannis","Konstantinos","Dimitris","Nicholas","Panagiotis","Basil","Chrisos","Athanasios","Michael","Evangelos","Spiros","Anthony","Anastasios","Theodore","Andreas","Charalampos","Alexander","Emmanuel","Elias"],
+		feminineNames: ["Maria","Eleni","Helen","Catherine","Vasiliki","Sofia","Angelica","Georgia","Anastasia","Evangeline","Demeter","Irene","Anna","Panagiota","Joanna","Constance","Despoina","Calliope","Alexandra","Dominique","Paraskevi"],
 		neutralNames: [],
-		surnames: [],
+		surnames: ["Papadopoulos","Vlahos","Angelopolous","Noklaidis","Georgiou","Petridis","Athanasiadis","Dimitriadis","Papadakis","Panagiotopolous","Papantoniou","Antoniou"],
 		assignedRace: dataRaces.white,
 		majorityFaith: "greekOrthodox",
 		endogamy: 0.8,
@@ -258,10 +261,10 @@ var dataEthnicities = {
 	
 	russian: {
 		name: "Russian",
-		masculineNames: [],
-		feminineNames: [],
+		masculineNames: ["Alexander","Anatoly","Andrei","Boris","Valentin","Vasily","Viktor","Vladimir","Garry","Georgy","David","Dmitry","Yegor","Ivan","Konstantin","Leonid","Makar","Mikhail","Nestor","Oleg","Peter","Pyotr","Robert","Roman","Semyon","Sergei","Stepan","Timur","Eduard","Erik","Yuri","Yakov"],
+		feminineNames: ["Alexandra","Alina","Anastasiya","Vera","Valeriya","Veronika","Galina","Dina","Ekaterina","Eva","Zoya","Inga","Irina","Iskra","Klara","Klementina","Kristina","Lada","Lidiya","Margarita","Marta","Nina","Nika","Oksana","Olga","Polina","Renata","Sofia","Tatyana","Faina","Ulyana","Florentina","Emilia"],
 		neutralNames: [],
-		surnames: [],
+		surnames: ["Smirnov","Ivanov","Kuznetsov","Popov","Sokolov","Lebedev","Kozlov","Novikov","Morozov","Petrov","Volkov","Solovyov","Vasilyev","Zaytsev","Pavlov","Golubev","Vinogradov","Bogdanov","Vorobyov"],
 		assignedRace: dataRaces.white,
 		majorityFaith: "russianOrthodox",
 		endogamy: 0.8,
@@ -269,10 +272,10 @@ var dataEthnicities = {
 	
 	arab: {
 		name: "Arab",
-		masculineNames: [],
-		feminineNames: [],
+		masculineNames: ["Aaron","Abdullah","Aden","Ahmad","Amir","Antwan","Caleb","Hassan","Ibrahim","Ismael","Jamal","Kadyn","Kale","Kareem","Khalil","Makhi","Malik","Mohamed","Nash","Nasir","Omar","Rashad","Samir","Tariq","Yahir","Yusuf","Zaire"],
+		feminineNames: ["Aisha","Aleah","Alma","Amani","Amina","Callie","Fatima","Hana","Imani","Jaliyah","Jenna","Jasmin","Kayla","Leyla","Lily","Maritza","Mina","Salma","Samira","Skye","Yesenia"],
 		neutralNames: [],
-		surnames: [],
+		surnames: ["Abdullah","Abdulrashid","Ahmad","Ahmed","Ajam","Alfarsi","Ali","Amjad","Boulos","Bousaid","Darzi","El-Amin","El-Ghazzawy","El-Hashem","El-Mofty","Hakim","Hussain","Kader","Karim","Karimi","Mohammed","Nagi","Nejem","Saab","Samara","Saqqaf","Sultan","Tawfeek","Zaman"],
 		assignedRace: dataRaces.middleEastern,
 		majorityFaith: "sunniIslam",
 		endogamy: 0.8,
@@ -280,10 +283,10 @@ var dataEthnicities = {
 	
 	iranian: {
 		name: "Iranian",
-		masculineNames: [],
-		feminineNames: [],
+		masculineNames: ["Abbas","Ashkan","Amir","Arman","Arvin","Bijan","Babak","Ebrahim","Ehsan","Eskander","Farhad","Farshid","Garshasp","Giv","Jamshid","Kamran","Kasra","Kouroush","Mahmoud","Musa","Marzban","Omid","Papak","Payam","Pouria","Ramin","Rostam","Sadegh","Turan","Vahid","Xerxes","Xosrov","Zand","Yousef"],
+		feminineNames: ["Anahita","Anousheh","Arian","Astar","Banu","Bita","Donya","Frida","Farzaneh","Goli","Jaleh","Leila","Mahshid","Nasrin","Niloufar","Parvin","Reyham","Sara","Simin","Sahar","Tara","Yasmin","Zaynab"],
 		neutralNames: [],
-		surnames: [],
+		surnames: ["Abdullahi","Abedini","Ahadi","Ahmadi","Baraghani","Ebrahimi","Esfahani","Fanaei","Farahani","Fikri","Ghasemi","Ghorbani","Hamadani","Hamidi","Banu Hashim","Hijazi","Husseini","Ipekci","Jahanbani","Jalili","Jamshidi","Javadi","Kadivar","Karimi","Kazmi","Khadem","Kalaji","Khorsandi","Mahdavi","Mahmoudi","Majidi","Mirzaei","Mokri","Nabavi","Naceri","Nafisi","Nalci","Namazi","Pahlavi","Pashaei","Qazwini","Rahmani","Rashidi","Salehi","Semnani","Shahidi","Shojaei","Souroush","Tabatabaei","Tousi","Talebi","Yazdani","Yadi","Yousefi","Zadeh","Zandi"],
 		assignedRace: dataRaces.middleEastern,
 		majorityFaith: "shiaIslam",
 		endogamy: 0.8,
@@ -294,7 +297,7 @@ var dataEthnicities = {
 		masculineNames: [],
 		feminineNames: [],
 		neutralNames: [],
-		surnames: [],
+		surnames: ["Afghan","Karzai","Nuristani","Poya","Sherkhanzai","Sattari","Shahnawaz","Yasin","Yousafzai","Yusufzai"],
 		assignedRace: dataRaces.middleEastern,
 		majorityFaith: "sunniIslam",
 		endogamy: 0.8,
@@ -305,7 +308,7 @@ var dataEthnicities = {
 		masculineNames: [],
 		feminineNames: [],
 		neutralNames: [],
-		surnames: [],
+		surnames: ["Davi","Khakwani","Kashani","Jadgal","Hashmi","Bhatti","Kuchis","Dogar","Kirmani","Kichlu","Gill","Dar","Megal","Khushk","Chachar","Butt","Sasooli","Malik","Zardari","Lau","Shah"],
 		assignedRace: dataRaces.middleEastern,
 		majorityFaith: "sunniIslam",
 		endogamy: 0.8,
@@ -313,21 +316,65 @@ var dataEthnicities = {
 	
 	indonesian: {
 		name: "Indonesian",
-		masculineNames: [],
-		feminineNames: [],
+		masculineNames: ["Kevin","Arief","Ahmad","Farel","Angga","Henry","Stanley","Fadhlan","Arif","David","Rio","Dimas","Andy","Osbert","Adit","Bayu","Adi","Fauzi"],
+		feminineNames: ["Putri","Irene","Intan","Aulia","Annisa","Maria","Nurul","Farah","Dewi","Syifa","Bella","Gita","Dian","Hana","Dina","Nadaya","Ayu","Amalia","Nabila"],
 		neutralNames: [],
-		surnames: [],
+		surnames: ["Ackbar","Bayu","Budiarto","Hidayat","Idrial","Iskander","Lie","Liem","Limpele","Mainaky","Pranata","Rafflesia","Sekewael","Setiawan","Sim","Sin","Vietnan","Widianto","Widjaja","Windu","Wiranata"],
 		assignedRace: dataRaces.asian,
 		majorityFaith: "nondenominationalIslam",
 		endogamy: 0.8,
 		},
 	
-	mexican: {
-		name: "Mexican",
+	hanChinese: {
+		name: "Han Chinese",
+		masculineNames: ["Wei","Qiang","Jun","Yong","Tao","Ming","Chao","Jie","Ping"],
+		feminineNames: ["Fang","Xiu Ying","Na","Min","Jing","Liu","Yan","Xiu Lan","Xia"],
+		neutralNames: [],
+		surnames: ["Chen","Guan","He","Huang","Jian","Jin","Lin","Wang","Wu","Zu","Zhang","Zhao"],
+		assignedRace: dataRaces.asian,
+		majorityFaith: "buddhism",
+		endogamy: 0.8,
+		},
+	
+	japanese: {
+		name: "Japanese",
+		masculineNames: ["Haruto","Riku","Haru","Hinata","Kaito","Asahi","Sora","Reo","Yuuto","Toumo","Itsuki"],
+		feminineNames: ["Hana","Himari","Akari","Ichika","Sara","Yui","Aoi","Niko","Hinata","Kanna","Sana"],
+		neutralNames: [],
+		surnames: ["Akiyama","Fujimoto","Fujita","Hamasaki","Honda","Ikeda","Inoue","Ishikawa","Ito","Kato","Kawaguchi","Kimura","Kobayashi","Maki","Matsushita","Miyamoto","Mori","Moto","Nakajima","Oshiro","Sato","Takahashi","Ueda","Watanabe"],
+		assignedRace: dataRaces.asian,
+		majorityFaith: "shinto",
+		endogamy: 0.8,
+		},
+	
+	punjabi: {
+		name: "Punjabi",
 		masculineNames: [],
 		feminineNames: [],
+		neutralNames: ["Agamdeep","Agampreet","Ajinder","Aman","Amandeep","Amanjeet","Amanpreet","Amardeep","Amrinder","Anupreet","Atamveer","Balbir","Baldev","Baljeet","Balvinder","Balwant","Barindra","Bhagwant","Bhupinder","Birindar","Bishanpal","Brijender","Charandeep","Charanjeet","Dalbir","Daljeet","Deepinder","Devendar","Dharampal","Dharamveer","Dharmender","Dilawar","Dilshad","Gunbir","Gurbachan","Gurbaksh","Gurcharan","Gurdas","Gurdeep","Gurinder","Gurjeet","Gurjinder","Gurmeet","Gurnam","Gurpal","Gurpreet","Gursharan","Gurubachan","Gurucharan","Gurudas","Gurudeep","Gurusharan","Gurvinder","Happy","Harbhajan","Harbinder","Harendra","Haricharan","Harjeet","Harjeevan","Harjinder","Harjyot","Harmeet","Harnam","Harpreet","Himmat","Inderdeep","Inderjeet","Indirjot","Jagjeet","Jagmohan","Jasbir","Jasdeep","Jaspal","Jaspinder","Jasvinder","Joginder","Kanwaljeet","Kartar","Khushwant","Kirpal","Kuldeep","Kuljeet","Kulwant","Kulwinder","Lakhbir","Lali","Lucky","Maan","Madanapal","Manajith","Mandeep","Mandira","Maninder","Manipal","Manjeet","Manmeet","Manmohan","Manpreet","Mohinder","Nampreet","Nanaki","Narinder","Navbir","Navjot","Pardeep","Parmeet","Parminder","Prakash","Praneeta","Preet","Prem","Raghubir","Rajbir","Rajender","Rajveer","Rajvinder","Ranbir","Ranjit","Ranveer","Rasbir","Roopindar","Sachdev","Santa","Sarabjeet","Satnam","Satpal","Satpreet","Satvinder","Shamsher","Sukhbir","Sukhcharan","Sukhdev","Sukhinder","Sukhjot","Sukhpreet","Sukhwinder","Sundar","Surinder","Surjit","Talwinder","Tanveer","Tegbir","Tejinder","Tufan","Uddam","Veerindar","Viraj","Yashpal","Zorawar"],
+		surnames: ["Abusaria","Achara","Agah","Agre","Ahuja","Ahlawat","Ajmeria","Anaadi","Andhak","Antal","Arneja","Asiagh","Atri","Atwal","Aujla","Aulakh","Babal","Babbar","Bachhal","Badesha","Badyal","Bagri","Bahia","Baht","Baidwan","Bains","Bajwa","Bajya","Balhara","Balyan","Bamraulia","Bana","Bansi","Bargoti","Barjati","Barola","Basanti","Basra","Basram","Basran","Bassi","Baswan","Batar","Beniwal","Benning","Bhadare","Bhadiar","Bhadu","Bhalli","Bhalothia","Bhambu","Bhandal","Bhangu","Bharak","Bharhaich","Bhari","Bhattal","Bhatti","Baweja","Bhela","Bhichar","Bhind","Bhinder","Bhudraja","Bhukar","Bhullar","Bijarniya","Billing","Binar","Birl","Birk","Bogan/Boughan","Brar","Braich","Budania","Budhwar","Burdak","Buttar","Baryar","Chadhar","Chahal","Chahar","Chaitha","Chakkal","Chandel","Chatha","Chhapyian","Chauhan","Cheema","Chhina","Chikkara","Chhillar","Chilka","Chheena","Dabas","Dabra","Dagur","Dahiya","Dalal","Dandiwal","Datewas","Dhamija","Dangi","Deo","Deol","Deshwal","Dhadli","Dhaka","Dhaliwal","Dhama","Dhankhar","Dhanoa","Dharan","Dharni","Dhariwal","Dhatarwal","Dhatt","Dhaulya","Dhaurelia","Dheendsa","Dhesi","Dhir","Dhull","Dhillon","Dhindawal","Dhindsa","Dholia","Dhonchak","Dhoot","Dookya","Dosanjh","Dudi","Duhan","Duhoon","Dullar","Fageria","Fandan","Farswal","Faugat","Faujdar","Gagneja","Gahlot","Gaina","Gakhal","Gandas","Gandhar","Garcha","Garewal","Garhwal","Gauria","Gehlawat","Ghangas","Ghatwala","Ghumman","Ghick","Ghugh","Gill","Godara","Gora","goraya","Gosal","Goyat","Grewal","Gulri","Gulia","Guram","Gurm","Harl","Hala","Hanga","Hans","Hayer","Heer","Hooda","Hundal","Inania","Jassi","Jaswal","Jaglan","Jagpal","Jajra","Jakhar","Jandu","Janu","Janghu","Janjua","Janmeja","Jatasra","Jatrana","Jatri","Jauhal","Jawanda","Jethoo","Jewlia","Jhaal","Jhaj","Jhajharia","Jhammat","Jhinjar","Jhuj","Jhutti","Johal","Johiya","Joon","Kalan","Kadian","Kahlon","Kajala","Kak","Kakar","Kakran","Kaler","Kalirai","Kalirouna","Kalkat","Kalkhande","Kalwaniya","Kandhola","Kang","Kapoor","Karwasra","Kaswan","Kataria","Katewa","Kehal","Khainwar","Khaira","Khakh","Khakha","Khalia","Khangura","Kharb","Kharoud","Khatkar","Kherwa","Khichad","Khirwar","Khinger","Khokhar","Khoja","Khosa","Khoye","Maurya","Khullar","Kisana","Kooner","Kuhar","Kular","Kularia","Kulhari","Kuntal","Lakhan","Lakhlan","Lakra","Lalli","Lally","Langrial","Lather","Lathwal","Lehga","Lengha","Liddar","Lidder","Lochab","Lund","Maan","Manda","Mandel","Madrak","Mahal","Mahil","Mahawal","Maichu","Malik","Malhan","Mander","Mandeer","Mandhan","Mandiwal","Manes","Mangat","Mann","Mede","Mehria","Merwar","Meel","Mohar","Mohil","Monga","Moond","Moonga","Motsara","Mundi","Mungut","Naga","Nagauria","Nagra","Nahl","Nain","Nandal","Nantaal","Natt","Nauhwar","Nehra","Nijjar","Nirman","Nirwan","Nichal","Nischal","Nitharwal","Noon","Ohlan","Ola","Othi","Pachar","Pachehra","Padda","Paliwal","Palsania","Panaich","Panag","Pandher","Panghal","Pangli","Pannu","Pansota","Panwar","Parihar","Parhaar","Parmaar","Pawar","Phalaswal","Phogat","Pilania","Pooni","Poria","Potaysir","Punia","Punial","Punian","Purewal","Purwar","Rahar","Rai","Rajaura","Rajawat","Rajian","Rakkar","Rana","Randhawa","Ranjha","Ranu","Ranwa","Rasoda","Rataul","Rathi","Rawala","Redhu","Rehal","Repswal","Rhind-Tutt","Riar","Romana","Rulania","Rupal","Sabharwal","Sahni","Saharan","Sahota","Saini","Samra","Sandhar","Sandhu","Sangha","Sanghera","Sangwan","Sangra","Sansanwal","Saprai","Sapra","Sarai","Sarao","Sauvira","Saroha","Seen","Sehrawat","Sehwag","Sejwal","Sekhon","Seokhand","Seoran","Shahi","Sahi","Shergill","Smith","Shokeen","Shokhanda","Sial","Sidhu","Sigroha","Sihota","Sikarwar","Sinsinwar","Sirohi","Sivia","Siwach","Soban","Sohal","Sohi","Solanki","Sooch","Sra","Sran","Suhag","Sukhija","Sumal","Sunda","Sunner","Takhar","Takshak","Talwarn","Tanwar","Tarar","Tatla","Tatran","Teerwal","Tevatia","Thakral","Thakran","Thandi","Tharoda","Thathiala","Thenua","Thethi","Thind","Thori","Tiwana","Tokas","Tomar","Toor","Toot","Tott","Tuar","Tung","Tushir","Tutt","Udar","Ujjwal","Uppal","Ver","Vaince","Vanar","Vijayrania","Virk","Wahla","Wainse","Wander","Waraich","Warraich"],
+		assignedRace: dataRaces.asian,
+		majorityFaith: "sunniIslam",
+		endogamy: 0.8,
+		},
+	
+	dravidian: {
+		name: "Dravidian",
+		masculineNames: ["Aachman","Adhita","Agrata","Ajay","Amalendu","Bagyaraj","Bahumanya","Bahula","Balamurali","Bhasvan","Chanakya","Cheliyan","Daarshik","Daha","Damian","Deepankar","Eeshan","Gahan","Hariaksa","Idhayan","Jainarayan","Kailas","Maaksharth","Nadish","Paawan","Pushpakar","Saakar","Tahaan","Taarush","Yadnya"],
+		feminineNames: ["Aadya","Aarini","Abhaya","Akriti","Anandani","Asha","Babita","Bahulprema","Bairavi","Bandita","Bhupali","Chaarvi","Chakrika","Daivi","Dalaja","Eesha","Faloni","Gamini","Haasita","Hamsanaari","Josya","Raagavi","Saarika","Veena"],
 		neutralNames: [],
-		surnames: [],
+		surnames: ["Arige","Balija","Cavarai","Chetty","Gentoo","Elamkunnapuzha","Kapu","Korrapati","Konda","Nair","Odda","Oddai","Oddar","Oppara","Padaiyachi","Palla","Pamireddy","Ramanathan","Sunil","Uppara","Valeti","Wappara","Wodda"],
+		assignedRace: dataRaces.asian,
+		majorityFaith: "hinduism",
+		endogamy: 0.8,
+		},
+	
+	mexican: {
+		name: "Mexican",
+		masculineNames: ["Jose","Luis","Juan","Miguel","Francisco","Jesus","Antonio","Alejandro","Pedro","Carlos","Manuel","Ricardo","Daniel","Fernando","Jorge"],
+		feminineNames: ["Maria","Maria","Maria","Maria","Maria","Juana","Margarita","Alejandra","Elizabeth","Leticia","Gabriela","Patricia","Josefina","Rosa","Alicia"],
+		neutralNames: ["Angel"],
+		surnames: ["Garcia","Rodriguez","Martinez","Hernandez","Lopez","Gonzalez","Perez","Sanchez","Ramirez","Torres","Flores","Rivera","Gomez","Diaz","Reyes","Morales","Cruz","Ortiz","Gutierrez","Chavez","Ramos","Gonzalez","Ruiz","Alvarez","Mendoza","Vasquez","Castilo","Jimenez"],
 		assignedRace: dataRaces.latinx,
 		majorityFaith: "romanCatholic",
 		endogamy: 0.8,
@@ -335,10 +382,10 @@ var dataEthnicities = {
 	
 	cuban: {
 		name: "Cuban",
-		masculineNames: [],
-		feminineNames: [],
+		masculineNames: ["Anton","Bembe","Che","Emeterio","Eterio","Gimoaldo","Homero","Ireneo","Kosmo","Learco","Mendo","Montez","Neo","Paz","Pirro","Quito","Riel","Silverio","Tajo"],
+		feminineNames: ["Agathe","Aleja","Benita","Charo","Diega","Edelira","Gertrudes","Hermosa","Idurre","Itxaro","Juanete","Landa","Lur","Mariposa","Mirana","Novia","Ramira","Samara","Verita"],
 		neutralNames: [],
-		surnames: [],
+		surnames: ["Garcia","Rodriguez","Martinez","Hernandez","Lopez","Gonzalez","Perez","Sanchez","Ramirez","Torres","Flores","Rivera","Gomez","Diaz","Reyes","Morales","Cruz","Ortiz","Gutierrez","Chavez","Ramos","Gonzalez","Ruiz","Alvarez","Mendoza","Vasquez","Castilo","Jimenez"],
 		assignedRace: dataRaces.latinx,
 		majorityFaith: "romanCatholic",
 		endogamy: 0.8,
@@ -349,7 +396,7 @@ var dataEthnicities = {
 		masculineNames: [],
 		feminineNames: [],
 		neutralNames: [],
-		surnames: [],
+		surnames: ["Acosta","Agustín","Albino","Alicea","Almodóvar","Alvarez","Arroyo","Ayala","Báez","Bermúdez","Bonilla","Busigó","Camacho","Casiano","Castro","Colón","Correa","Cortés","Cruz","Cumel","Dávila","Feliciano","Fernández","Ferrer","Figueroa","Galarza","González","Irizarry","Lamboi","Lebrón","López","Lugo","Madera","Malavé","Martin","Martínez","Mercado","Millán","Miranda","Molina","Montalvo","Morales","Nazario","Negrón","Ocasio","Ortiz","OrtizdelaRenta","Pacheco","Padilla","Pagán","Pérez","Ramos","Ramírez","Ríos","Rivera","Rodríguez","Rosa","Ruiz","Sáez","Salcedo","Sánchez","Santana","Santiago","Silva","Soltero","Soto","Tirado","Toro","Torres","Valle","Vargas","Vázquez","Vega","Villarinos","Zaragoza"],
 		assignedRace: dataRaces.latinx,
 		majorityFaith: "romanCatholic",
 		endogamy: 0.8,
@@ -360,7 +407,7 @@ var dataEthnicities = {
 		masculineNames: ["Adahy",],
 		feminineNames: ["Adsila","Awenasa","Awinita","Ayita",],
 		neutralNames: ["Galilahi",],
-		surnames: [],
+		surnames: ["Eagle","Tuckahoe","Wickett","Wilenawa","Oconostota","Bentleg","Goodpaster","Cornsilk","Berryman","Rogers","Starr","McDaniel","Lowrey","Gunter","Kingfisher","Crittenden","Sizemore"],
 		assignedRace: dataRaces.firstNations,
 		majorityFaith: "nondenominationalChristian",
 		endogamy: 0.8,
@@ -371,7 +418,7 @@ var dataEthnicities = {
 		masculineNames: ["Ahiga","Atehaine","Bidzil","Bilagaana","Gaagi","Gad","Hastiin","Hokee","Naainish","Nastas","Niyol","Sani","Shilah","Yanisin","Yas","Yiska"],
 		feminineNames: [],
 		neutralNames: [],
-		surnames: [],
+		surnames: ["Acothley","Ahasteen","Atcitty","Ayze","Betone","Bitsuie","Chee","Chissie","Cly","Dahozy","Daisy","Dele","Denetsosie","Haskan","Hayou","Kaibetony","Kesswood","Nalje","Kinnel","Natani","Pahe","Peshlakai","Secody","Taya","Toby","Tohe","Tohonnie","Tseda","Tsipei","Yabeney","Zahne","Sonnie"],
 		assignedRace: dataRaces.firstNations,
 		majorityFaith: "nondenominationalChristian",
 		endogamy: 0.8,
@@ -382,7 +429,7 @@ var dataEthnicities = {
 		masculineNames: [],
 		feminineNames: ["Atepa","Fala","Isi",],
 		neutralNames: ["Nita","Paloma","Talulah"],
-		surnames: [],
+		surnames: ["Cole","LeFlore","Fletcher","Harkins","Folsom","Kincaid","McCurtain","Juzan","Waker","Wade","Hudson","Garland","Wright","Bryant","Garvin","Smallwood","Dukes","Semple","Durant"],
 		assignedRace: dataRaces.firstNations,
 		majorityFaith: "nondenominationalChristian",
 		endogamy: 0.8,
@@ -393,7 +440,7 @@ var dataEthnicities = {
 		masculineNames: ["Akecheta","Ashkii","Chankoowashtay","Chayton","Enapay","Hotah","Howahkan","Kangee","Kohana","Lootah","Mahkah","Mahpee","Matoskah","Napayshni","Odakota","Ohanzee","Ohetekah","Paytah","Takoda","Teetonka","Watchintonka","Wamblee"],
 		feminineNames: [],
 		neutralNames: [],
-		surnames: [],
+		surnames: ["Dubray","Clown","Catches","Deloria","Red Cloud","Roinson","Guthrie","Fox","Thunderhawk","Iron Teeth","Bear King","Catch the Enemy","Bull","Crow Eagle","Four Robes","Kangi Glixha","Makes Room","Thasujke","Tatanka","Wounded"],
 		assignedRace: dataRaces.firstNations,
 		majorityFaith: "nondenominationalChristian",
 		endogamy: 0.8,
@@ -401,10 +448,10 @@ var dataEthnicities = {
 	
 	wampanoag: {
 		name: "Wampanoag",
-		masculineNames: [],
-		feminineNames: [],
+		masculineNames: ["Crispus","Massasoit","Corbitant","Caleb","Sonny","Amos","Cedric","Russell"],
+		feminineNames: ["Sachem","Jessie","Joan","Linda","Paula"],
 		neutralNames: [],
-		surnames: [],
+		surnames: ["Perry","Attucks","Weetamoo","Awashonks","Haskins","Dove","Cromwell","Peters","Amos","Lopez","Baird","Avant","Coombs","Haynes","Peters"],
 		assignedRace: dataRaces.firstNations,
 		majorityFaith: "nondenominationalChristian",
 		endogamy: 0.8,
@@ -467,6 +514,7 @@ var dataFaiths = {
 			issues: [dataIssues.religiousFreedom],
 			congregation: ["Discussion Group"],
 			denonyms: ["Atheist","Atheists"],
+			typicalEthnicities: [undefined],
 		},
 
 	anglican: {
@@ -477,6 +525,7 @@ var dataFaiths = {
 			issues: [dataIssues.patriarchy,dataIssues.homophobia],
 			congregation: ["Anglican Church"],
 			denonyms: ["Anglican","Anglicans"],
+			typicalEthnicities: [dataEthnicities.english],
 		},
 
 	baptist: {
@@ -487,6 +536,7 @@ var dataFaiths = {
 			issues: [dataIssues.patriarchy,dataIssues.homophobia],
 			congregation: ["Baptist Church","Bible Church"],
 			denonyms: ["Baptist","Baptists"],
+			typicalEthnicities: [undefined],
 		},
 
 	lutheran: {
@@ -497,6 +547,7 @@ var dataFaiths = {
 			issues: [dataIssues.patriarchy,dataIssues.homophobia],
 			congregation: ["Lutheran Church"],
 			denonyms: ["Lutheran","Lutherans"],
+			typicalEthnicities: [dataEthnicities.german],
 		},
 
 	methodist: {
@@ -507,6 +558,7 @@ var dataFaiths = {
 			issues: [dataIssues.patriarchy,dataIssues.homophobia],
 			congregation: ["Methodist Church"],
 			denonyms: ["Methodist","Methodists"],
+			typicalEthnicities: [dataEthnicities.scots,dataEthnicities.english],
 		},
 
 	nondenominationalChristian: {
@@ -517,6 +569,7 @@ var dataFaiths = {
 			issues: [dataIssues.patriarchy,dataIssues.homophobia],
 			congregation: ["Christian Church"],
 			denonyms: ["Christian","Christians"],
+			typicalEthnicities: [dataEthnicities.scots,dataEthnicities.english],
 		},
 	
 	unitedChurchChrist: {
@@ -527,6 +580,7 @@ var dataFaiths = {
 			issues: [dataIssues.religiousFreedom,dataIssues.racialJustice,dataIssues.queerRights],
 			congregation: ["UCC Church"],
 			denonyms: ["UCC Christian","UCC Christians"],
+			typicalEthnicities: [dataEthnicities.scots,dataEthnicities.english],
 		},
 
 	africanMethodist: {
@@ -537,6 +591,7 @@ var dataFaiths = {
 			issues: [dataIssues.patriarchy,dataIssues.homophobia,dataIssues.voterSuppression,dataIssues.racialJustice,dataIssues.economicEquity],
 			congregation: ["AME Church","African Methodist Church","African Methodist Episcopal Church"],
 			denonyms: ["AME Christian","AME Christians"],
+			typicalEthnicities: [dataEthnicities.africanAmerican],
 		},
 
 	romanCatholic: {
@@ -547,6 +602,7 @@ var dataFaiths = {
 			issues: [dataIssues.patriarchy,dataIssues.homophobia],
 			congregation: ["Catholic Church","Cathedral"],
 			denonyms: ["Catholic","Catholics"],
+			typicalEthnicities: [dataEthnicities.scots,dataEthnicities.italian,dataEthnicities.cuban,dataEthnicities.mexican],
 		},
 
 	greekOrthodox: {
@@ -557,6 +613,7 @@ var dataFaiths = {
 			issues: [dataIssues.patriarchy,dataIssues.homophobia],
 			congregation: ["Greek Orthodox Church","Basilica"],
 			denonyms: ["Greek Christian","Greek Christians"],
+			typicalEthnicities: [dataEthnicities.greek],
 		},
 
 	russianOrthodox: {
@@ -567,6 +624,7 @@ var dataFaiths = {
 			issues: [dataIssues.patriarchy,dataIssues.homophobia],
 			congregation: ["Russian Orthodox Church","Basilica"],
 			denonyms: ["Russian Christian","Russian Christians"],
+			typicalEthnicities: [dataEthnicities.russian],
 		},
 		
 	bahai: {
@@ -577,6 +635,41 @@ var dataFaiths = {
 			issues: [dataIssues.religiousFreedom,dataIssues.homophobia],
 			congregation: ["Baha'i Faith Center"],
 			denonyms: ["Baha'i","Baha'i"],
+			typicalEthnicities: [dataEthnicities.iranian],
+		},
+		
+	buddhism: {
+			key: "buddhism",
+			denomination: "Buddhism",
+			sect: "Buddhism",
+			name: "Buddhism",
+			issues: [dataIssues.religiousFreedom,dataIssues.patriarchy,dataIssues.homophobia],
+			congregation: ["Temple"],
+			denonyms: ["Buddhist","Buddhists"],
+			typicalEthnicities: [dataEthnicities.hanChinese],
+		},
+		
+	shinto: {
+			key: "shinto",
+			denomination: "Shinto",
+			sect: "Shinto",
+			name: "Shinto",
+			issues: [dataIssues.religiousFreedom,dataIssues.patriarchy,dataIssues.homophobia],
+			congregation: ["Shrine"],
+			denonyms: ["Buddhist","Buddhists"],
+			typicalEthnicities: [dataEthnicities.japanese],
+		},
+		
+	hinduism: {
+			key: "hinduism",
+			denomination: "Hindu",
+			sect: "Hindu",
+			name: "Hindu",
+			issues: [dataIssues.religiousFreedom,dataIssues.patriarchy,dataIssues.homophobia],
+			congregation: ["Ashram","Temple"],
+			denonyms: ["Hindu","Hindus"],
+			school: ["Ashram"],
+			typicalEthnicities: [dataEthnicities.dravidian,dataEthnicities.punjabi],
 		},
 		
 	orthodoxJudaism: {
@@ -587,6 +680,8 @@ var dataFaiths = {
 			issues: [dataIssues.religiousFreedom,dataIssues.racialJustice,dataIssues.patriarchy,dataIssues.homophobia],
 			congregation: ["Synagogue","Shul","Temple"],
 			denonyms: ["Orthodox Jew","Orthodox Jews"],
+			school: ["Yeshiva"],
+			typicalEthnicities: [dataEthnicities.ashkenazim,dataEthnicities.sephardim,dataEthnicities.mizrahim],
 		},
 		
 	reformJudaism: {
@@ -597,6 +692,7 @@ var dataFaiths = {
 			issues: [dataIssues.religiousFreedom,dataIssues.racialJustice,dataIssues.patriarchy,dataIssues.homophobia],
 			congregation: ["Synagogue","Shul","Temple"],
 			denonyms: ["Reform Jew","Reform Jews"],
+			typicalEthnicities: [dataEthnicities.ashkenazim,dataEthnicities.sephardim,dataEthnicities.mizrahim],
 		},
 		
 	conservativeJudaism: {
@@ -607,6 +703,7 @@ var dataFaiths = {
 			issues: [dataIssues.religiousFreedom,dataIssues.racialJustice,dataIssues.patriarchy,dataIssues.homophobia],
 			congregation: ["Synagogue","Shul","Temple"],
 			denonyms: ["Conservative Jew","Conservative Jews"],
+			typicalEthnicities: [dataEthnicities.ashkenazim,dataEthnicities.sephardim,dataEthnicities.mizrahim],
 		},
 	
 	sunniIslam: {
@@ -617,6 +714,7 @@ var dataFaiths = {
 			issues: [dataIssues.religiousFreedom,dataIssues.racialJustice,dataIssues.patriarchy,dataIssues.homophobia],
 			congregation: ["Mosque","Islamic Center"],
 			denonyms: ["Sunni","Sunnis"],
+			typicalEthnicities: [dataEthnicities.punjabi,dataEthnicities.arab,dataEthnicities.pakistani,dataEthnicities.indonesian],
 		},
 	
 	shiaIslam: {
@@ -627,6 +725,7 @@ var dataFaiths = {
 			issues: [dataIssues.religiousFreedom,dataIssues.racialJustice,dataIssues.patriarchy,dataIssues.homophobia],
 			congregation: ["Mosque","Islamic Center"],
 			denonyms: ["Shiite","Shiites"],
+			typicalEthnicities: [dataEthnicities.iranian],
 		},
 	
 	sufiIslam: {
@@ -637,6 +736,7 @@ var dataFaiths = {
 			issues: [dataIssues.religiousFreedom,dataIssues.racialJustice,dataIssues.patriarchy,dataIssues.homophobia],
 			congregation: ["Mosque","Islamic Center"],
 			denonyms: ["Sufi","Sufis"],
+			typicalEthnicities: [undefined],
 		},
 	
 	nondenominationalIslam: {
@@ -647,6 +747,18 @@ var dataFaiths = {
 			issues: [dataIssues.religiousFreedom,dataIssues.racialJustice,dataIssues.patriarchy,dataIssues.homophobia],
 			congregation: ["Mosque","Islamic Center"],
 			denonyms: ["Muslim","Muslims"],
+			typicalEthnicities: [dataEthnicities.punjabi,dataEthnicities.arab,dataEthnicities.pakistani,dataEthnicities.indonesian,dataEthnicities.iranian],
+		},
+	
+	sikhism: {
+			key: "sikhism",
+			denomination: "Sikh",
+			sect: "Sikh",
+			name: "Sikh",
+			issues: [dataIssues.religiousFreedom,dataIssues.racialJustice,dataIssues.patriarchy,dataIssues.homophobia],
+			congregation: ["Gurdwara"],
+			denonyms: ["Sikh","Sikhs"],
+			typicalEthnicities: [dataEthnicities.punjabi],
 		},
 	
 	neopagan: {
@@ -657,6 +769,7 @@ var dataFaiths = {
 			issues: [dataIssues.religiousFreedom,dataIssues.environmentalism],
 			congregation: ["Circle","Coven"],
 			denonyms: ["Pagan","Pagans"],
+			typicalEthnicities: [dataEthnicities.scots,dataEthnicities.english],
 		},
 	
 	odinist: {
@@ -667,6 +780,7 @@ var dataFaiths = {
 			issues: [dataIssues.religiousFreedom,dataIssues.patriarchy,dataIssues.homophobia,dataIssues.whiteSupremacy,dataIssues.environmentalism],
 			congregation: ["Fellowship"],
 			denonyms: ["Odinist","Odinists"],
+			typicalEthnicities: [dataEthnicities.scots,dataEthnicities.english],
 		},
 	
 	unitarianUniversalist: {
@@ -677,6 +791,7 @@ var dataFaiths = {
 			issues: [dataIssues.religiousFreedom,dataIssues.economicEquity,dataIssues.queerRights,dataIssues.genderEquity,dataIssues.racialJustice],
 			congregation: ["Unitarian-Universalists","Unitarian-Universalist Congregation","Unitarian-Universalist Community","Unitarian-Universalist Church","Community Church"],
 			denonyms: ["UU","UUs"],
+			typicalEthnicities: [dataEthnicities.scots,dataEthnicities.english,dataEthnicities.italian,dataEthnicities.german,dataEthnicities.ashkenazim],
 		},
 
 	};
@@ -1039,6 +1154,15 @@ var dataBackstories = {
 		updateDemo: [],
 		},
 
+	financialHardship: {
+		name: "Financial Hardship",
+		values: ["care","fairness"],
+		issues: [dataIssues.healthcare,dataIssues.economicEquity],
+		resources: ["debt"],
+		resourceLosses: [],
+		updateDemo: [],
+		},
+
 	medicalHardship: {
 		name: "Medical Hardship",
 		values: ["care","fairness"],
@@ -1202,6 +1326,7 @@ var backstoriesMature = [
 		dataBackstories.oldTimeReligion,
 		dataBackstories.nonChristianReligion,
 		dataBackstories.liberalReligion,
+		dataBackstories.financialHardship,
 		dataBackstories.medicalHardship,
 		dataBackstories.outdoors,
 		dataBackstories.backToSchool,
@@ -1347,7 +1472,8 @@ var dataInstitutionNames = {
 			"Shack",
 			"International",
 			"Superstore",
-			"Planet"
+			"Planet",
+			"Bar"
 			],
 	},
 	industrial: {
