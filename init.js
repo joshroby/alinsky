@@ -10,6 +10,7 @@ for (qwe=0;qwe<11;qwe++) {
 	}
 
 var player = new Person();
+player.growUp();
 
 var playerOrganization = new Institution(player.neighborhood,"greenspace");
 playerOrganization.name = "Organize Now!";
@@ -28,9 +29,9 @@ player.findHousing(playerHome);
 var playerChurch = new Institution(undefined,"religious",player.faith);
 player.findChurch(playerChurch);
 
-for (qwe=0;qwe<100;qwe++) {
-	handlers.newPerson();
-	}
+// for (qwe=0;qwe<100;qwe++) {
+// 	handlers.newPerson();
+// 	}
 
 view.refreshMap();
 view.displayContact(player);

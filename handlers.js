@@ -85,6 +85,7 @@ var handlers = {
 
 	newPerson: function() {
 		var newGuy = new Person();
+		newGuy.growUp();
 		newGuy.findHousing();
 		newGuy.findJob();
 		if (newGuy.resources.devotion > 1) {newGuy.findChurch()};
@@ -113,6 +114,7 @@ var handlers = {
 	
 	newEmployee: function() {
 		var newGuy = new Person();
+		newGuy.growUp();
 		newGuy.findHousing();
 		newGuy.findChurch();
 		newGuy.findJob(view.focus.institution);

@@ -161,192 +161,25 @@ function Person(neighborhood) {
 		} else {
 			orientation = "Queer";
 		}
-	
-	var issues = [];
-	var values = {
-		care: 1 + Math.random() * 3 << 0,
-		fairness: 1 + Math.random() * 3 << 0,
-		liberty: 1 + Math.random() * 3 << 0,
-		loyalty: 1 + Math.random() * 3 << 0,
-		authority: 1 + Math.random() * 3 << 0,
-		purity: 1 + Math.random() * 3 << 0,
-		ambition: 1 + Math.random() * 3 << 0,
-		};
-	var resources = {status:1,money:1,debt:0,education:1,network:0,spouse:0,child:0,devotion:0,closet:0,tourOfDuty:0};
-	
-	
-	var age = Math.round(Math.max(Math.random()*20+Math.random()*20+Math.random()*20+Math.random()*20,18));
-	
-	// Here's where we change the randomly-generated information in order to fit the arguments of the Person() call
-	
-	var backstories = [];
-	var backstoriesPickList = [];
-	var newBackstory;
-	
-	// Adding Family and Youth Backstory Blocks
-	
-	backstoriesPickList = backstoriesFamily;
-	for (i = 0; i < 3; i++) {
-		backstories.push({type:backstoriesPickList[backstoriesPickList.length * Math.random() << 0],known:0,details:[Math.random(),Math.random(),Math.random()]});
-		}
-		
-	for (i = 0; i < 2; i++) {
-		backstoriesPickList = backstoriesYouth;
-		if (orientation === "Queer" && resources.closet === 0) {backstoriesPickList=backstoriesPickList.concat(backstoriesQueer)};
-		if (genderIdentity.name !== genderPublic.name) {backstoriesPickList=backstoriesPickList.concat(backstoriesTrans)};
-		backstories.push({type:backstoriesPickList[backstoriesPickList.length * Math.random() << 0],known:0,details:[Math.random(),Math.random(),Math.random()]});
-		if (backstories[backstories.length-1].type.resourceLosses[0] === "closet") {resources.closet--};
-		if (backstories[backstories.length-1].type.updateDemo[0] === "gender") {genderPublic = genderIdentity};
-		}
 
-	// Processing Youth+Family Backstory Blocks' Effects Here
-	for (i in backstories) {
-		for (n in backstories[i].type.values) {
-			values[backstories[i].type.values[n]]++;
-			}
-		for (n in backstories[i].type.resources) {
-			resources[backstories[i].type.resources[n]]++;
-			}
-		for (n in backstories[i].type.resourceLosses) {
-			resources[backstories[i].type.resourceLosses[n]]--;
-			}
-		for (n in backstories[i].issues) {
-			if (issues.indexOf(backstories[i].type.issues[n]) == -1) {
-				issues.push(backstories[i].type.issues[n]);
-				}
-			}
-		if (backstories[i].updateDemo !== undefined) {
-			var type = backstories[i].type.updateDemo[0];
-			var list = backstories[i].type.updateDemo[1];
-			if (type === "faith") {
-				var newFaith = list[list.length * backstories[i].details[0] << 0];
-				faith = newFaith;
-			} else if (type === "gender") {
-				genderPublic = genderIdentity;
-				}
-			}
-		}
-
-	// Mature Phase Backstory Blocks	
-	for (y = 18; y < age; y += 12) {
-		backstoriesPickList = backstoriesMature;
-		if (orientation === "Queer" && resources.closet === 0) {backstoriesPickList=backstoriesPickList.concat(backstoriesQueer)};
-		if (genderIdentity.name !== genderAssigned.name) {backstoriesPickList=backstoriesPickList.concat(backstoriesTrans)};
-		for (i=0;i<resources.education;i++) {
-			backstoriesPickList = backstoriesPickList.concat(backstoriesMatureEducation);
-		}
-		for (i=0;i<resources.money;i++) {
-			backstoriesPickList = backstoriesPickList.concat(backstoriesMatureMoney);
-		}
-		for (i=0;i<resources.status;i++) {
-			backstoriesPickList = backstoriesPickList.concat(backstoriesMatureStatus);
-		}
-		for (i=0;i<resources.network;i++) {
-			backstoriesPickList = backstoriesPickList.concat(backstoriesMatureNetwork);
-		}
-		for (i=0;i<resources.child;i++) {
-			backstoriesPickList = backstoriesPickList.concat(backstoriesMatureChild);
-		}
-		newBackstory = backstoriesPickList[backstoriesPickList.length * Math.random() << 0];
-		backstories.push({type:newBackstory,known:0,details:[Math.random(),Math.random(),Math.random()]});
-		
-		for (n in newBackstory.values) {
-			values[newBackstory.values[n]]++;
-			}
-		for (n in newBackstory.resources) {
-			resources[newBackstory.resources[n]]++;
-			}
-		for (n in newBackstory.resourceLosses) {
-			resources[newBackstory.resourceLosses[n]]--;
-			}
-		for (n in newBackstory.issues) {
-			if (issues.indexOf(newBackstory.issues[n]) == -1) {
-				issues.push(newBackstory.issues[n]);
-				}
-			}
-		if (newBackstory.updateDemo !== undefined) {
-			var type = newBackstory.updateDemo[0];
-			var list = newBackstory.updateDemo[1];
-			if (type === "faith") {
-				var newFaith = list[list.length * Math.random() << 0];
-				faith = newFaith;
-			} else if (type === "gender") {
-				genderPublic = genderIdentity;
-				}
-			}
-		
-		}
-			
-	// Identity-based Issues not handled in Backstory
-	var identityIssues = [];
-	identityIssues = identityIssues.concat(genderIdentity.issues);
-	identityIssues = identityIssues.concat(race.issues);
-	identityIssues = identityIssues.concat(faith.issues);
-	if (orientation === "Queer") {identityIssues = identityIssues.concat(dataIssues.queerRights)};
-	for (i in identityIssues) {
-		if (issues.indexOf(identityIssues[i]) == -1) {
-			issues.push(identityIssues[i]);
-			}
-	}
+	// Tagging Birth Details onto Object
+	this.neighborhood = neighborhood;
 	
-		
-	// Picking Names, now that we've established current Gender Identity in Backstory	
-	var firstNames = [];
-	if (genderPublic.name === dataGenders.man.name) {
-		firstNames = ethnicity[0].masculineNames;
-		firstNames = firstNames.concat(ethnicity[1].masculineNames);
-		firstNames = firstNames.concat(ethnicity[2].masculineNames);
-		firstNames = firstNames.concat(ethnicity[3].masculineNames);
-		firstNames = firstNames.concat(common.masculineNames);
-	} else if (genderPublic.name === dataGenders.woman.name) {
-		firstNames = ethnicity[0].feminineNames;
-		firstNames = firstNames.concat(ethnicity[1].feminineNames);
-		firstNames = firstNames.concat(ethnicity[2].feminineNames);
-		firstNames = firstNames.concat(ethnicity[3].feminineNames);
-		firstNames = firstNames.concat(common.feminineNames);
-	}
-	firstNames = firstNames.concat(ethnicity[0].neutralNames);
-	firstNames = firstNames.concat(ethnicity[1].neutralNames);
-	firstNames = firstNames.concat(ethnicity[2].neutralNames);
-	firstNames = firstNames.concat(ethnicity[3].neutralNames);
-	firstNames = firstNames.concat(common.neutralNames);
-		
-	var firstName = firstNames[firstNames.length * Math.random() << 0];
-	var middleName = firstNames[firstNames.length * Math.random() << 0];
-	var surnames = ethnicity[0].surnames.concat(common.surnames);
-	var lastName = surnames[surnames.length * Math.random() << 0];
+	this.race = race;
+	this.ethnicity = ethnicity;
 	
+	this.gender = {};
+	this.gender.assigned = genderAssigned;
+	this.gender.identity = genderIdentity;
+	this.gender.public = genderPublic;
 	
+	this.orientation = {};
+	this.orientation.name = orientation;
+	this.orientation.attraction = attraction;
 	
-	// Create stubs for Personal Network
-	this.personalNetwork = [];
-	var so = attraction[attraction.length * Math.random() << 0];
-	if (resources.spouse > 0 || Math.random() > 0.7) {
-		if (so === undefined) {
-			this.personalNetwork.push(["a spouse"])
-		} else if (so.name === "Man") {
-			this.personalNetwork.push(["a husband"])
-		} else if (so.name === "Woman") {
-			this.personalNetwork.push(["a wife"])
-		} else {
-			this.personalNetwork.push(["a spouse"])
-		}
-	} else if (Math.random() > 0.4) {
-		if (so === undefined) {
-			this.personalNetwork.push(["a significant other"])
-		} else if (so.name === "Man") {
-			this.personalNetwork.push(["a boyfriend"])
-		} else if (so.name === "Woman") {
-			this.personalNetwork.push(["a girlfriend"])
-		} else {
-			this.personalNetwork.push(["a significant other"])
-		}
-	}
-	var children = resources.child + Math.random() * 2 << 0 ;
-	for (i=0;i<children;i++) {
-		this.personalNetwork.push(["a child"])
-	}
+	this.faith = faith;
 	
+	people.push(this);
 	
 	// Network Connection Functions	
 	this.connections = [];
@@ -394,6 +227,7 @@ function Person(neighborhood) {
 	this.findHousing = function(institution,level) {
 		if (institution == undefined) {
 			var vacancies = [];
+			console.log(this);
 			for (i in housing) {
 				if (housing[i].capacity > housing[i].clients.length && housing[i].rent * 0.33 < this.resources.money) {
 					vacancies.push(housing[i])
@@ -464,39 +298,206 @@ function Person(neighborhood) {
 			church.clients.push([this,level]);
 		}
 	};
+		
+	this.growUp = function() {
 	
-	// Sticking stuff on the actual object for later reference now
-	this.name = {};
-	this.name.first = firstName;
-	this.name.middle = middleName;
-	this.name.last = lastName;
+		var issues = [];
+		var values = {
+			care: 1 + Math.random() * 3 << 0,
+			fairness: 1 + Math.random() * 3 << 0,
+			liberty: 1 + Math.random() * 3 << 0,
+			loyalty: 1 + Math.random() * 3 << 0,
+			authority: 1 + Math.random() * 3 << 0,
+			purity: 1 + Math.random() * 3 << 0,
+			ambition: 1 + Math.random() * 3 << 0,
+			};
+		var resources = {status:1,money:1,debt:0,education:1,network:0,spouse:0,child:0,devotion:0,closet:0,tourOfDuty:0};
 	
-	this.neighborhood = neighborhood;
 	
-	this.race = race;
-	this.ethnicity = ethnicity;
+		var age = Math.round(Math.max(Math.random()*20+Math.random()*20+Math.random()*20+Math.random()*20,18));
+		
+		var backstories = [];
+		var backstoriesPickList = [];
+		var newBackstory;
 	
-	this.gender = {};
-	this.gender.assigned = genderAssigned;
-	this.gender.identity = genderIdentity;
-	this.gender.public = genderPublic;
+		// Adding Family and Youth Backstory Blocks
 	
-	this.orientation = {};
-	this.orientation.name = orientation;
-	this.orientation.attraction = attraction;
+		backstoriesPickList = backstoriesFamily;
+		for (i = 0; i < 3; i++) {
+			backstories.push({type:backstoriesPickList[backstoriesPickList.length * Math.random() << 0],known:0,details:[Math.random(),Math.random(),Math.random()]});
+			}
+		
+		for (i = 0; i < 2; i++) {
+			backstoriesPickList = backstoriesYouth;
+			if (orientation === "Queer" && resources.closet === 0) {backstoriesPickList=backstoriesPickList.concat(backstoriesQueer)};
+			if (genderIdentity.name !== genderPublic.name) {backstoriesPickList=backstoriesPickList.concat(backstoriesTrans)};
+			backstories.push({type:backstoriesPickList[backstoriesPickList.length * Math.random() << 0],known:0,details:[Math.random(),Math.random(),Math.random()]});
+			if (backstories[backstories.length-1].type.resourceLosses[0] === "closet") {resources.closet--};
+			if (backstories[backstories.length-1].type.updateDemo[0] === "gender") {genderPublic = genderIdentity};
+			}
+
+		// Processing Youth+Family Backstory Blocks' Effects Here
+		for (i in backstories) {
+			for (n in backstories[i].type.values) {
+				values[backstories[i].type.values[n]]++;
+				}
+			for (n in backstories[i].type.resources) {
+				resources[backstories[i].type.resources[n]]++;
+				}
+			for (n in backstories[i].type.resourceLosses) {
+				resources[backstories[i].type.resourceLosses[n]]--;
+				}
+			for (n in backstories[i].issues) {
+				if (issues.indexOf(backstories[i].type.issues[n]) == -1) {
+					issues.push(backstories[i].type.issues[n]);
+					}
+				}
+			if (backstories[i].updateDemo !== undefined) {
+				var type = backstories[i].type.updateDemo[0];
+				var list = backstories[i].type.updateDemo[1];
+				if (type === "faith") {
+					var newFaith = list[list.length * backstories[i].details[0] << 0];
+					faith = newFaith;
+				} else if (type === "gender") {
+					genderPublic = genderIdentity;
+					}
+				}
+			}
+
+		// Mature Phase Backstory Blocks	
+		for (y = 18; y < age; y += 12) {
+			backstoriesPickList = backstoriesMature;
+			if (orientation === "Queer" && resources.closet === 0) {backstoriesPickList=backstoriesPickList.concat(backstoriesQueer)};
+			if (genderIdentity.name !== genderAssigned.name) {backstoriesPickList=backstoriesPickList.concat(backstoriesTrans)};
+			for (i=0;i<resources.education;i++) {
+				backstoriesPickList = backstoriesPickList.concat(backstoriesMatureEducation);
+			}
+			for (i=0;i<resources.money;i++) {
+				backstoriesPickList = backstoriesPickList.concat(backstoriesMatureMoney);
+			}
+			for (i=0;i<resources.status;i++) {
+				backstoriesPickList = backstoriesPickList.concat(backstoriesMatureStatus);
+			}
+			for (i=0;i<resources.network;i++) {
+				backstoriesPickList = backstoriesPickList.concat(backstoriesMatureNetwork);
+			}
+			for (i=0;i<resources.child;i++) {
+				backstoriesPickList = backstoriesPickList.concat(backstoriesMatureChild);
+			}
+			newBackstory = backstoriesPickList[backstoriesPickList.length * Math.random() << 0];
+			backstories.push({type:newBackstory,known:0,details:[Math.random(),Math.random(),Math.random()]});
+		
+			for (n in newBackstory.values) {
+				values[newBackstory.values[n]]++;
+				}
+			for (n in newBackstory.resources) {
+				resources[newBackstory.resources[n]]++;
+				}
+			for (n in newBackstory.resourceLosses) {
+				resources[newBackstory.resourceLosses[n]]--;
+				}
+			for (n in newBackstory.issues) {
+				if (issues.indexOf(newBackstory.issues[n]) == -1) {
+					issues.push(newBackstory.issues[n]);
+					}
+				}
+			if (newBackstory.updateDemo !== undefined) {
+				var type = newBackstory.updateDemo[0];
+				var list = newBackstory.updateDemo[1];
+				if (type === "faith") {
+					var newFaith = list[list.length * Math.random() << 0];
+					faith = newFaith;
+				} else if (type === "gender") {
+					genderPublic = genderIdentity;
+					}
+				}
+		
+			}
+			
+		// Identity-based Issues not handled in Backstory
+		var identityIssues = [];
+		identityIssues = identityIssues.concat(genderIdentity.issues);
+		identityIssues = identityIssues.concat(race.issues);
+		identityIssues = identityIssues.concat(faith.issues);
+		if (orientation === "Queer") {identityIssues = identityIssues.concat(dataIssues.queerRights)};
+		for (i in identityIssues) {
+			if (issues.indexOf(identityIssues[i]) == -1) {
+				issues.push(identityIssues[i]);
+				}
+		}
 	
-	this.faith = faith;
+		
+		// Picking Names, now that we've established current Gender Identity in Backstory	
+		var firstNames = [];
+		if (genderPublic.name === dataGenders.man.name) {
+			firstNames = ethnicity[0].masculineNames;
+			firstNames = firstNames.concat(ethnicity[1].masculineNames);
+			firstNames = firstNames.concat(ethnicity[2].masculineNames);
+			firstNames = firstNames.concat(ethnicity[3].masculineNames);
+			firstNames = firstNames.concat(common.masculineNames);
+		} else if (genderPublic.name === dataGenders.woman.name) {
+			firstNames = ethnicity[0].feminineNames;
+			firstNames = firstNames.concat(ethnicity[1].feminineNames);
+			firstNames = firstNames.concat(ethnicity[2].feminineNames);
+			firstNames = firstNames.concat(ethnicity[3].feminineNames);
+			firstNames = firstNames.concat(common.feminineNames);
+		}
+		firstNames = firstNames.concat(ethnicity[0].neutralNames);
+		firstNames = firstNames.concat(ethnicity[1].neutralNames);
+		firstNames = firstNames.concat(ethnicity[2].neutralNames);
+		firstNames = firstNames.concat(ethnicity[3].neutralNames);
+		firstNames = firstNames.concat(common.neutralNames);
+		
+		var firstName = firstNames[firstNames.length * Math.random() << 0];
+		var middleName = firstNames[firstNames.length * Math.random() << 0];
+		var surnames = ethnicity[0].surnames.concat(common.surnames);
+		var lastName = surnames[surnames.length * Math.random() << 0];
 	
-	this.age = age;
-	this.backstories = backstories;
 	
-	this.values = values;
-	this.issues = issues;
-	this.resources = resources;
 	
-	people.push(this);
+		// Create stubs for Personal Network
+		this.personalNetwork = [];
+		var so = attraction[attraction.length * Math.random() << 0];
+		if (resources.spouse > 0 || Math.random() > 0.7) {
+			if (so === undefined) {
+				this.personalNetwork.push(["a spouse"])
+			} else if (so.name === "Man") {
+				this.personalNetwork.push(["a husband"])
+			} else if (so.name === "Woman") {
+				this.personalNetwork.push(["a wife"])
+			} else {
+				this.personalNetwork.push(["a spouse"])
+			}
+		} else if (Math.random() > 0.4) {
+			if (so === undefined) {
+				this.personalNetwork.push(["a significant other"])
+			} else if (so.name === "Man") {
+				this.personalNetwork.push(["a boyfriend"])
+			} else if (so.name === "Woman") {
+				this.personalNetwork.push(["a girlfriend"])
+			} else {
+				this.personalNetwork.push(["a significant other"])
+			}
+		}
+		var children = resources.child + Math.random() * 2 << 0 ;
+		for (i=0;i<children;i++) {
+			this.personalNetwork.push(["a child"])
+		}
 	
-	// Functions
+		// Sticking stuff on the actual object for later reference now
+		this.name = {};
+		this.name.first = firstName;
+		this.name.middle = middleName;
+		this.name.last = lastName;
+	
+	
+		this.age = age;
+		this.backstories = backstories;
+	
+		this.values = values;
+		this.issues = issues;
+		this.resources = resources;
+	};	
 	
 
 };
@@ -630,7 +631,6 @@ function Institution(neighborhood,type,faith) {
 
 		var newClient = new Person();
 		
-		// These are all lock-step and need a random factor added so clients aren't always exact copies
 		if (this.typicalClientele.genders !== undefined && Math.random() < 0.8) {
 			var gender = this.typicalClientele.genders[this.typicalClientele.genders.length * Math.random() << 0];
 			newClient.gender.public = gender;
@@ -644,14 +644,12 @@ function Institution(neighborhood,type,faith) {
 			if (Math.random() < 0.8) {newClient.ethnicity[1] = ethnicity};
 			if (Math.random() < 0.8) {newClient.ethnicity[2] = ethnicity};
 			if (Math.random() < 0.8) {newClient.ethnicity[3] = ethnicity};
-// 			Need to update race based on changed ethnicity
-// 			Need to change names to match ethnicity, too!
 			};
 		
 		if (this.typicalClientele.orientation !== undefined && newClient.orientation.name !== this.typicalClientele.orientation && Math.random() < 0.8) {
 			newClient.orientation.name = this.typicalClientele.orientation;
 			if (this.typicalClientele.orientation === "Queer") {
-				// Missing code here
+//				Missing code here
 			} else {
 				var opposite = dataGenders.man;
 				if (newClient.gender.identity.name === "Man") {opposite = dataGenders.woman};
@@ -663,9 +661,8 @@ function Institution(neighborhood,type,faith) {
 				newClient.faith = this.typicalClientele.faiths[this.typicalClientele.faiths * Math.random() << 0];
 			};
 		
-		
-		// Need to add issues for ethnicity, race, gender, faith, and orientation!
-		
+		newClient.growUp();
+				
 		if (this.type === "religious") {
 			newClient.findChurch(this);
 			newClient.findJob();
