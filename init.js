@@ -2,13 +2,6 @@
 var community = new Community();
 console.log(community);
 
-var downtown = new Neighborhood();
-downtown.name = "Downtown";
-
-for (qwe=0;qwe<11;qwe++) {
-	new Neighborhood();
-	}
-
 var player = new Person();
 player.growUp();
 
@@ -35,5 +28,5 @@ player.findChurch(playerChurch);
 
 view.refreshMap();
 view.displayContact(player);
-view.displayNeighborhood(downtown);
+view.displayNeighborhood(neighborhoods[0]);
 handlers.sidebarPaneExpand("contact");

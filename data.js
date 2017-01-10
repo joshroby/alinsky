@@ -1477,7 +1477,8 @@ var dataNeighborhoodNames = {
 			" Plantation",
 			"wood",
 			" Row",
-			"side"
+			"side",
+			" Quarter",
 			],
 	};
 

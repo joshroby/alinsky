@@ -1,3 +1,5 @@
+// window.onbeforeunload = function() { return "Going back will erase your current community."; };
+
 var view = {
 
 	focus: {
@@ -248,32 +250,12 @@ var view = {
 		neighborhoodIndustrialSpan.innerHTML = Math.round(neighborhood.zoning.industrial*100) + "%";
 		neighborhoodMunicipalSpan.innerHTML = Math.round(neighborhood.zoning.municipal*100) + "%";
 
-		
-		var neighborhoodResidentsByRace = {};
-		var neighborhoodsTotal;
-		var share;
-		for (i in neighborhood.demographics.race) {
-			neighborhoodsTotal = 0;
-			for (n in neighborhoods) {
-				neighborhoodsTotal += neighborhoods[n].demographics.race[i]; 
-			}
-			share = neighborhood.demographics.race[i]/neighborhoodsTotal;
-			share = Math.round(share * community.demographics.race[i] * community.population);
-			neighborhoodResidentsByRace[i] = share;
-			}
-		var races = Object.keys(neighborhoodResidentsByRace);
-		var neighborhoodPopulation = 0;
-		for (i in neighborhoodResidentsByRace) {
-			neighborhoodPopulation += neighborhoodResidentsByRace[i];
-		}
-		for (i in neighborhoodResidentsByRace) {
-			neighborhoodResidentsByRace[i] = neighborhoodResidentsByRace[i] / neighborhoodPopulation;
-		}
-		races.sort(function(a,b) {return (neighborhoodResidentsByRace[a] > neighborhoodResidentsByRace[b]) ? -1 : ((neighborhoodResidentsByRace[b] > neighborhoodResidentsByRace[a]) ? 1 : 0);} );
 		var raceDemographicsList = '';
+		var races = Object.keys(neighborhood.demographics.race);
+		races.sort(function(a,b) {return (neighborhood.demographics.race[a] > neighborhood.demographics.race[b]) ? -1 : ((neighborhood.demographics.race[b] > neighborhood.demographics.race[a]) ? 1 : 0);});
 		for (i in races) {
-			if (neighborhoodResidentsByRace[races[i]] > 0.01) {
-				raceDemographicsList += "<li>" + Math.round(neighborhoodResidentsByRace[races[i]]*100) + "% " + dataRaces[races[i]].name + "</li>";
+			if (neighborhood.demographics.race[races[i]] > 0) {
+				raceDemographicsList += "<li>" + Math.round(100*neighborhood.demographics.race[races[i]]/neighborhood.demographics.population) + "% " + dataRaces[races[i]].name + "</li>";
 				}
 		}
 					
