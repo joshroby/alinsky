@@ -65,17 +65,33 @@ var view = {
 		
 		var race = contact.race.name;
 		
-		if (contact.ethnicity[0].name !== contact.ethnicity[2].name && contact.ethnicity[1].name !== contact.ethnicity[3].name) {
-			var ethnicity = contact.ethnicity[0].name + ", " + contact.ethnicity[1].name + ", " + contact.ethnicity[2].name + ", and " + contact.ethnicity[3].name;
-		} else if (contact.ethnicity[0].name !== contact.ethnicity[2].name && contact.ethnicity[1].name === contact.ethnicity[3].name) {
-			var ethnicity = "Half " + contact.ethnicity[1].name + ", quarter " + contact.ethnicity[0].name + ", quarter " + contact.ethnicity[2].name;
-		} else if (contact.ethnicity[0].name === contact.ethnicity[2].name && contact.ethnicity[1].name !== contact.ethnicity[3].name) {
-			var ethnicity = "Half " + contact.ethnicity[0].name + ", quarter " + contact.ethnicity[1].name + ", quarter " + contact.ethnicity[3].name;
-		} else if (contact.ethnicity[0].name !== contact.ethnicity[1].name) {
-			var ethnicity = contact.ethnicity[0].name + " and " + contact.ethnicity[1].name;
+		var ethnicity;
+		var contactEthnicities = {};
+		for (i in contact.ethnicity) {
+			contactEthnicities[contact.ethnicity[i].name] = 0;
+		};
+		for (i in contact.ethnicity) {
+			contactEthnicities[contact.ethnicity[i].name] += 0.25;
+		};
+		var ethnicities = Object.keys(contactEthnicities);
+		if (ethnicities.length == 1) {
+			ethnicity = ethnicities[0];
+		} else if (ethnicities.length == 2 && contactEthnicities[ethnicities[0]] == 0.5) {
+			ethnicity = "half " + ethnicities[0] + ", half " + ethnicities[1];
+		} else if (ethnicities.length == 2 && contactEthnicities[ethnicities[0]] == 0.75) {
+			ethnicity = "three-quarters " + ethnicities[0] + " and one-quarter " + ethnicities[1];
+		} else if (ethnicities.length == 2 && contactEthnicities[ethnicities[0]] == 0.25) {
+			ethnicity = "three-quarters " + ethnicities[1] + " and one-quarter " + ethnicities[0];
+		} else if (ethnicities.length == 3 && contactEthnicities[ethnicities[0]] == 0.5) {
+			ethnicity = 'half ' + ethnicities[0] + ", quarter " + ethnicities[1] + ", and quarter " + ethnicities[2];
+		} else if (ethnicities.length == 3 && contactEthnicities[ethnicities[1]] == 0.5) {
+			ethnicity = 'half ' + ethnicities[1] + ", quarter " + ethnicities[0] + ", and quarter " + ethnicities[2];
+		} else if (ethnicities.length == 3 && contactEthnicities[ethnicities[2]] == 0.5) {
+			ethnicity = 'half ' + ethnicities[2] + ", quarter " + ethnicities[1] + ", and quarter " + ethnicities[0];
 		} else {
-			var ethnicity = contact.ethnicity[0].name;
-		}
+			ethnicity = ethnicities[0] + ", " + ethnicities[1] + ", " + ethnicities[2] + ", and " + ethnicities[3];
+		};
+		
 		
 		if (contact.gender.identity.name === contact.gender.assigned.name) {
 				var gender = "Cisgender " + contact.gender.identity.name;
@@ -137,7 +153,17 @@ var view = {
 			var personalNetworkItem = document.createElement('li');
 			if (personalNetwork[i].length === 1) {
 				personalNetworkItem.innerHTML = personalNetwork[i][0] + " <button disabled>Meet</button>";
-			} else {
+			} else if (personalNetwork[i][0] === 'a child') {
+				var childBirth = personalNetwork[i][2];
+				var childAge = date.year - childBirth.year;
+				if (childBirth.month < date.month) {childAge--};
+				if (childBirth.month == date.month && childBirth.day < date.day) {childBirth--};
+				if (childAge < 18) {
+				personalNetworkItem.innerHTML = "a " + childAge + "-year-old child";
+				} else {
+				personalNetworkItem.innerHTML = "a " + childAge + "-year-old child" + " <button disabled>Meet</button>";
+				}
+			} else if (personalNetwork[i][1] !== undefined) {
 				personalNetworkItem.innerHTML = personalNetwork[i][0] + ", <a onclick='handlers.jumpToPerson(" + personalNetwork[i][1] + ")'>" + people[personalNetwork[i][1]].name.first + "</a>";
 				}
 			contactPersonalNetwork.appendChild(personalNetworkItem);

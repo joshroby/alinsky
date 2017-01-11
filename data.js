@@ -1495,6 +1495,7 @@ var dataInstitutionNames = {
 		product: [
 			"Taco",
 			"Sandwich",
+			"Pizza",
 			"Copy",
 			"Accounting",
 			"Oil Change",
@@ -1593,6 +1594,19 @@ var dataInstitutionNames = {
 			"Park",
 			"Field",
 			"Trail",
+			],
+	},
+	shelter: {
+		first: [
+			"Community",
+			"Charitable"
+			],
+		product: [
+			"Women & Children",
+			"Safe",
+			],
+		last: [
+			"Shelter",
 			],
 	},
 	religious: {
