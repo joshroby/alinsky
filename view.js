@@ -372,6 +372,9 @@ var view = {
 					}
 				}
 			}
+		if (institution.typicalClientele.race !== undefined) {
+			typicalClienteleText += " ("+institution.typicalClientele.race.name+")";
+			}	
 		if (institution.typicalClientele.genders !== undefined) {
 			for (i in institution.typicalClientele.genders) {
 				typicalClienteleText += ' ' + institution.typicalClientele.genders[i].plural;

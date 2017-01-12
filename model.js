@@ -10,8 +10,8 @@ var congregationsBySect = {};
 var congregationsByReligion = {};
 for (i in dataFaiths) {
 	congregationsByFaith[i] = [];
-	congregationsBySect[i.sect] = [];
-	congregationsByReligion[i.name] = [];
+	congregationsBySect[dataFaiths[i].sect] = [];
+	congregationsByReligion[dataFaiths[i].name] = [];
 	}
 
 var date = {year:2018,month:10,day:5};
@@ -248,7 +248,7 @@ function Institution(neighborhood,type,faith) {
 	// Demographics
 	var typicalClientele = {};
 	var typicalEmployees = {unskilled:{},skilled:{},management:{},executive:{}};
-	var clientGenders = [undefined,undefined,undefined,undefined,undefined,[dataGenders.man],[dataGenders.man],[dataGenders.woman],[dataGenders.woman],[dataGenders.woman,dataGenders.genderqueer]][Math.random()* 10 << 0];
+	var clientGenders = [[],[],[],[],[],[dataGenders.man],[dataGenders.man],[dataGenders.woman],[dataGenders.woman],[dataGenders.woman,dataGenders.genderqueer]][Math.random()* 10 << 0];
 	var clientOrientation = [undefined,undefined,undefined,undefined,undefined,undefined,"Straight","Straight","Straight","Queer"][Math.random()* 10 << 0];
 
 	var clientEthnicities = [dataEthnicities[neighborhood.pickList.ethnicity[neighborhood.pickList.ethnicity.length * Math.random() << 0]]];
@@ -259,9 +259,18 @@ function Institution(neighborhood,type,faith) {
 		for (n=0;n<faith.typicalEthnicities.length/3;n++) {
 			clientEthnicities.push(faith.typicalEthnicities[faith.typicalEthnicities.length * Math.random() << 0]);
 			}
+		if (clientEthnicities[0] == undefined) {clientEthnicities=[]};
 		if (faith.issues.indexOf(dataIssues.homophobia) !== -1 && Math.random() < 0.8) {
 				clientOrientation = "Straight";
 			}
+		};
+	
+	races = {};
+	for (i in clientEthnicities) {
+		races[clientEthnicities[i].assignedRace.key] = 1;
+		};
+	if (Object.keys(races).length === 1) {
+		var clientRace = clientEthnicities[0].assignedRace ;
 		};
 	
 	var activeUnions = [];
@@ -338,7 +347,7 @@ function Institution(neighborhood,type,faith) {
 	this.employees = {volunteer:[],unskilled:[],skilled:[],management:[],executive:[]};
 	this.clients = [];
 	
-	this.typicalClientele = {genders:clientGenders,orientation:clientOrientation,faiths:clientFaiths,ethnicities:clientEthnicities};
+	this.typicalClientele = {genders:clientGenders,orientation:clientOrientation,faiths:clientFaiths,ethnicities:clientEthnicities,race:clientRace};
 	
 	this.organizations = {};
 	this.organizations.unions = activeUnions;
@@ -515,7 +524,6 @@ function Person(neighborhood) {
 		};
 		if (institution !== undefined) {
 			this.connections.push([institution,"works at",level]);
-			console.log(level);
 			institution.employees[level].push(this);
 			console.log(this.name.first + " " + this.name.last + "'s jobSeachPower of " + jobSearchPower + " pulled down a " + institution.paygrade[level] + " " + level + " job at " + institution.name);
 		} else {
@@ -523,7 +531,6 @@ function Person(neighborhood) {
 		}
 	};
 
-	// Level does not reference money
 	this.findHousing = function(institution,level) {
 		if (institution == undefined) {
 			var vacancies = [];
@@ -536,8 +543,6 @@ function Person(neighborhood) {
 			
 			if (vacancies.length === 0) {
 				institution = new Institution(undefined,"residential");
-// 				institution.rent = this.resources.money;
-// 				institution.status = Math.ceil(institution.status / 2 )
 			} else {
 				institution = vacancies[vacancies.length * Math.random() << 0];
 			}
@@ -572,22 +577,13 @@ function Person(neighborhood) {
 		institution.clients.push([this,level]);
 	};
 	
-	// Needs to privilege churches with similar ethnicities, races, status, money
 	this.findChurch = function(church,level) {
 		var churches = [];
-		console.log('findChurch');
 		if (church == undefined && this.faith.denomination !== "Athiest") {
-			console.log(churches);
 			churches = churches.concat(congregationsByFaith[this.faith.key]);
-			console.log(churches);
 			churches = churches.concat(congregationsBySect[this.faith.sect]);
-			console.log(churches);
 			churches = churches.concat(congregationsByReligion[this.faith.name]);
-			console.log(churches);
-			if (churches.length === 0) {
-				var newChurch = new Institution(undefined,"religious",this.faith);
-				churches = [newChurch];
-			}
+//			this produces lists with a lot of duplicates
 		} else if (church !== undefined) {
 			churches = [church];
 		} else if (this.faith.denomination == "Athiest") {
@@ -596,13 +592,30 @@ function Person(neighborhood) {
 		if (level == undefined) {	
 			var level = ["friend","member","volunteer","officer"][Math.min(3,Math.max(0,this.resources.devotion))];
 		}
-//		Need to create a weighted list based on churches rating each church
-//		…in terms of like denomination, sect, typical ethnicity, typical race, money, status
-//		If no existing church rates very high, create a new church (check for atheists)
-//		Sort the churches by rating and pick the top one rather than random	
-		console.log(churches);
-		if (churches.length !== 0) {
-			church = churches[churches.length * Math.random() << 0];
+		for (i in churches) {
+			console.log(churches[i]);
+			var score = Math.random() * 3 << 0;
+			if (churches[i].status > this.resources.status-2 && churches[i].status < this.resources.status+2) {score++};
+			if (churches[i].faith.denomination === this.faith.denomination) {score += 5};
+			if (churches[i].faith.sect === this.faith.sect) {score += 4};
+			if (churches[i].faith.name === this.faith.name) {score += 3};
+			if (churches[i].typicalClientele.ethnicities.indexOf(this.ethnicity[0]) !== -1) {score ++};
+			if (churches[i].typicalClientele.ethnicities.indexOf(this.ethnicity[1]) !== -1) {score ++};
+			if (churches[i].typicalClientele.ethnicities.indexOf(this.ethnicity[2]) !== -1) {score ++};
+			if (churches[i].typicalClientele.ethnicities.indexOf(this.ethnicity[3]) !== -1) {score ++};
+			if (churches[i].typicalClientele.genders.indexOf(this.gender.identity) !== -1) {score ++};
+			if (churches[i].typicalClientele.race === this.race) {score++};
+			if (churches[i].typicalClientele.orientation === this.orientation.name) {score++};
+			if (churches[i].neighborhood.name === this.neighborhood.name) {score++};
+			churches[i] = [churches[i],score];
+			}
+		churches.sort(function(a,b) {return (a[1] < b[1]) ? 1 : ((b[1] < a[1]) ? -1 : 0);});
+		if (churches.length !== 0 && churches[0][1] > 10) {
+			church = churches[0][0];
+			this.connections.push([church,"attends",level]);
+			church.clients.push([this,level]);
+		} else {
+			church = new Institution(undefined,"religious",this.faith);
 			this.connections.push([church,"attends",level]);
 			church.clients.push([this,level]);
 		}
@@ -797,7 +810,7 @@ function Person(neighborhood) {
 		}
 		var children = resources.child + Math.random() * 2 << 0 ;
 		for (i=0;i<children;i++) {
-			var childBirth = {year:date.year - (Math.random() * age <<0),month:Math.random() * 12 << 0,day:Math.random() * 28 << 0};
+			var childBirth = {year:date.year - (Math.random() * (age-15) <<0),month:Math.random() * 12 << 0,day:Math.random() * 28 << 0};
 			this.personalNetwork.push(["a child",undefined,childBirth])
 		}
 	

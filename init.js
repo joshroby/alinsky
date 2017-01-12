@@ -5,7 +5,7 @@ console.log(community);
 var player = new Person();
 player.growUp();
 
-var playerOrganization = new Institution(player.neighborhood,"greenspace");
+var playerOrganization = new Institution(player.neighborhood,"municipal");
 playerOrganization.name = "Organize Now!";
 playerOrganization.paygrade = {unskiled:0,skilled:0,management:0,executive:0};
 playerOrganization.payroll = 1;
