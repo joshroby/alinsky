@@ -12,9 +12,15 @@ for (i in dataFaiths) {
 	congregationsByFaith[i] = [];
 	congregationsBySect[dataFaiths[i].sect] = [];
 	congregationsByReligion[dataFaiths[i].name] = [];
-	}
+	};
 
 var date = {year:2018,month:10,day:5};
+
+function curveRandom(depth) {
+		if (depth == undefined) {depth = 10};
+		var random = Math.random();
+		return (1 - random)/(depth * random + 1)
+	};
 
 function Community(size) {
 
@@ -91,10 +97,27 @@ function Community(size) {
 		}
 	if (faithsPickList[99] === undefined) {faithsPickList[99] = "unitarianUniversalist";};
 	
+	var privilegeByRace = [];
+	for (i in races) {
+		privilegeByRace[dataRaces[races[i]].privilegeRanking] = races[i];
+		};
+	
+	var privilegeByGender = [];
+	var genders = Object.keys(dataGenders);
+	for (i in genders) {
+		privilegeByGender[dataGenders[genders[i]].privilegeRanking] = genders[i];
+		};
+	
 	this.demographics = demographics;
 	this.pickList = {};
 	this.pickList.ethnicities = ethnicitiesPickList;
 	this.pickList.faiths = faithsPickList;
+	
+	this.privilegeList = {};
+	this.privilegeList.race = privilegeByRace;
+	this.privilegeList.gender = privilegeByGender;
+	this.privilegeList.orientation = ["Straight","Queer"];
+	
 	this.population = 10000;
 	
 	// Neighborhoods
@@ -247,7 +270,6 @@ function Institution(neighborhood,type,faith) {
 	
 	// Demographics
 	var typicalClientele = {};
-	var typicalEmployees = {unskilled:{},skilled:{},management:{},executive:{}};
 	var clientGenders = [[],[],[],[],[],[dataGenders.man],[dataGenders.man],[dataGenders.woman],[dataGenders.woman],[dataGenders.woman,dataGenders.genderqueer]][Math.random()* 10 << 0];
 	var clientOrientation = [undefined,undefined,undefined,undefined,undefined,undefined,"Straight","Straight","Straight","Queer"][Math.random()* 10 << 0];
 
@@ -271,6 +293,19 @@ function Institution(neighborhood,type,faith) {
 		};
 	if (Object.keys(races).length === 1) {
 		var clientRace = clientEthnicities[0].assignedRace ;
+		};
+		
+	var typicalEmployees = {unskilled:{},skilled:{},management:{},executive:{}};
+	var q = {unskilled:2,skilled:10,management:20,executive:30};
+	for (e in typicalEmployees) {
+		var races = community.privilegeList.race;
+		if (Math.random() < 0.5) {typicalEmployees[e].race = dataRaces[races[curveRandom(q[e]) * races.length << 0]]};
+		var genders = community.privilegeList.gender;
+		if (Math.random() < 0.5) {typicalEmployees[e].gender = dataGenders[genders[curveRandom(q[e]) * genders.length << 0]]};
+		var orientations = community.privilegeList.orientation;
+		if (Math.random() < 0.5) {typicalEmployees[e].orientation = orientations[curveRandom(q[e]) * orientations.length << 0]};
+		if (Math.random() < 0.5) {typicalEmployees[e].money = 2};
+		if (Math.random() < 0.5) {typicalEmployees[e].status = 5};
 		};
 	
 	var activeUnions = [];

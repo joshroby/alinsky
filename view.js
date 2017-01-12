@@ -393,7 +393,23 @@ var view = {
 				typicalClienteleText += " people";
 			}
 		institutionTypicalClientsCell.innerHTML = typicalClienteleText;
-		institutionTypicalEmployeesCell.innerHTML = institution.typicalEmployees;
+		
+		var typicalEmployeesText = '';
+		for (i in institution.typicalEmployees) {
+				if (institution.typicalEmployees[i].orientation !== undefined) {
+					typicalEmployeesText += institution.typicalEmployees[i].orientation + " ";
+					};
+				if (institution.typicalEmployees[i].race !== undefined) {
+					typicalEmployeesText += institution.typicalEmployees[i].race.name + " ";
+					};
+				if (institution.typicalEmployees[i].gender !== undefined) {
+					typicalEmployeesText += institution.typicalEmployees[i].gender.plural + " ";
+					};
+				typicalEmployeesText += i;
+				if (i === 'unskilled' || i === 'skilled') {typicalEmployeesText += " workers"};
+				typicalEmployeesText += '<br />';
+			}
+		institutionTypicalEmployeesCell.innerHTML = typicalEmployeesText;
 
 		if (institution.type === "religious") {
 			institutionClientsHead.innerHTML = "Congregants";

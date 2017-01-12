@@ -140,18 +140,21 @@ var dataGenders = {
 		name: "Man",
 		plural: "Men",
 		issues: [dataIssues.patriarchy],
+		privilegeRanking: 0,
 		},
 
 	woman: {
 		name: "Woman",
 		plural: "Women",
 		issues: [dataIssues.genderEquity],
+		privilegeRanking: 1,
 		},
 
 	genderqueer: {
 		name: "Genderqueer",
 		plural: "Genderqueers",
 		issues: [dataIssues.genderEquity,dataIssues.queerRights],
+		privilegeRanking: 2,
 		},
 
 	};
@@ -162,42 +165,49 @@ var dataRaces = {
 		name: "First Nations",
 		key: "firstNations",
 		issues: [dataIssues.racialJustice,dataIssues.healthcare,dataIssues.environmentalism],
+		privilegeRanking: 3,
 		},
 
 	white: {
 		name: "White",
 		key: "white",
 		issues: [dataIssues.whiteSupremacy],
+		privilegeRanking: 0,
 		},
 
 	black: {
 		name: "Black",
 		key: "black",
 		issues: [dataIssues.racialJustice],
+		privilegeRanking: 5,
 		},
 
 	asian: {
 		name: "Asian",
 		key: "asian",
 		issues: [dataIssues.racialJustice],
+		privilegeRanking: 1,
 		},
 
 	middleEastern: {
 		name: "Middle Eastern",
 		key: "middleEastern",
 		issues: [dataIssues.racialJustice],
+		privilegeRanking: 2,
 		},
 
 	latinx: {
 		name: "Latinx",
 		key: "latinx",
 		issues: [dataIssues.racialJustice,dataIssues.immigrationReform],
+		privilegeRanking: 4,
 		},
 
 	multiracial: {
 		name: "Multiracial",
 		key: "multiracial",
 		issues: [dataIssues.whiteSupremacy,dataIssues.racialJustice,dataIssues.immigrationReform],
+		privilegeRanking: undefined,
 		},
 
 	};
