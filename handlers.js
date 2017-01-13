@@ -113,11 +113,7 @@ var handlers = {
 	},
 	
 	newEmployee: function() {
-		var newGuy = new Person();
-		newGuy.growUp();
-		newGuy.findHousing();
-		newGuy.findChurch();
-		newGuy.findJob(view.focus.institution);
+		view.focus.institution.newEmployee();
 		view.displayInstitution(view.focus.institution);
 	},
 }

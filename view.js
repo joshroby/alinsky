@@ -334,6 +334,7 @@ var view = {
 		var institutionName = document.getElementById('institutionName');
 		var institutionStatusCell = document.getElementById('institutionStatusCell');
 		var institutionPaygradeCell = document.getElementById('institutionPaygradeCell');
+		var institutionPayrollCell = document.getElementById('institutionPayrollCell');
 		var institutionTypicalClientsCell = document.getElementById('institutionTypicalClientsCell');
 		var institutionTypicalEmployeesCell = document.getElementById('institutionTypicalEmployeesCell');
 		var institutionCapacityCell = document.getElementById('institutionCapacityCell');
@@ -346,6 +347,7 @@ var view = {
 		institutionName.innerHTML = institution.name;
 		institutionStatusCell.innerHTML = institution.status;
 		institutionPaygradeCell.innerHTML = institution.paygrade.unskilled + " / " + institution.paygrade.skilled + " / " + institution.paygrade.management + " / " + institution.paygrade.executive;
+		institutionPayrollCell.innerHTML = institution.payroll.unskilled + " / " + institution.payroll.skilled + " / " + institution.payroll.management + " / " + institution.payroll.executive;
 		institutionCapacityCell.innerHTML = institution.capacity;
 		institutionUnionsCell.innerHTML = 'TK';
 		
@@ -364,17 +366,20 @@ var view = {
 					}
 				}
 			}
+		if (institution.typicalClientele.race !== undefined) {
+			typicalClienteleText += institution.typicalClientele.race.name+" (";
+			}	
 		if (institution.typicalClientele.ethnicities !== undefined && institution.typicalClientele.ethnicities[0] !== undefined) {
 			for (i in institution.typicalClientele.ethnicities) {
-				typicalClienteleText += ' ' + institution.typicalClientele.ethnicities[i].name;
+				typicalClienteleText += institution.typicalClientele.ethnicities[i].name + ' ';
 				if (i == institution.typicalClientele.ethnicities.length-2) {
 					typicalClienteleText += " and";
 					}
 				}
 			}
 		if (institution.typicalClientele.race !== undefined) {
-			typicalClienteleText += " ("+institution.typicalClientele.race.name+")";
-			}	
+			typicalClienteleText += ") ";
+			}
 		if (institution.typicalClientele.genders !== undefined) {
 			for (i in institution.typicalClientele.genders) {
 				typicalClienteleText += ' ' + institution.typicalClientele.genders[i].plural;
@@ -398,6 +403,9 @@ var view = {
 		for (i in institution.typicalEmployees) {
 				if (institution.typicalEmployees[i].orientation !== undefined) {
 					typicalEmployeesText += institution.typicalEmployees[i].orientation + " ";
+					};
+				if (institution.typicalEmployees[i].faith !== undefined) {
+					typicalEmployeesText += dataFaiths[institution.typicalEmployees[i].faith].denomination + " ";
 					};
 				if (institution.typicalEmployees[i].race !== undefined) {
 					typicalEmployeesText += institution.typicalEmployees[i].race.name + " ";

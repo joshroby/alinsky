@@ -7,10 +7,11 @@ player.growUp();
 
 var playerOrganization = new Institution(player.neighborhood,"municipal");
 playerOrganization.name = "Organize Now!";
-playerOrganization.paygrade = {unskiled:0,skilled:0,management:0,executive:0};
-playerOrganization.payroll = 1;
+playerOrganization.paygrade = {unskilled:0,skilled:0,management:0,executive:0};
+playerOrganization.payroll = {unskilled:0,skilled:0,management:0,executive:1};
 playerOrganization.neighborhood = player.neighborhood;
 playerOrganization.typicalClientele = {genders:undefined,orientation:undefined,faiths:undefined,ethnicities:[]};;
+playerOrganization.typicalEmployees = {executive:{race:player.race,gender:player.gender.identity,orientation:player.orientation.name}};
 player.findJob(playerOrganization,"executive");
 
 var playerDayJob = new Institution();

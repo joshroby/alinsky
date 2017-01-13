@@ -165,6 +165,7 @@ var dataRaces = {
 		name: "First Nations",
 		key: "firstNations",
 		issues: [dataIssues.racialJustice,dataIssues.healthcare,dataIssues.environmentalism],
+		ethnicities: [],
 		privilegeRanking: 3,
 		},
 
@@ -172,6 +173,7 @@ var dataRaces = {
 		name: "White",
 		key: "white",
 		issues: [dataIssues.whiteSupremacy],
+		ethnicities: [],
 		privilegeRanking: 0,
 		},
 
@@ -179,6 +181,7 @@ var dataRaces = {
 		name: "Black",
 		key: "black",
 		issues: [dataIssues.racialJustice],
+		ethnicities: [],
 		privilegeRanking: 5,
 		},
 
@@ -186,6 +189,7 @@ var dataRaces = {
 		name: "Asian",
 		key: "asian",
 		issues: [dataIssues.racialJustice],
+		ethnicities: [],
 		privilegeRanking: 1,
 		},
 
@@ -193,6 +197,7 @@ var dataRaces = {
 		name: "Middle Eastern",
 		key: "middleEastern",
 		issues: [dataIssues.racialJustice],
+		ethnicities: [],
 		privilegeRanking: 2,
 		},
 
@@ -200,6 +205,7 @@ var dataRaces = {
 		name: "Latinx",
 		key: "latinx",
 		issues: [dataIssues.racialJustice,dataIssues.immigrationReform],
+		ethnicities: [],
 		privilegeRanking: 4,
 		},
 
@@ -207,6 +213,7 @@ var dataRaces = {
 		name: "Multiracial",
 		key: "multiracial",
 		issues: [dataIssues.whiteSupremacy,dataIssues.racialJustice,dataIssues.immigrationReform],
+		ethnicities: [],
 		privilegeRanking: undefined,
 		},
 
@@ -533,6 +540,11 @@ var dataEthnicities = {
 		endogamy: 0.8,
 		},
 	
+	};
+
+// Builds references back from dataRaces to constituent ethnicities
+for (i in dataEthnicities) {
+		dataEthnicities[i].assignedRace.ethnicities.push(dataEthnicities[i]);
 	};
 
 var common = {

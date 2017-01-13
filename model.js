@@ -261,6 +261,7 @@ function Institution(neighborhood,type,faith) {
 	var skilledCap = Math.ceil(payroll * 0.3);
 	var managementCap = Math.ceil(payroll * 0.2);
 	var executiveCap = Math.ceil(payroll * 0.1);
+	var payroll = {unskilled:unskilledCap,skilled:skilledCap,management:managementCap,executive:executiveCap};
 	
 	// Paygrade
 	var unskilled = 5 + Math.random() * 5 << 0;
@@ -300,12 +301,32 @@ function Institution(neighborhood,type,faith) {
 	for (e in typicalEmployees) {
 		var races = community.privilegeList.race;
 		if (Math.random() < 0.5) {typicalEmployees[e].race = dataRaces[races[curveRandom(q[e]) * races.length << 0]]};
-		var genders = community.privilegeList.gender;
-		if (Math.random() < 0.5) {typicalEmployees[e].gender = dataGenders[genders[curveRandom(q[e]) * genders.length << 0]]};
 		var orientations = community.privilegeList.orientation;
 		if (Math.random() < 0.5) {typicalEmployees[e].orientation = orientations[curveRandom(q[e]) * orientations.length << 0]};
-		if (Math.random() < 0.5) {typicalEmployees[e].money = 2};
-		if (Math.random() < 0.5) {typicalEmployees[e].status = 5};
+		var genders = community.privilegeList.gender;
+		if (Math.random() < 0.5) {typicalEmployees[e].gender = dataGenders[genders[curveRandom(q[e]) * genders.length << 0]];typicalEmployees[e].orientation = "Queer"};
+		if (Math.random() < 0.5) {typicalEmployees[e].faith = community.pickList.faiths[Math.random() * community.pickList.faiths.length << 0]};
+// 		if (Math.random() < 0.5) {typicalEmployees[e].money = 2};
+// 		if (Math.random() < 0.5) {typicalEmployees[e].status = 5};
+		var num = Object.keys(typicalEmployees[e]);
+		num = num.length;
+		if (num === 0 || payroll[e] < 3) {delete typicalEmployees[e]};
+		};
+	if (type === "religious") {
+		if (typicalEmployees.management == undefined) {typicalEmployees.management = {}};
+		if (typicalEmployees.executive == undefined) {typicalEmployees.executive = {}};
+		typicalEmployees.management.faith = faith.key;
+		typicalEmployees.executive.faith = faith.key;
+		if (faith.issues.indexOf(dataIssues.homophobia) !== -1) {
+			for (e in typicalEmployees) {
+				typicalEmployees[e].orientation = "Straight";
+				};
+			};
+		if (faith.issues.indexOf(dataIssues.patriarchy) !== -1) {
+			for (e in typicalEmployees) {
+				typicalEmployees[e].gender = dataGenders.man;
+				};
+			};
 		};
 	
 	var activeUnions = [];
@@ -332,12 +353,19 @@ function Institution(neighborhood,type,faith) {
 		
 		if (this.typicalClientele.orientation !== undefined && newClient.orientation.name !== this.typicalClientele.orientation && Math.random() < 0.8) {
 			newClient.orientation.name = this.typicalClientele.orientation;
-			if (this.typicalClientele.orientation === "Queer") {
-//				Missing code here
+			if (this.typicalClientele.orientation === "Queer" && newClient.orientation.attraction.length == 1) {
+				if (Math.random() > 0.5) {
+					newClient.orientation.attraction = [newClient.gender.identity];
+				} else {
+					newClient.orientation.attraction = [];
+					genders = Object.keys(dataGenders);
+					newClient.orientation.attraction.push(dataGenders[genders[genders.length * Math.random() << 0]]);
+					newClient.orientation.attraction.push(dataGenders[genders[genders.length * Math.random() << 0]]);
+				};
 			} else {
 				var opposite = dataGenders.man;
 				if (newClient.gender.identity.name === "Man") {opposite = dataGenders.woman};
-				newClient.orientation.attractions = [opposite];
+				newClient.orientation.attraction = [opposite];
 				}
 			};
 		
@@ -367,6 +395,75 @@ function Institution(neighborhood,type,faith) {
 		view.displayInstitution(this);
 		
 		};
+		
+	this.newEmployee = function(level) {
+		
+		if (level === undefined) {
+			level = 'unskilled';
+			};
+
+		var newEmployee = new Person();
+		
+		if (this.typicalEmployees[level] !== undefined) {
+			if (this.typicalEmployees[level].gender !== undefined && Math.random() < 0.8) {
+				var gender = this.typicalEmployees[level].gender;
+				newEmployee.gender.public = gender;
+				if (Math.random() < 0.8) {newEmployee.gender.identity = gender};
+				if (Math.random() < 0.8) {newEmployee.gender.assigned = gender};
+				};
+		
+			if (this.typicalEmployees[level].race !== undefined) {
+				var ethnicities = this.typicalEmployees[level].race.ethnicities;
+				if (Math.random() < 0.9) {newEmployee.ethnicity[0] = ethnicities[ethnicities.length * Math.random() << 0]};
+				if (Math.random() < 0.9) {newEmployee.ethnicity[1] = ethnicities[ethnicities.length * Math.random() << 0]};
+				if (Math.random() < 0.9) {newEmployee.ethnicity[2] = ethnicities[ethnicities.length * Math.random() << 0]};
+				if (Math.random() < 0.9) {newEmployee.ethnicity[3] = ethnicities[ethnicities.length * Math.random() << 0]};			
+				};
+		
+			if (this.typicalEmployees[level].orientation !== undefined && Math.random() < 0.8) {
+				newEmployee.orientation.name = this.typicalEmployees[level].orientation;
+				if (this.typicalEmployees[level].orientation === "Queer" && newEmployee.orientation.attraction.length == 1) {
+					if (Math.random() > 0.5) {
+						newEmployee.orientation.attraction = [newEmployee.gender.identity];
+					} else {
+						newEmployee.orientation.attraction = [];
+						genders = Object.keys(dataGenders);
+						newEmployee.orientation.attraction.push(dataGenders[genders[genders.length * Math.random() << 0]]);
+						newEmployee.orientation.attraction.push(dataGenders[genders[genders.length * Math.random() << 0]]);
+					};
+				} else {
+					var opposite = dataGenders.man;
+					if (newEmployee.gender.identity.name === "Man") {opposite = dataGenders.woman};
+					newEmployee.orientation.attraction = [opposite];
+					}
+				};
+		
+			if (this.typicalEmployees[level].faith !== undefined && Math.random() < 0.8) {
+					newEmployee.faith = this.typicalEmployees[level].faith;
+				};
+			};
+		
+		newEmployee.growUp();
+				
+		if (this.type === "religious") {
+			newEmployee.findChurch();
+			newEmployee.findJob(this,level);
+			newEmployee.findHousing();
+		} else if (this.type = "residential") {
+			newEmployee.findHousing();
+			newEmployee.findChurch();
+			newEmployee.findJob(this,level);
+		} else {
+			this.Employees.push([newEmployee,level]);
+			newEmployee.findHousing();
+			newEmployee.findChurch();
+			newEmployee.findJob(this,level);
+			};
+		
+		view.displayNeighborhood(this.neighborhood);
+		view.displayInstitution(this);
+		
+		};
 
 	// And now sticking data on the object for later reference
 	this.name = name;
@@ -374,7 +471,7 @@ function Institution(neighborhood,type,faith) {
 	this.status = status;
 	this.rent = rent;
 	this.capacity = capacity;
-	this.payroll = {unskilled:unskilledCap,skilled:skilledCap,management:managementCap,executive:executiveCap};
+	this.payroll = payroll;
 	this.paygrade = {unskilled:unskilled,skilled:skilled,management:management,executive:executive};
 
 	this.typicalEmployees = typicalEmployees;
@@ -628,7 +725,6 @@ function Person(neighborhood) {
 			var level = ["friend","member","volunteer","officer"][Math.min(3,Math.max(0,this.resources.devotion))];
 		}
 		for (i in churches) {
-			console.log(churches[i]);
 			var score = Math.random() * 3 << 0;
 			if (churches[i].status > this.resources.status-2 && churches[i].status < this.resources.status+2) {score++};
 			if (churches[i].faith.denomination === this.faith.denomination) {score += 5};
