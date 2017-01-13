@@ -1,4 +1,3 @@
-
 var people = [];
 var neighborhoods = [];
 var institutions = [];
@@ -122,9 +121,15 @@ function Community(size) {
 	
 	// Neighborhoods
 	for (neighborhood = 0;neighborhood < size; neighborhood++) {
-		new Neighborhood();
+		var status;
+		if (neighborhood < size / 2 && neighborhood < 6) {
+			status = neighborhood;
+		} else {
+			status = Math.random() * 6 << 0;
+		}
+		new Neighborhood(status);
 		};
-	neighborhoods[0].name = "Downtown";
+	neighborhoods[neighborhoods.length * Math.random() << 0].name = "Downtown";
 	
 	for (i in neighborhoods) {
 		neighborhoods[i].setupDemographics(this);
@@ -132,10 +137,14 @@ function Community(size) {
 	
 	};
 
-function Neighborhood() {
+function Neighborhood(status) {
 
-	var statusDemographics = 1 + Math.random() * 6 << 0;
-	var moneyDemographics = Math.max(1,statusDemographics + [-2,-1,-1,-1,0,1,1,1,2][9 * Math.random() << 0]);
+	if (status === undefined) {
+		status = Math.random() * 6 << 0;
+	};
+
+	var statusDemographics = status;
+	var moneyDemographics = Math.max(0,statusDemographics + [-2,-1,-1,-1,0,1,1,1,2][9 * Math.random() << 0]);
 	
 	var residential = Math.random() * 2 ;
 	var commercial = Math.random();
@@ -154,6 +163,27 @@ function Neighborhood() {
 	for (i in ethnicities) {
 		shareOfEthnicities[ethnicities[i]] = Math.random()*Math.random();
 		}
+
+//	REDLINING CODE that will not compile because it is dependent on community being set up already	
+// 	var privilegeByRace = community.privilegeList.race;
+// 	if (status < 3) {
+// 		var loops = 3 - status;
+// 		for (i=0;i<loops;i++) {
+// 			privilegeByRace.reverse();
+// 			var newResidentsRace = privilegeByRace[curveRandom * privilegeByRace.length << 0];
+// 			var ethnicities = dataRaces[newResidentsRace].ethnicities;
+// 			var newResidentsEthnicity = ethnicities[ethnicities.length * Math.random << 0];
+// 			shareOfEthnicities[newResidentsEthnicity] += Math.random();
+// 			};
+// 	} else if (status > 3) {
+// 		var loops = status - 3;
+// 		for (i=0;i<loops;i++) {
+// 			var newResidentsRace = privilegeByRace[curveRandom * privilegeByRace.length << 0];
+// 			var ethnicities = dataRaces[newResidentsRace].ethnicities;
+// 			var newResidentsEthnicity = ethnicities[ethnicities.length * Math.random << 0];
+// 			shareOfEthnicities[newResidentsEthnicity] += Math.random();
+// 			};
+// 	};
 	
 	var races = Object.keys(dataRaces);
 	var residentsByRace = {};
@@ -275,6 +305,13 @@ function Institution(neighborhood,type,faith) {
 	var clientOrientation = [undefined,undefined,undefined,undefined,undefined,undefined,"Straight","Straight","Straight","Queer"][Math.random()* 10 << 0];
 
 	var clientEthnicities = [dataEthnicities[neighborhood.pickList.ethnicity[neighborhood.pickList.ethnicity.length * Math.random() << 0]]];
+	for (i = 0; i < 3; i++) {
+		var newEthnicity = dataEthnicities[neighborhood.pickList.ethnicity[neighborhood.pickList.ethnicity.length * Math.random() << 0]];
+		if (newEthnicity.name !== clientEthnicities[0].name && newEthnicity.assignedRace === clientEthnicities[0].assignedRace) {
+			clientEthnicities.push(newEthnicity);
+			console.log('ping');
+			};
+		};
 	
 	if (type === "religious") {
 		var clientFaiths = [faith];

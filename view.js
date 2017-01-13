@@ -268,8 +268,8 @@ var view = {
 		var neighborhoodMunicipalList = document.getElementById('neighborhoodMunicipalList');
 		
 		neighborhoodName.innerHTML = neighborhood.name;
-		neighborhoodStatusCell.innerHTML = neighborhood.demographics.status;
-		neighborhoodMoneyCell.innerHTML = neighborhood.demographics.money;
+		neighborhoodStatusCell.innerHTML = descStatus[Math.min(5,Math.max(0,neighborhood.demographics.status))] + " (" + neighborhood.demographics.status + ")";
+		neighborhoodMoneyCell.innerHTML = descPropertyValue[Math.min(5,Math.max(0,neighborhood.demographics.money))] + " (" + neighborhood.demographics.money + ")";
 		
 		neighborhoodResidentialSpan.innerHTML = Math.round(neighborhood.zoning.residential*100) + "%";
 		neighborhoodCommercialSpan.innerHTML = Math.round(neighborhood.zoning.commercial*100) + "%";
@@ -345,7 +345,7 @@ var view = {
 		var institutionEmployeesHead = document.getElementById('institutionEmployeesHead');
 		
 		institutionName.innerHTML = institution.name;
-		institutionStatusCell.innerHTML = institution.status;
+		institutionStatusCell.innerHTML = descQuality[Math.min(5,Math.max(0,institution.status))] + " (" + institution.status + ")";
 		institutionPaygradeCell.innerHTML = institution.paygrade.unskilled + " / " + institution.paygrade.skilled + " / " + institution.paygrade.management + " / " + institution.paygrade.executive;
 		institutionPayrollCell.innerHTML = institution.payroll.unskilled + " / " + institution.payroll.skilled + " / " + institution.payroll.management + " / " + institution.payroll.executive;
 		institutionCapacityCell.innerHTML = institution.capacity;
@@ -353,16 +353,16 @@ var view = {
 		
 		var typicalClienteleText = '';
 		if (institution.typicalClientele.faiths === undefined && institution.typicalClientele.genders === undefined && institution.typicalClientele.orientation === undefined && institution.typicalClientele.ethnicities[0] === undefined) {
-			typicalClienteleText = 'various';
+			typicalClienteleText = 'various ';
 			}
 		if (institution.typicalClientele.orientation !== undefined) {
-			typicalClienteleText += ' ' + institution.typicalClientele.orientation;
+			typicalClienteleText += institution.typicalClientele.orientation + " ";
 			}
 		if (institution.typicalClientele.faiths !== undefined && institution.typicalClientele.genders !== undefined) {
 			for (i in institution.typicalClientele.faiths) {
-				typicalClienteleText += ' ' + institution.typicalClientele.faiths[i].denonyms[0];
+				typicalClienteleText += institution.typicalClientele.faiths[i].denonyms[0] + ' ';
 				if (i == institution.typicalClientele.faiths.length-2) {
-					typicalClienteleText += " and";
+					typicalClienteleText += "and ";
 					}
 				}
 			}
@@ -373,7 +373,7 @@ var view = {
 			for (i in institution.typicalClientele.ethnicities) {
 				typicalClienteleText += institution.typicalClientele.ethnicities[i].name + ' ';
 				if (i == institution.typicalClientele.ethnicities.length-2) {
-					typicalClienteleText += " and";
+					typicalClienteleText += "and ";
 					}
 				}
 			}
@@ -382,20 +382,20 @@ var view = {
 			}
 		if (institution.typicalClientele.genders !== undefined) {
 			for (i in institution.typicalClientele.genders) {
-				typicalClienteleText += ' ' + institution.typicalClientele.genders[i].plural;
+				typicalClienteleText += institution.typicalClientele.genders[i].plural + ' ';
 				if (i == institution.typicalClientele.genders.length-2) {
-					typicalClienteleText += " and";
+					typicalClienteleText += "and ";
 					}
 				}
 			} else if (institution.typicalClientele.faiths !== undefined) {
 				for (i in institution.typicalClientele.faiths) {
-					typicalClienteleText += ' ' + institution.typicalClientele.faiths[i].denonyms[1];
+					typicalClienteleText += institution.typicalClientele.faiths[i].denonyms[1] + ' ';
 				if (i == institution.typicalClientele.faiths.length-2) {
-					typicalClienteleText += " and";
+					typicalClienteleText += " nd ";
 					}
 					}
 			} else {
-				typicalClienteleText += " people";
+				typicalClienteleText += "people";
 			}
 		institutionTypicalClientsCell.innerHTML = typicalClienteleText;
 		

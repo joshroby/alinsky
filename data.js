@@ -12,6 +12,8 @@ var descStatus = ["underclass","lower class","lower-middle class","upper-middle 
 var descMoney = ["poor","struggling","comfortable","well-off","wealthy","very wealthy"];
 var descEducation = ["illiterate","high school diploma","BA","graduate degree","PhD","multiple PhDs"];
 var descNetwork = ["outcast","weak","small","medium","connected","well-connected","power networker"];
+var descPropertyValue = ["abyssmal","cheap","affordable","average","pricey","ludicrous"];
+var descQuality = ["terrible","poor","fair","good","high","ritzy"];
 
 function valuation(coreValue,secondaryValue,conditionalValue,condition,bool,key) {
 	return function(person) {
