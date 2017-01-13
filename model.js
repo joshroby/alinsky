@@ -309,7 +309,6 @@ function Institution(neighborhood,type,faith) {
 		var newEthnicity = dataEthnicities[neighborhood.pickList.ethnicity[neighborhood.pickList.ethnicity.length * Math.random() << 0]];
 		if (newEthnicity.name !== clientEthnicities[0].name && newEthnicity.assignedRace === clientEthnicities[0].assignedRace) {
 			clientEthnicities.push(newEthnicity);
-			console.log('ping');
 			};
 		};
 	
@@ -363,6 +362,9 @@ function Institution(neighborhood,type,faith) {
 			for (e in typicalEmployees) {
 				typicalEmployees[e].gender = dataGenders.man;
 				};
+			};
+		if (faith.typicalEthnicities !== undefined) {
+			typicalEmployees.executive.ethnicities = faith.typicalEthnicities;
 			};
 		};
 	
@@ -476,11 +478,45 @@ function Institution(neighborhood,type,faith) {
 				};
 		
 			if (this.typicalEmployees[level].faith !== undefined && Math.random() < 0.8) {
-					newEmployee.faith = this.typicalEmployees[level].faith;
+					newEmployee.faith = dataFaiths[this.typicalEmployees[level].faith];
 				};
 			};
+
+		if (this.type === "religious" && level === "executive") {
+			if (this.faith.clergyRestrictions.gender !== undefined && Math.random() < 0.9) {
+				newEmployee.gender.identity = this.faith.clergyRestrictions.gender;
+				newEmployee.gender.assigned = this.faith.clergyRestrictions.gender;
+				newEmployee.gender.public = this.faith.clergyRestrictions.gender;
+				}
+			if (this.typicalEmployees.executive.ethnicities !== undefined) {
+				var chance = 0.8;
+				var ethnicities = this.typicalEmployees.executive.ethnicities;
+				if (Math.random() < chance) {newEmployee.ethnicity[0] = ethnicities[ethnicities.length * Math.random() << 0]};
+				if (Math.random() < chance) {newEmployee.ethnicity[1] = ethnicities[ethnicities.length * Math.random() << 0]};
+				if (Math.random() < chance) {newEmployee.ethnicity[2] = ethnicities[ethnicities.length * Math.random() << 0]};
+				if (Math.random() < chance) {newEmployee.ethnicity[3] = ethnicities[ethnicities.length * Math.random() << 0]};
+				}
+			};
 		
-		newEmployee.growUp();
+		for (i=0;i<5;i++) {
+			newEmployee.growUp();
+			if (newEmployee.jobSearchPower() > this.paygrade[level]) {
+				i = 100;
+				};
+			};
+			
+		if (this.type === "religious" && level === "executive") {
+			newEmployee.faith = this.faith;
+			if (this.faith.clergyRestrictions.gender !== undefined) {
+				newEmployee.gender.public = this.faith.clergyRestrictions.gender;
+				var firstNames = newEmployee.ethnicity[0].masculineNames;
+				newEmployee.name.first = firstNames[firstNames.length * Math.random() << 0];;
+				};
+			if (this.faith.clergyRestrictions.orientation !== undefined) {
+				if (newEmployee.orientation.name === "Queer") {newEmployee.orientation.closet = true};
+				}
+			if (this.faith.clergyRestrictions.celibacy === true) {newEmployee.personalNetwork = []}
+			};
 				
 		if (this.type === "religious") {
 			newEmployee.findChurch();
@@ -643,14 +679,27 @@ function Person(neighborhood) {
 	
 	// Network Connection Functions	
 	this.connections = [];
+	
+	this.jobSearchPower = function() {
+		return (1+Math.max(0,this.resources.status))*(1+Math.max(0,this.resources.education))*(1+Math.max(0,this.resources.network));
+		};
+	
 	this.findJob = function(institution,level) {
-		var jobSearchPower = (1+Math.max(0,this.resources.status))*(1+Math.max(0,this.resources.education))*(1+Math.max(0,this.resources.network));
+		var jobSearchPower = this.jobSearchPower();
 		if (institution == undefined && level == undefined) {
 			var openings = [];
 			var crappyOpenings = [];
 			for (i in institutions) {
 				for (l in {unskilled:"unskilled",skilled:"skilled",management:"management",executive:"executive"})
-					if (institutions[i].employees[l].length < institutions[i].payroll[l] && institutions[i].paygrade[l] < jobSearchPower && institutions[i].paygrade[l] < jobSearchPower/2) {
+					var threshold = institutions[i].paygrade[l];
+					if (institutions[i].typicalEmployees[l] !== undefined) {
+						if (institutions[i].typicalEmployees[l].faith !== this.faith.key) {threshold *= 1.3;};
+						if (institutions[i].typicalEmployees[l].gender !== this.gender.public) {threshold *= 1.3;};
+						if (institutions[i].typicalEmployees[l].gender !== this.gender.assigned) {threshold *= 1.3;};
+						if (institutions[i].typicalEmployees[l].orientation !== this.orientation.name) {threshold *= 1.3;};
+						if (institutions[i].typicalEmployees[l].race !== this.race) {threshold *= 1.3;};
+						};
+					if (institutions[i].employees[l].length < institutions[i].payroll[l] && threshold < jobSearchPower && threshold < jobSearchPower/2) {
 						crappyOpenings.push([institutions[i],l]);
 					} else if (institutions[i].employees[l].length < institutions[i].payroll[l] && institutions[i].paygrade[l] < jobSearchPower) {
 						openings.push([institutions[i],l]);
@@ -747,6 +796,7 @@ function Person(neighborhood) {
 	};
 	
 	this.findChurch = function(church,level) {
+		console.log(this.faith);
 		var churches = [];
 		if (church == undefined && this.faith.denomination !== "Athiest") {
 			churches = churches.concat(congregationsByFaith[this.faith.key]);

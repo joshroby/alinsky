@@ -112,8 +112,8 @@ var handlers = {
 		view.displayInstitution(view.focus.institution);
 	},
 	
-	newEmployee: function() {
-		view.focus.institution.newEmployee();
+	newEmployee: function(level) {
+		view.focus.institution.newEmployee(level);
 		view.displayInstitution(view.focus.institution);
 	},
 }

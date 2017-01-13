@@ -281,7 +281,10 @@
 						<td id="institutionEmployeesCell">
 							<ul id="institutionEmployeesList" class="noIndent"></ul>
 							<div class="debug">
-								<button onclick='handlers.newEmployee()'>New Employee</button>
+								<button onclick='handlers.newEmployee("unskilled")'>New Unskilled Employee</button>
+								<button onclick='handlers.newEmployee("skilled")'>New Skilled Employee</button>
+								<button onclick='handlers.newEmployee("management")'>New Manager</button>
+								<button onclick='handlers.newEmployee("executive")'>New Executive</button>
 							</div>
 						</td>
 					</tr>

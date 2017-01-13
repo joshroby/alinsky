@@ -98,26 +98,52 @@ var view = {
 			} else if (contact.gender.identity.name === contact.gender.public.name) {
 				var gender = "Transgender " + contact.gender.identity.name;
 			} else {
-				var gender = "Transgender " + contact.gender.identity.name + " (Publicly, a " + contact.gender.public.name + ")";
+				var gender = "Transgender " + contact.gender.identity.name + " (publicly, a " + contact.gender.public.name + ")";
 			}
 		
 		if (contact.orientation.attraction.length === 0) {
-				var orientation = "Asexual";
+				var publicOrientation = "Asexual";
 			} else if (contact.gender.public.name === "Man" && contact.orientation.attraction[0].name === "Woman" && contact.orientation.attraction.length === 1) {
-				var orientation = "Straight";
+				var publicOrientation = "Straight";
 			} else if (contact.gender.public.name === "Woman" && contact.orientation.attraction[0].name === "Man" && contact.orientation.attraction.length === 1) {
+				var publicOrientation = "Straight";
+			} else if (contact.orientation.attraction.length > 2) {
+				var publicOrientation = "Queer Pansexual";
+			} else if (contact.orientation.attraction.length > 1) {
+				var publicOrientation = "Queer Bisexual";
+			} else if (contact.gender.public.name === "Man" && contact.orientation.attraction[0].name === "Man") {
+				var publicOrientation = "Queer Gay";
+			} else if (contact.gender.public.name === "Woman" && contact.orientation.attraction[0].name === "Woman") {
+				var publicOrientation = "Queer Lesbian";
+			} else {
+				var publicOrientation = "Queer";
+			};
+		
+		if (contact.orientation.attraction.length === 0) {
+				var orientation = "Asexual";
+			} else if (contact.gender.identity.name === "Man" && contact.orientation.attraction[0].name === "Woman" && contact.orientation.attraction.length === 1) {
+				var orientation = "Straight";
+			} else if (contact.gender.identity.name === "Woman" && contact.orientation.attraction[0].name === "Man" && contact.orientation.attraction.length === 1) {
 				var orientation = "Straight";
 			} else if (contact.orientation.attraction.length > 2) {
 				var orientation = "Queer (Pansexual)";
 			} else if (contact.orientation.attraction.length > 1) {
 				var orientation = "Queer (Bisexual)";
-			} else if (contact.gender.public.name === "Man" && contact.orientation.attraction[0].name === "Man") {
+			} else if (contact.gender.identity.name === "Man" && contact.orientation.attraction[0].name === "Man") {
 				var orientation = "Queer (Gay)";
-			} else if (contact.gender.public.name === "Woman" && contact.orientation.attraction[0].name === "Woman") {
+			} else if (contact.gender.identity.name === "Woman" && contact.orientation.attraction[0].name === "Woman") {
 				var orientation = "Queer (Lesbian)";
 			} else {
 				var orientation = "Queer";
-			}
+			};
+		
+		if (contact.orientation.closet === true) {
+			publicOrientation = "Straight";
+			};
+		
+		if (publicOrientation !== orientation) {
+			orientation = orientation + " (publically, " + publicOrientation + ")";
+			};
 		
 		var faith = contact.faith.denomination;
 		

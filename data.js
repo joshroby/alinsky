@@ -572,6 +572,7 @@ var dataFaiths = {
 			congregation: ["Discussion Group"],
 			denonyms: ["Atheist","Atheists"],
 			typicalEthnicities: [undefined],
+			clergyRestrictions: {gender:undefined,orientation:undefined,celibacy:undefined},
 		},
 
 	anglican: {
@@ -583,6 +584,7 @@ var dataFaiths = {
 			congregation: ["Anglican Church"],
 			denonyms: ["Anglican","Anglicans"],
 			typicalEthnicities: [dataEthnicities.english],
+			clergyRestrictions: {gender:undefined,orientation:"Straight",celibacy:undefined},
 		},
 
 	baptist: {
@@ -594,6 +596,7 @@ var dataFaiths = {
 			congregation: ["Baptist Church","Bible Church"],
 			denonyms: ["Baptist","Baptists"],
 			typicalEthnicities: [undefined],
+			clergyRestrictions: {gender:dataGenders.man,orientation:"Straight",celibacy:undefined},
 		},
 
 	lutheran: {
@@ -605,6 +608,7 @@ var dataFaiths = {
 			congregation: ["Lutheran Church"],
 			denonyms: ["Lutheran","Lutherans"],
 			typicalEthnicities: [dataEthnicities.german],
+			clergyRestrictions: {gender:undefined,orientation:"Straight",celibacy:undefined},
 		},
 
 	methodist: {
@@ -616,6 +620,7 @@ var dataFaiths = {
 			congregation: ["Methodist Church"],
 			denonyms: ["Methodist","Methodists"],
 			typicalEthnicities: [dataEthnicities.scots,dataEthnicities.english],
+			clergyRestrictions: {gender:undefined,orientation:"Straight",celibacy:undefined},
 		},
 
 	nondenominationalChristian: {
@@ -627,6 +632,7 @@ var dataFaiths = {
 			congregation: ["Christian Church"],
 			denonyms: ["Christian","Christians"],
 			typicalEthnicities: [dataEthnicities.scots,dataEthnicities.english],
+			clergyRestrictions: {gender:dataGenders.man,orientation:"Straight",celibacy:undefined},
 		},
 	
 	unitedChurchChrist: {
@@ -638,6 +644,7 @@ var dataFaiths = {
 			congregation: ["UCC Church"],
 			denonyms: ["UCC Christian","UCC Christians"],
 			typicalEthnicities: [dataEthnicities.scots,dataEthnicities.english],
+			clergyRestrictions: {gender:undefined,orientation:undefined,celibacy:undefined},
 		},
 
 	africanMethodist: {
@@ -649,6 +656,7 @@ var dataFaiths = {
 			congregation: ["AME Church","African Methodist Church","African Methodist Episcopal Church"],
 			denonyms: ["AME Christian","AME Christians"],
 			typicalEthnicities: [dataEthnicities.africanAmerican],
+			clergyRestrictions: {gender:undefined,orientation:"Straight",celibacy:undefined},
 		},
 
 	romanCatholic: {
@@ -660,6 +668,7 @@ var dataFaiths = {
 			congregation: ["Catholic Church","Cathedral"],
 			denonyms: ["Catholic","Catholics"],
 			typicalEthnicities: [dataEthnicities.scots,dataEthnicities.italian,dataEthnicities.cuban,dataEthnicities.mexican],
+			clergyRestrictions: {gender:dataGenders.man,orientation:"Straight",celibacy:true},
 		},
 
 	greekOrthodox: {
@@ -671,6 +680,7 @@ var dataFaiths = {
 			congregation: ["Greek Orthodox Church","Basilica"],
 			denonyms: ["Greek Christian","Greek Christians"],
 			typicalEthnicities: [dataEthnicities.greek],
+			clergyRestrictions: {gender:dataGenders.man,orientation:"Straight",celibacy:undefined},
 		},
 
 	russianOrthodox: {
@@ -682,6 +692,7 @@ var dataFaiths = {
 			congregation: ["Russian Orthodox Church","Basilica"],
 			denonyms: ["Russian Christian","Russian Christians"],
 			typicalEthnicities: [dataEthnicities.russian],
+			clergyRestrictions: {gender:dataGenders.man,orientation:"Straight",celibacy:undefined},
 		},
 		
 	bahai: {
@@ -693,6 +704,7 @@ var dataFaiths = {
 			congregation: ["Baha'i Faith Center"],
 			denonyms: ["Baha'i","Baha'i"],
 			typicalEthnicities: [dataEthnicities.iranian],
+			clergyRestrictions: {gender:undefined,orientation:"Straight",celibacy:undefined},
 		},
 		
 	buddhism: {
@@ -704,6 +716,7 @@ var dataFaiths = {
 			congregation: ["Temple"],
 			denonyms: ["Buddhist","Buddhists"],
 			typicalEthnicities: [dataEthnicities.hanChinese],
+			clergyRestrictions: {gender:undefined,orientation:"Straight",celibacy:undefined},
 		},
 		
 	shinto: {
@@ -715,6 +728,7 @@ var dataFaiths = {
 			congregation: ["Shrine"],
 			denonyms: ["Buddhist","Buddhists"],
 			typicalEthnicities: [dataEthnicities.japanese],
+			clergyRestrictions: {gender:undefined,orientation:"Straight",celibacy:undefined},
 		},
 		
 	hinduism: {
@@ -727,6 +741,7 @@ var dataFaiths = {
 			denonyms: ["Hindu","Hindus"],
 			school: ["Ashram"],
 			typicalEthnicities: [dataEthnicities.dravidian,dataEthnicities.punjabi],
+			clergyRestrictions: {gender:undefined,orientation:"Straight",celibacy:undefined},
 		},
 		
 	orthodoxJudaism: {
@@ -739,6 +754,7 @@ var dataFaiths = {
 			denonyms: ["Orthodox Jew","Orthodox Jews"],
 			school: ["Yeshiva"],
 			typicalEthnicities: [dataEthnicities.ashkenazim,dataEthnicities.sephardim,dataEthnicities.mizrahim],
+			clergyRestrictions: {gender:dataGenders.man,orientation:"Straight",celibacy:undefined},
 		},
 		
 	reformJudaism: {
@@ -750,6 +766,7 @@ var dataFaiths = {
 			congregation: ["Synagogue","Shul","Temple"],
 			denonyms: ["Reform Jew","Reform Jews"],
 			typicalEthnicities: [dataEthnicities.ashkenazim,dataEthnicities.sephardim,dataEthnicities.mizrahim],
+			clergyRestrictions: {gender:undefined,orientation:"Straight",celibacy:undefined},
 		},
 		
 	conservativeJudaism: {
@@ -761,6 +778,7 @@ var dataFaiths = {
 			congregation: ["Synagogue","Shul","Temple"],
 			denonyms: ["Conservative Jew","Conservative Jews"],
 			typicalEthnicities: [dataEthnicities.ashkenazim,dataEthnicities.sephardim,dataEthnicities.mizrahim],
+			clergyRestrictions: {gender:dataGenders.man,orientation:"Straight",celibacy:undefined},
 		},
 	
 	sunniIslam: {
@@ -772,6 +790,7 @@ var dataFaiths = {
 			congregation: ["Mosque","Islamic Center"],
 			denonyms: ["Sunni","Sunnis"],
 			typicalEthnicities: [dataEthnicities.punjabi,dataEthnicities.arab,dataEthnicities.pakistani,dataEthnicities.indonesian],
+			clergyRestrictions: {gender:undefined,orientation:"Straight",celibacy:undefined},
 		},
 	
 	shiaIslam: {
@@ -783,6 +802,7 @@ var dataFaiths = {
 			congregation: ["Mosque","Islamic Center"],
 			denonyms: ["Shiite","Shiites"],
 			typicalEthnicities: [dataEthnicities.iranian],
+			clergyRestrictions: {gender:dataGenders.man,orientation:"Straight",celibacy:undefined},
 		},
 	
 	sufiIslam: {
@@ -794,6 +814,7 @@ var dataFaiths = {
 			congregation: ["Mosque","Islamic Center"],
 			denonyms: ["Sufi","Sufis"],
 			typicalEthnicities: [undefined],
+			clergyRestrictions: {gender:undefined,orientation:undefined,celibacy:undefined},
 		},
 	
 	nondenominationalIslam: {
@@ -805,6 +826,7 @@ var dataFaiths = {
 			congregation: ["Mosque","Islamic Center"],
 			denonyms: ["Muslim","Muslims"],
 			typicalEthnicities: [dataEthnicities.punjabi,dataEthnicities.arab,dataEthnicities.pakistani,dataEthnicities.indonesian,dataEthnicities.iranian],
+			clergyRestrictions: {gender:undefined,orientation:"Straight",celibacy:undefined},
 		},
 	
 	sikhism: {
@@ -816,6 +838,7 @@ var dataFaiths = {
 			congregation: ["Gurdwara"],
 			denonyms: ["Sikh","Sikhs"],
 			typicalEthnicities: [dataEthnicities.punjabi],
+			clergyRestrictions: {gender:undefined,orientation:"Straight",celibacy:undefined},
 		},
 	
 	neopagan: {
@@ -827,6 +850,7 @@ var dataFaiths = {
 			congregation: ["Circle","Coven"],
 			denonyms: ["Pagan","Pagans"],
 			typicalEthnicities: [dataEthnicities.scots,dataEthnicities.english],
+			clergyRestrictions: {gender:undefined,orientation:undefined,celibacy:undefined},
 		},
 	
 	odinist: {
@@ -838,6 +862,7 @@ var dataFaiths = {
 			congregation: ["Fellowship"],
 			denonyms: ["Odinist","Odinists"],
 			typicalEthnicities: [dataEthnicities.scots,dataEthnicities.english],
+			clergyRestrictions: {gender:undefined,orientation:undefined,celibacy:undefined},
 		},
 	
 	unitarianUniversalist: {
@@ -849,6 +874,7 @@ var dataFaiths = {
 			congregation: ["Unitarian-Universalists","Unitarian-Universalist Congregation","Unitarian-Universalist Community","Unitarian-Universalist Church","Community Church"],
 			denonyms: ["UU","UUs"],
 			typicalEthnicities: [dataEthnicities.scots,dataEthnicities.english,dataEthnicities.italian,dataEthnicities.german,dataEthnicities.ashkenazim],
+			clergyRestrictions: {gender:undefined,orientation:undefined,celibacy:undefined},
 		},
 
 	};
