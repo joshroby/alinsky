@@ -56,6 +56,139 @@ var view = {
 			}
 	},
 	
+	refreshCalendar: function() {
+	
+		var calendarTable = document.getElementById('calendarTable');
+		calendarTable.innerHTML = '';
+		
+		var date = new Date(gameDate.getFullYear(), gameDate.getMonth(),gameDate.getDate() - gameDate.getDay(),0);
+		var startOfMonth = true;
+		
+		for (w=0;w<12;w++) {
+			var week = document.createElement('tr');
+			for (d=0;d<7;d++) {
+				var day = document.createElement('td');
+				var key = date.getFullYear().toString() + ('0' + date.getMonth()).slice(-2) + ('0' + date.getDate()).slice(-2);
+				if (date < gameDate) {
+					day.className = 'calCellPast';
+					day.innerHTML = date.getDate();
+				} else if (events[key] !== undefined) {
+					day.className = 'calCellFutureEvent';
+					day.innerHTML = "<a onclick='handlers.displayDate("+key+")'>" + date.getDate() + "</a>";
+				} else {
+					day.className = 'calCellFutureNone';
+					day.innerHTML = date.getDate();
+				};
+				if (date.getDate() == 1) {startOfMonth = true};
+				week.appendChild(day);
+				date = new Date(date.getFullYear(), date.getMonth(),date.getDate() + 1,0);
+				};
+			var monthLabel = document.createElement('td');
+			if (startOfMonth) {
+				var monthName = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"][date.getMonth()];
+				monthLabel.innerHTML = monthName.substring(0,3);
+				var startOfMonth = false;
+			} else {
+				monthLabel.innerHTML = '';
+				};
+			week.insertBefore(monthLabel,week.firstChild);
+			calendarTable.appendChild(week);
+			};
+	
+	},
+	
+	displayDate: function(date) {
+		
+		var calendarDate = document.getElementById('calendarDate');
+		
+		var defaultEvents = {dawn:"Sleep",morning:"Free!",lunch:"Free!",afternoon:"Free!",evening:"Free!",lateNight:"Sleep"};
+		
+		var todaysEvents = {dawn:[],morning:[],lunch:[],afternoon:[],evening:[],lateNight:[]};
+		for (i in events[date]) {
+			if (events[date][i].date.getHours() == 0) {todaysEvents.lateNight.push(events[date][i])};
+			if (events[date][i].date.getHours() == 4) {todaysEvents.dawn.push(events[date][i])};
+			if (events[date][i].date.getHours() == 8) {todaysEvents.morning.push(events[date][i])};
+			if (events[date][i].date.getHours() == 12) {todaysEvents.lunch.push(events[date][i])};
+			if (events[date][i].date.getHours() == 16) {todaysEvents.afternoon.push(events[date][i])};
+			if (events[date][i].date.getHours() == 20) {todaysEvents.evening.push(events[date][i])};
+			};
+		console.log(todaysEvents);
+		
+		// Add work schedule here (code assumes M-F 9-5)
+		for (i in people[0].connections) {
+			if (people[0].connections[i][1] == "works at") {
+				var hours = people[0].connections[i][3];
+				var workplace = people[0].connections[i][0];
+				for (h in hours) {
+					defaultEvents[hours[h]] = "Work";
+					todaysEvents[hours[h]].push({name:"Work",venue:workplace,sponsors:[]});
+					};
+				};
+			};
+		
+		for (i in defaultEvents) {
+			var cellName = "event" + i.charAt(0).toUpperCase() + i.slice(1);
+			var eventCell = document.getElementById(cellName);
+			if (todaysEvents[i].length > 0) {
+				var eventText = '';
+				if (todaysEvents[i].length > 1) {
+					eventText += '<div class="eventConflict">Schedule Conflict!</div>';
+					};
+				eventText += '<table id = "eventBar"><tr>';
+				for (e in todaysEvents[i]) {
+					eventText += "<td class='eventCell'><h3 class='eventHead'>" + todaysEvents[i][e].name + "</h3>";
+					eventText += "<table class='eventList'><tr><td class='tableHead'>Location:</td><td class='eventInfo'>";
+					if (todaysEvents[i][e].venue !== undefined) {
+						eventText += todaysEvents[i][e].venue.name;
+					} else {
+						eventText += "to be determined";
+						};
+					eventText += "</td></tr>";
+					if (todaysEvents[i][e].sponsors[0] !== undefined) {
+					eventText += "<tr><td class='tableHead'>Sponsors:</td><td class='eventInfo'>";
+						for (s in todaysEvents[i][e].sponsors) {
+							if (todaysEvents[i][e].sponsors[s].name.first == undefined) {
+								eventText += todaysEvents[i][e].sponsors[s].name;
+							} else {
+								eventText += todaysEvents[i][e].sponsors[s].name.first + " " + todaysEvents[i][e].sponsors[s].name.last;
+								};
+							};
+						};
+					eventText += "</td></tr>";
+					var checkSponsors = todaysEvents[i][e].sponsors.indexOf(people[0]) + todaysEvents[i][e].sponsors.indexOf(institutions[0]);
+					if (checkSponsors !== -2) {
+						eventText += "<tr><td class='tableHead'>Prepwork:</td><td class='eventInfo'>"
+						eventText += Math.round(100*todaysEvents[i][e].prepDone/todaysEvents[i][e].prep) + "% (" + (todaysEvents[i][e].prep - todaysEvents[i][e].prepDone) + " hours remaining)";
+						eventText += "</td></tr><tr><td class='tableHead'>Funding:</td><td class='eventInfo'>"
+						eventText += Math.round(100*todaysEvents[i][e].funding/todaysEvents[i][e].cost) + "% ($" + todaysEvents[i][e].funding + " / $" + todaysEvents[i][e].cost + ")";
+						eventText += "</td></tr><tr><td class='tableHead'>RSVPs:</td><td class='eventInfo'>";
+						eventText += todaysEvents[i][e].rsvps.acceptances.length + " accepted, " + todaysEvents[i][e].rsvps.declines.length + " declined";
+						eventText += "</td></tr>"
+					} else if (todaysEvents[i][e].sponsors[0] == undefined && todaysEvents[i].length > 1) {
+						eventText += "<tr><td class='tableHead'>Scheduling:</td><td class='eventInfo'><button disabled>Use Vacation Day</button><button disabled>Call In Sick</button></td></tr>"
+					} else if (todaysEvents[i][e].sponsors[0] !== undefined) {
+						eventText += "<tr><td class='tableHead'>RSVP:</td><td class='eventInfo'>";
+						if (todaysEvents[i][e].playerRSVP === false) {
+							eventText += "<button disabled>Accept</button> <button disabled>Decline</button>";
+						} else {
+							eventText += "yes";
+							};
+						eventText += "</td></tr></td>"
+						};
+						eventText += "</tr></table>";
+					};
+					eventText += "</tr></table></div>";
+					eventCell.innerHTML = eventText;
+			} else {
+				eventCell.innerHTML = "<h3 class='eventHead'>" + defaultEvents[i] + "</h3>";
+				};
+			};
+		
+		calendarDate.innerHTML = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"][events[date][0].date.getMonth()] + ' ' + events[date][0].date.getDate() + ' ' + events[date][0].date.getFullYear();
+	},
+	
 	displayContact: function(contact) {
 	
 		console.log(contact);

@@ -58,6 +58,11 @@ var handlers = {
 		view.displayInstitution(institution);
 	},
 	
+	displayDate: function(date) {
+		view.displayDate(date);
+		handlers.sidebarPaneExpand("cal");
+	},
+	
 	jumpToInstitution: function(index) {
 		var institution = view.focus.contact.connections[index][0];
 		view.displayNeighborhood(institution.neighborhood);

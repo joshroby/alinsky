@@ -17,6 +17,7 @@ li {
 
 td {
 	vertical-align:top;
+/* 	border: 1px solid blue; */
 	}
 
 #newGame {
@@ -202,7 +203,7 @@ dd {
 	display: none;
 	}
 
-#calendar {
+#calendarTable {
 	margin-left: 20px;
 	}
 
@@ -234,6 +235,9 @@ dd {
 	padding-left: 40px;
 	}
 
+.event {
+	}
+
 #contactPane {
 	display: none;
 	}
@@ -258,6 +262,16 @@ dd {
 
 .eventInfo {
 	margin-left: 30px;
+	}
+
+.eventConflict {
+	margin-left: 30px;
+	margin-top: 10px;
+	padding: 3px;
+	font-style: italic;
+	color: red;
+	background: pink;
+	width: 90%;
 	}
 
 .debug {

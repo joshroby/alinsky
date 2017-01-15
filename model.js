@@ -4,6 +4,8 @@ var institutions = [];
 var housing = [];
 var shelters = [];
 
+var events = {};
+
 var congregationsByFaith = {};
 var congregationsBySect = {};
 var congregationsByReligion = {};
@@ -14,6 +16,33 @@ for (i in dataFaiths) {
 	};
 
 var date = {year:2018,month:10,day:5};
+var gameDate = new Date(new Date().getFullYear() + 1, new Date().getMonth(), new Date().getDate(),8);
+
+function Event(name,date,sponsors,venue,cost,prep,rsvps) {
+	this.name = name;
+	this.date = date;
+	
+	this.venue = venue;
+	
+	this.sponsors = sponsors;
+	this.rsvps = {declines:[],acceptances:[]};
+	this.playerRSVP = false;
+	
+	if (cost == undefined) {cost = 0};
+	this.cost = cost;
+	this.funding = 0;
+	
+	if (prep == undefined) {prep = 5};
+	this.prep = prep;
+	this.prepDone = 0;
+	
+	var key = date.getFullYear().toString() + ('0' + date.getMonth()).slice(-2) + ('0' + date.getDate()).slice(-2);
+	if (events[key] == undefined) {
+		events[key] = [this];
+	} else {
+		events[key].push(this);
+		};
+	};
 
 function curveRandom(depth) {
 		if (depth == undefined) {depth = 10};
@@ -741,7 +770,7 @@ function Person(neighborhood) {
 			}
 		};
 		if (institution !== undefined) {
-			this.connections.push([institution,"works at",level]);
+			this.connections.push([institution,"works at",level,["morning","afternoon"]]);
 			institution.employees[level].push(this);
 			console.log(this.name.first + " " + this.name.last + "'s jobSeachPower of " + jobSearchPower + " pulled down a " + institution.paygrade[level] + " " + level + " job at " + institution.name);
 		} else {
@@ -1053,3 +1082,16 @@ function Person(neighborhood) {
 
 };
 
+var calendar = {
+
+	dates: {},
+	
+	createEvent: function(name,date) {
+		var year = date.getFullYear();
+		var month = date.getMonth();
+		var day = date.getDay();
+		var hour = date.getHours();
+		
+		console.log(year,month,day,hour);
+		},
+};
