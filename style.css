@@ -36,7 +36,7 @@ td {
 	background: #BBB;
 	}
 
-.resourceTracker {
+.currenciesTracker {
 	float:right;
 	padding-left: 15px;
 	padding-top: 5px;
@@ -56,6 +56,12 @@ h3 {
 	padding-left: 40px;
 	color: #999;
 	font-size: 80%;
+	}
+
+.tableColumnHead {
+	font-weight: bold;
+	border-bottom: 2px solid black;
+	text-align: center;
 	}
 	
 .sidebar {
@@ -246,6 +252,10 @@ dd {
 	display: none;
 	}
 
+.actionContent {
+	display: none;
+	}
+
 .calHead {
 	font-size: 50%;
 	border-bottom: 1px dotted grey;
@@ -272,6 +282,56 @@ dd {
 	color: red;
 	background: pink;
 	width: 90%;
+	}
+
+.actionTable {
+	margin-left: 5%;
+	width: 80%;
+	max-width: 80%;
+	min-width: 80%;
+/* 
+	border: 1px solid grey;
+	background: #eee;
+ */
+	}
+
+#titleInput {
+	width: 80%;
+	}
+
+#eventNameInput {
+	width: 80%;
+	}
+	
+#actionScheduledBar {
+	margin-left: 5%;
+	}
+
+#actionConnectContent {
+	margin-left: 5%;
+	}
+
+#actionMassCommunicationContent {
+	margin-left: 5%;
+	}
+
+#communicationManageListsDiv {
+	margin-left: 5%;
+	}
+
+.listBox {
+	display:inline-block;
+	vertical-align:top;
+	margin-right: 5%;
+	margin-bottom: 5%;
+	}
+
+#actionDelegateContent {
+	margin-left: 5%;
+	}
+
+#actionSelfCareContent {
+	margin-left: 5%;
 	}
 
 .debug {

@@ -18,6 +18,11 @@ for (i in dataFaiths) {
 var date = {year:2018,month:10,day:5};
 var gameDate = new Date(new Date().getFullYear() + 1, new Date().getMonth(), new Date().getDate(),8);
 
+function advanceClock() {
+	gameDate = new Date(gameDate.getFullYear(),gameDate.getMonth(),gameDate.getDate(),gameDate.getHours()+4);
+	view.refreshHeader();
+	};
+
 function Event(name,date,sponsors,venue,cost,prep,rsvps) {
 	this.name = name;
 	this.date = date;
@@ -400,6 +405,10 @@ function Institution(neighborhood,type,faith) {
 	var activeUnions = [];
 	
 	// Functions
+	this.rename = function(newName) {
+		this.name = newName;
+		};
+	
 	this.newClient = function() {
 
 		var newClient = new Person();
@@ -566,6 +575,23 @@ function Institution(neighborhood,type,faith) {
 		view.displayInstitution(this);
 		
 		};
+		
+	this.newList = function() {
+		this.subscriptionLists.push({name:"New List",subscribers:[]});
+		};
+	
+	this.renameList = function(list,newName) {
+		this.subscriptionLists[list].name = newName;
+		};
+	
+	this.addToList = function(list,subscriber) {
+		var subscriber = this.subscriptionLists[0].subscribers[subscriber];
+		this.subscriptionLists[list].subscribers.push(subscriber);
+		};
+		
+	this.removeFromList = function(list,subscriber) {
+		this.subscriptionLists[list].subscribers.splice(subscriber,1);
+		};
 
 	// And now sticking data on the object for later reference
 	this.name = name;
@@ -583,8 +609,12 @@ function Institution(neighborhood,type,faith) {
 	
 	this.typicalClientele = {genders:clientGenders,orientation:clientOrientation,faiths:clientFaiths,ethnicities:clientEthnicities,race:clientRace};
 	
-	this.organizations = {};
-	this.organizations.unions = activeUnions;
+	this.reputation = {efficacy:0,corruption:0};
+	this.achievements = [];
+	
+	this.subscriptionLists = [{name:'Master List',subscribers:[]}];
+	
+	this.organizations = {unions: activeUnions,allies:[]};
 	
 	this.neighborhood = neighborhood;
 	
@@ -705,6 +735,23 @@ function Person(neighborhood) {
 	this.faith = faith;
 	
 	people.push(this);
+	
+	// Gameplay Functions
+	this.selfCare = function(cost) {
+		people[0].currencies.mana = Math.min(100,people[0].currencies.mana + 20);
+		people[0].currencies.cash -= cost;
+		advanceClock();
+		};
+	
+	this.sleep = function(wake) {
+		if (people[0].currencies.mana < 50) {
+				people[0].currencies.mana = Math.min(50,people[0].currencies.mana + 20);
+			};
+		advanceClock();
+		if (gameDate.getHours() !== wake) {
+			this.sleep(wake);
+			};
+		};
 	
 	// Network Connection Functions	
 	this.connections = [];
@@ -1080,18 +1127,4 @@ function Person(neighborhood) {
 	};	
 	
 
-};
-
-var calendar = {
-
-	dates: {},
-	
-	createEvent: function(name,date) {
-		var year = date.getFullYear();
-		var month = date.getMonth();
-		var day = date.getDay();
-		var hour = date.getHours();
-		
-		console.log(year,month,day,hour);
-		},
 };

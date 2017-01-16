@@ -7,6 +7,20 @@ var view = {
 		institution: '',
 		person: '',
 		},
+		
+	refreshHeader: function() {
+		
+		var currencyMana = document.getElementById('currencyMana');
+		var currencyCash = document.getElementById('currencyCash');
+		var currencyTreasury = document.getElementById('currencyTreasury');
+		var time = document.getElementById('time');
+		
+		currencyMana.innerHTML = people[0].currencies.mana;
+		currencyCash.innerHTML = "$" + people[0].currencies.cash;
+		currencyTreasury.innerHTML = "$" + institutions[0].currencies.cash;
+		
+		time.innerHTML = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][gameDate.getMonth()] + " " + gameDate.getDate() + ", " + gameDate.getFullYear() + " " + gameDate.getHours() + ":00";
+		},
 	
 	refreshContacts: function() {
 		
@@ -259,13 +273,13 @@ var view = {
 			} else if (contact.gender.identity.name === "Woman" && contact.orientation.attraction[0].name === "Man" && contact.orientation.attraction.length === 1) {
 				var orientation = "Straight";
 			} else if (contact.orientation.attraction.length > 2) {
-				var orientation = "Queer (Pansexual)";
+				var orientation = "Queer Pansexual";
 			} else if (contact.orientation.attraction.length > 1) {
-				var orientation = "Queer (Bisexual)";
+				var orientation = "Queer Bisexual";
 			} else if (contact.gender.identity.name === "Man" && contact.orientation.attraction[0].name === "Man") {
-				var orientation = "Queer (Gay)";
+				var orientation = "Queer Gay";
 			} else if (contact.gender.identity.name === "Woman" && contact.orientation.attraction[0].name === "Woman") {
-				var orientation = "Queer (Lesbian)";
+				var orientation = "Queer Lesbian";
 			} else {
 				var orientation = "Queer";
 			};
@@ -645,6 +659,165 @@ var view = {
 		
 		mapInstitutionPane.style.display = 'block';
 		view.focus.institution = institution;
+	},
+	
+	refreshActions: function() {
+		console.log('Refreshing actions…');
+
+		// Scheduled Event Quick Bar
+		var actionScheduleEvents = document.getElementById('actionScheduleEvents');
+		var goToWorkButton = document.getElementById('goToWorkButton');
+		var goToEventButton = document.getElementById('goToEventButton');
+		var goToSleepButton = document.getElementById('goToSleepButton');
+		
+		// Review Organization
+		document.getElementById('organizationName').innerHTML = institutions[0].name;
+		
+		document.getElementById('operationsTreasury').innerHTML = "$" + institutions[0].currencies.cash;
+		
+		var subscribers = []
+		for (i in institutions[0].subscriptionLists) {
+			subscribers.concat(institutions[0].subscriptionLists[i][1]);
+		}
+		document.getElementById('operationsSubscribers').innerHTML = subscribers.length;
+		
+		var volunteers = institutions[0].employees.volunteer;
+		var volunteersList = document.createElement('ul');
+		volunteersList.className = "noIndent";
+		for (i in volunteers) {
+			var volunteersItem = document.createElement('li');
+			volunteersItem.innerHTML = volunteers[i].name.first + " " + volunteers[i].name.last;
+			volunteersList.appendChild(volunteersItem);
+			};
+		document.getElementById('operationsVolunteers').innerHTML = '';	
+		document.getElementById('operationsVolunteers').appendChild(volunteersList);
+		if (volunteers.length === 0) {document.getElementById('operationsVolunteers').innerHTML = 0;};
+		
+		var hires = institutions[0].employees.unskilled.concat(institutions[0].employees.skilled.concat(institutions[0].employees.management.concat(institutions[0].employees.executive)));
+		var hiresList = document.createElement('ul');
+		hiresList.className = "noIndent";
+		for (i in hires) {
+			var hiresItem = document.createElement('li');
+			hiresItem.innerHTML = hires[i].name.first + " " + hires[i].name.last;
+			hiresList.appendChild(hiresItem);
+			};
+		document.getElementById('operationsHires').innerHTML = '';
+		document.getElementById('operationsHires').appendChild(hiresList);
+		
+		var operationsAllies = document.getElementById('operationsAllies');
+		var operationsPledges = document.getElementById('operationsPledges');
+		var operationsReputation = document.getElementById('operationsReputation');
+		var operationsGrants = document.getElementById('operationsGrants');
+		var operationsAchievements = document.getElementById('operationsAchievements');
+		var operationsOffices = document.getElementById('operationsOffices');
+		
+		// Connect with People
+		var connectNeighborButton = document.getElementById('connectNeighborButton');
+		var connectNeighborCost = document.getElementById('connectNeighborCost');
+		var connectCoworkerButton = document.getElementById('connectCoworkerButton');
+		var connectCoworkerCost = document.getElementById('connectCoworkerCost');
+		var connectCongregantButton = document.getElementById('connectCongregantButton');
+		var connectCongregantCost = document.getElementById('connectCongregantCost');
+		var visitContactList = document.getElementById('visitContactList');
+		var makeCallsButton = document.getElementById('makeCallsButton');
+		var makeCallsCost = document.getElementById('makeCallsCost');
+		
+		// Mass Communication
+		var issues = people[0].issues;
+		
+		var newCommunicationList = document.getElementById('newCommunicationList');
+		var editCommunicationList = document.getElementById('editCommunicationList');
+		var communicationTypeCell = document.getElementById('communicationTypeCell');
+		var communicationMailingList = document.getElementById('communicationMailingList');
+		var communicationProgressCell = document.getElementById('communicationProgressCell');
+		var communicationFundingCell = document.getElementById('communicationFundingCell');
+		var communicationArticle01 = document.getElementById('communicationArticle01');
+		var communicationAddArticleButton = document.getElementById('communicationAddArticleButton');
+		var communicationWorkButton = document.getElementById('communicationWorkButton');
+		var communicationPublishButton = document.getElementById('communicationPublishButton');
+		var communicationWorkCost = document.getElementById('communicationWorkCost');
+		var communicationPublishCost = document.getElementById('communicationPublishCost');
+		var communicationScrapButton = document.getElementById('communicationScrapButton');
+		
+		var communicationManageListsDiv = document.getElementById('communicationManageListsDiv');
+		communicationManageListsDiv.innerHTML = '';
+		for (i in institutions[0].subscriptionLists) {
+			var listDiv = document.createElement('div');
+			listDiv.className = 'listBox';
+			var listTitle = document.createElement('h4');
+			listTitle.innerHTML = institutions[0].subscriptionLists[i].name;
+			var listList = document.createElement('ul');
+			for (s in institutions[0].subscriptionLists[i].subscribers) {
+				var listItem = document.createElement('li');
+				var subscriber = institutions[0].subscriptionLists[i].subscribers[s];
+				listItem.innerHTML = subscriber.name.first + " " + subscriber.name.last;
+				if (i > 0) {
+					listItem.innerHTML += " <button onclick='handlers.removeFromList(" + i + "," + s + ")'>-</button>";
+				};
+				listList.appendChild(listItem);
+				};
+			var addSubscriberItem = document.createElement('li');
+			var addSubscriberSelect = document.createElement('select');
+			addSubscriberSelect.id = 'communicationAddToList'+i;
+			addSubscriberSelect.setAttribute('oninput','handlers.addToList('+i+')');
+			var masterSubscribers = institutions[0].subscriptionLists[0].subscribers;
+			if (i > 0) {
+				var headerItem = document.createElement('option');
+				headerItem.disabled = true;
+				headerItem.selected = true;
+				headerItem.innerHTML = "Add…";
+				addSubscriberSelect.appendChild(headerItem);
+				for (p in masterSubscribers) {
+					if (institutions[0].subscriptionLists[i].subscribers.indexOf(masterSubscribers[p]) == -1) {
+						var addSubscriberOption = document.createElement('option');
+						addSubscriberOption.innerHTML = "Add " + masterSubscribers[p].name.first + " " + masterSubscribers[p].name.last;
+						addSubscriberOption.value = p;
+						addSubscriberSelect.appendChild(addSubscriberOption);
+						};
+					};
+				addSubscriberItem.appendChild(addSubscriberSelect);
+				listList.appendChild(addSubscriberItem);
+				};
+			listDiv.appendChild(listTitle);
+			listDiv.appendChild(listList);
+			if (i > 0) {
+				var renameListField = document.createElement('p');
+				renameListField.innerHTML = "<input type='text' id='communicationListRenameField"+i+"' /><button onclick='handlers.renameList("+i+")'>Rename</button>";
+				listDiv.appendChild(renameListField);
+				};
+			communicationManageListsDiv.appendChild(listDiv);
+			};
+		var createNewList = document.createElement('div');
+		createNewList.innerHTML = '<button onclick="handlers.newList()">Create New Mailing List</button>';
+		createNewList.className = 'listBox';
+		communicationManageListsDiv.appendChild(createNewList);
+		
+		// Event Planning
+		var newEventPlanList = document.getElementById('newEventPlanList');
+		var editEventPlanList = document.getElementById('editEventPlanList');
+		var eventPlanDateCell = document.getElementById('eventPlanDateCell');
+		var eventPlanVenueList = document.getElementById('eventPlanVenueList');
+		var eventPlanProgressCell = document.getElementById('eventPlanProgressCell');
+		var eventPlanFundingCell = document.getElementById('eventPlanFundingCell');
+		var eventPlanCauseList = document.getElementById('eventPlanCauseList');
+		var eventPlanValueList = document.getElementById('eventPlanValueList');
+		var eventPlanTargetList = document.getElementById('eventPlanTargetList');
+		var eventPlanDemandList = document.getElementById('eventPlanDemandList');
+		var eventPlanTypeCell = document.getElementById('eventPlanTypeCell');
+		var eventPlanAmenitiesList = document.getElementById('eventPlanAmenitiesList');
+		var eventPlanAddAmenitiesList = document.getElementById('eventPlanAddAmenitiesList');
+		var eventPlanInviteesList = document.getElementById('eventPlanInviteesList');
+		var eventPlanSponsorsList = document.getElementById('eventPlanSponsorsList');
+		var eventPlanPrepButton = document.getElementById('eventPlanPrepButton');
+		var eventPlanPrepCost = document.getElementById('eventPlanPrepCost');
+		var eventPlanScrapButton = document.getElementById('eventPlanScrapButton');
+		
+		// Self Care
+		var selfCareButton = document.getElementById('selfCareButton');
+		var selfCareButton = document.getElementById('selfCareCost');
+		var sleepButton = document.getElementById('sleepButton');
+		var sleepButton = document.getElementById('sleepUntil');
+		
 	},
 
 }

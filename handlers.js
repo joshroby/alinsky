@@ -43,6 +43,31 @@ var handlers = {
 			
 	},
 	
+	actionPaneExpand: function(pane) {
+		var actionOperations = document.getElementById('actionOperations');
+		var actionConnect = document.getElementById('actionConnect');
+		var actionMassCommunication = document.getElementById('actionMassCommunication');
+		var actionEventPlanning = document.getElementById('actionEventPlanning');
+		var actionDelegate = document.getElementById('actionDelegate');
+		var actionSelfCare = document.getElementById('actionSelfCare');
+		
+
+		actionOperations.style.display = 'none';
+		actionConnect.style.display = 'none';
+		actionMassCommunication.style.display = 'none';
+		actionEventPlanning.style.display = 'none';
+		actionDelegate.style.display = 'none';
+		actionSelfCare.style.display = 'none';
+		
+		if (pane == "actionOperations") {actionOperations.style.display = 'block'};
+		if (pane == "actionConnect") {actionConnect.style.display = 'block'};
+		if (pane == "actionMassCommunication") {actionMassCommunication.style.display = 'block'};
+		if (pane == "actionEventPlanning") {actionEventPlanning.style.display = 'block'};
+		if (pane == "actionDelegate") {actionDelegate.style.display = 'block'};
+		if (pane == "actionSelfCare") {actionSelfCare.style.display = 'block'};
+			
+	},
+	
 	displayContact: function(index) {
 		var contact = people[index];
 		view.displayContact(contact);
@@ -120,5 +145,48 @@ var handlers = {
 	newEmployee: function(level) {
 		view.focus.institution.newEmployee(level);
 		view.displayInstitution(view.focus.institution);
+	},
+	
+	renameOrganization: function() {
+		var newName = document.getElementById('organizationRenameField').value;
+		institutions[0].rename(newName);
+		view.refreshActions();
+		view.displayNeighborhood(institutions[0].neighborhood);
+		view.displayInstitution(institutions[0]);
+	},
+	
+	newList: function() {
+		institutions[0].newList();
+		view.refreshActions();
+	},
+	
+	renameList: function(list) {
+		var newName = document.getElementById('communicationListRenameField'+list).value;
+		institutions[0].renameList(list,newName);
+		view.refreshActions();
+	},
+	
+	addToList: function(list) {
+		var subscriber = document.getElementById('communicationAddToList'+list).value;
+		institutions[0].addToList(list,subscriber);
+		view.refreshActions();
+	},
+	
+	removeFromList: function(list,subscriber) {
+		institutions[0].removeFromList(list,subscriber);
+		view.refreshActions();
+	},
+	
+	selfCare: function() {
+		var cost = document.getElementById('selfCareCost').innerHTML;
+		people[0].selfCare(cost);
+	},
+	
+	sleep: function() {
+		var wake = document.getElementById('sleepUntil').innerHTML;
+		var timeOfDay = wake.slice(-2);
+		wake = parseInt(wake.substring(0,wake.length-2));
+		if (timeOfDay === "pm") {wake += 12}
+		people[0].sleep(wake);
 	},
 }
