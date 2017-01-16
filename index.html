@@ -17,20 +17,20 @@
 	
 	<div class="header">
 	
-		<div class="resourceTracker">
+		<div class="currenciesTracker">
 			<span id="time">Oct 5, 2018</span>
 		</div>
 	
-		<div class="resourceTracker">
-			<span id="resourceMana">X</span> mana
+		<div class="currenciesTracker">
+			<span id="currencyMana">X</span> mana
 		</div>
 	
-		<div class="resourceTracker">
-			<span id="resourceCash">X</span> cash
+		<div class="currenciesTracker">
+			<span id="currencyCash">X</span> cash
 		</div>
 	
-		<div class="resourceTracker">
-			<span id="resourceTreasury">X</span> treasury
+		<div class="currenciesTracker">
+			<span id="currencyTreasury">X</span> treasury
 		</div>
 		
 		<ul class="barList" />
@@ -74,7 +74,7 @@
 		<div id="calBar">
 			<h3 onclick="handlers.sidebarPaneExpand('cal')">Calendar</h3>
 			<div id="calBarContents">
-				<table id="calendar">
+				<table id="calendarTable">
 					<tr>
 						<td class="calCellPast">1</td>
 						<td class="calCellPast">2</td>
@@ -188,16 +188,15 @@
 		</div>
 	
 		<div id="actionBar">
-			<h3 onclick="handlers.sidebarPaneExpand('action')">Actions</h3>
+			<h3 onclick="handlers.sidebarPaneExpand('action')">Action</h3>
 			<div id="actionBarContents">
 				<ul class="barList">
-					<li>One-on-One</li>
-					<li>Newsletter</li>
-					<li>Press Release</li>
-					<li>Attend Event</li>
-					<li>Event Planning</li>
-					<li>Day Job</li>
-					<li>Self Care</li>
+					<li onclick='handlers.actionPaneExpand("actionOperations")'>Review Organization</li>
+					<li onclick='handlers.actionPaneExpand("actionConnect")'>One-on-Ones</li>
+					<li onclick='handlers.actionPaneExpand("actionMassCommunication")'>Mass Communication</li>
+					<li onclick='handlers.actionPaneExpand("actionEventPlanning")'>Event Planning</li>
+					<li onclick='handlers.actionPaneExpand("actionDelegate")'>Delegate</li>
+					<li onclick='handlers.actionPaneExpand("actionSelfCare")'>Self Care</li>
 				</ul>
 			</div>
 		</div>
@@ -307,39 +306,59 @@
 		<div id="calPane" class="calContent">
 			<div id="calPaneDay">
 				<h1 id="calendarDate">October 7th, 2017</h1>
+				<div id="calendarDawn">
+					<h3 class="calHead">Dawn:</h3>
+					<div id="eventDawn">
+						<h3 class="eventHead">Sleep</h3>
+					</div>
+				</div>
 				<div id="calendarMorning">
 					<h3 class="calHead">Morning:</h3>
-					<h3 class="eventHead">Work</h3>
+					<div id="eventMorning">
+						<h3 class="eventHead">Work</h3>
+					</div>
 				</div>
 				<div id="calendarAfternoon">
 					<h3 class="calHead">Lunch:</h3>
-					<h3 class="eventHead">Free!</h3>
+					<div id="eventLunch">
+						<h3 class="eventHead">Free!</h3>
+					</div>
 				</div>
 				<div id="calendarAfternoon">
 					<h3 class="calHead">Afternoon:</h3>
-					<h3 class="eventHead">Work</h3>
+					<div id="eventAfternoon">
+						<h3 class="eventHead">Work</h3>
+					</div>
 				</div>
 				<div id="calendarEvening">
 					<h3 class="calHead">Evening:</h3>
-					<h3 class="eventHead">Candlelight Vigil</h3>
-					<table class="eventList">
-						<tr>
-							<td class="tableHead">Location:</td>
-							<td class="eventInfo" id="eventLocation">First Manichean</td>
-						</tr>
-						<tr>
-							<td class="tableHead">Sponsor:</td>
-							<td class="eventInfo" id="eventOrganizer">Downtown Shelter</td>
-						</tr>
-						<tr>
-							<td class="tableHead">Funding:</td>
-							<td class="eventInfo" id="eventFunding">100%</li>
-						</tr>
-						<tr>
-							<td class="tableHead">RSVPs:</td>
-							<td class="eventInfo" id="eventRSVPs">34</li>
-						</tr>
-					</table>
+					<div id="eventEvening">
+						<h3 class="eventHead">Candlelight Vigil</h3>
+						<table class="eventList">
+							<tr>
+								<td class="tableHead">Location:</td>
+								<td class="eventInfo" id="eventLocation">First Manichean</td>
+							</tr>
+							<tr>
+								<td class="tableHead">Sponsor:</td>
+								<td class="eventInfo" id="eventOrganizer">Downtown Shelter</td>
+							</tr>
+							<tr>
+								<td class="tableHead">Funding:</td>
+								<td class="eventInfo" id="eventFunding">100%</li>
+							</tr>
+							<tr>
+								<td class="tableHead">RSVPs:</td>
+								<td class="eventInfo" id="eventRSVPs">34</li>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div id="calendarNight">
+					<h3 class="calHead">Late Night:</h3>
+					<div id="eventLateNight">
+						<h3 class="eventHead">Sleep</h3>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -456,30 +475,452 @@
 		</div>
 		
 		<div id="actionPane" class="actionContent">
-			<h1>Action</h1>
+			<h1 id='actionTitle'>Action</h1>
+			<div id="actionScheduledBar">
+				<table>
+					<tr>
+						<td class="tableHead">
+							On your calendar:
+						</td>
+						<td id="actionScheduleEvents">
+							Placeholder
+							<button id="goToWorkButton" onclick="handlers.goToWork(1)">Go to Work</button>
+							<button id="goToEventButton" onclick="handlers.attendEvent()">Attend Event</button>
+							<button id="goToSleepButton" onclick="handlers.sleep()">Sleep til <span id="sleepUntilDash">8am</span></button>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div id="actionOperations" class="actionContent">
+				<h3 id="organizationName">your Organization</h3>
+				<table>
+					<tr>
+						<td class="tableColumnHead" colspan='2'>People</td>
+						<td class="tableColumnHead" colspan='2'>Money</td>
+						<td class="tableColumnHead" colspan='2'>Allies</td>
+					</tr>
+					<tr>
+						<td class="tableHead">Subscribers:</td>
+						<td id='operationsSubscribers'>X</td>
+						<td class="tableHead">Treasury:</td>
+						<td id='operationsTreasury'>X</td>
+						<td class="tableHead">Allies:</td>
+						<td id='operationsAllies'>X</td>
+					</tr>
+					<tr>
+						<td class="tableHead">Volunteers:</td>
+						<td id='operationsVolunteers'>X</td>
+						<td class="tableHead">Pledges:</td>
+						<td id='operationsPledges'>$0</td>
+						<td class="tableHead">Reputation:</td>
+						<td id='operationsReputation'>unknown</td>
+					</tr>
+					<tr>
+						<td class="tableHead">Hires:</td>
+						<td id='operationsHires'><ul class="noIndent"><li>yourself</li></ul></td>
+						<td class="tableHead">Grants:</td>
+						<td id='operationsGrants'>none</td>
+						<td class="tableHead">Achievements:</td>
+						<td id='operationsAchievements'>X</td>
+					</tr>
+				</table>
+				<table>
+					<tr id='operationsOffices'>
+						<td>
+							<table>
+								<tr>
+									<td class="tableColumnHead" colspan='2'>
+										Home Office
+									</td>
+								</tr>
+								<tr>
+									<td class="tableHead">Location:</td>
+									<td>Your home</td>
+								</tr>
+								<tr>
+									<td class="tableHead">Capacity:</td>
+									<td>3 volunteers</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+				<hr />
+				<input type='text' id='organizationRenameField' value='New name here' onFocus="this.value=''"></input> <button onclick='handlers.renameOrganization()'>Rename Organization</button>
+			</div>
+			<div id="actionConnect" class="actionContent">
+				<div>
+					<h3>Connect with New People</h3>
+					<div id="actionConnectButtons" class="actionConnectContent">
+						<button id='connectNeighborButton' disabled>Connect with a new Neighbor (<span id='connectNeighborCost'>10</span> mana)</button>
+						<button id='connectCoworkerButton' disabled>Connect with a new Coworker (<span id='connectCoworkerCost'>10</span> mana)</button>
+						<button id='connectCongregantButton' disabled>Connect with a new Congregant (<span id='connectCongregantCost'>10</span> mana)</button>
+					</div>
+					<h3>Visit</h3>
+					<div class="actionConnectContent">
+						Meet 
+						<select id='visitContactList'>
+							<option disabled selected>select a Contact</option>
+							<option>Some Guy</option>
+							<option>Some Chick</option>
+							<option>Some Dude</option>
+						</select>
+						to discuss
+						<select id='visitTopicList'>
+							<option disabled selected>select a Topic</option>
+							<option>Invitation</option>
+							<option>Subscription</option>
+							<option>a Sustaining Pledge</option>
+							<option>Event Sponsorship</option>
+							<option>Employment</option>
+							<option>Alliance</option>
+						</select>
+						<button disabled>Go! (<span id="connectVisitCost">10</span> mana)</button>
+					</div>
+					<h3>Call List</h3>
+					<div class="actionConnectContent">
+						<p>
+							1. Call
+							<select id='callContactList0'>
+								<option disabled selected>select a Contact</option>
+								<option>Some Guy</option>
+								<option>Some Chick</option>
+								<option>Some Dude</option>
+							</select>
+							to discuss
+							<select id='callTopicList0'>
+								<option disabled selected>select a Topic</option>
+								<option>Invitation</option>
+								<option>Subscription</option>
+								<option>a Sustaining Pledge</option>
+								<option>Event Sponsorship</option>
+							</select>
+						</p>
+						<p>
+							2. Call
+							<select id='callContactList1'>
+								<option disabled selected>select a Contact</option>
+								<option>Some Guy</option>
+								<option>Some Chick</option>
+								<option>Some Dude</option>
+							</select>
+							to discuss
+							<select id='callTopicList1'>
+								<option disabled selected>select a Topic</option>
+								<option>Invitation</option>
+								<option>Subscription</option>
+								<option>a Sustaining Pledge</option>
+								<option>Event Sponsorship</option>
+							</select>
+						</p>
+						<p>
+							3. Call
+							<select id='callContactList2'>
+								<option disabled selected>select a Contact</option>
+								<option>Some Guy</option>
+								<option>Some Chick</option>
+								<option>Some Dude</option>
+							</select>
+							to discuss
+							<select id='callTopicList2'>
+								<option disabled selected>select a Topic</option>
+								<option>Invitation</option>
+								<option>Subscription</option>
+								<option>a Sustaining Pledge</option>
+								<option>Event Sponsorship</option>
+							</select>
+						</p>
+						<p>
+							4. Call
+							<select id='callContactList3'>
+								<option disabled selected>select a Contact</option>
+								<option>Some Guy</option>
+								<option>Some Chick</option>
+								<option>Some Dude</option>
+							</select>
+							to discuss
+							<select id='callTopicList3'>
+								<option disabled selected>select a Topic</option>
+								<option>Invitation</option>
+								<option>Subscription</option>
+								<option>a Sustaining Pledge</option>
+								<option>Event Sponsorship</option>
+							</select>
+						</p>
+						<button id='makeCallsButton' disabled>Make Calls (<span id='makeCallsCost'>10</span> mana)</button>
+					</div>
+				</div>
+			</div>
+			<div id="actionMassCommunication" class="actionContent">
+				<h3>Compose Mass Communication</h3>
+				<table class="actionTable">
+					<tr>
+						<td colspan='4'><input id='titleInput' type='text' value='Title your communication here' onFocus="this.value=''"></input></td>
+						<td align="right" colspan='4'>
+							<select id='newCommunicationList'>
+								<option disabled selected>Start New…</option>
+								<option value='4'>Newsletter</option>
+								<option value='2'>Flyer</option>
+								<option value='3'>Press Release</option>
+								<option value='3'>Report</option>
+							</select>
+							<select>
+								<option id='editCommunicationList' disabled selected>Edit…</option>
+								<option value='4'>October Newsletter</option>
+								<option value='2'>Rally Flyer</option>
+								<option value='3'>Statement on Recent Violence</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td class="tableHead">Type:</td>
+						<td id='communicationTypeCell'></td>
+						<td class="tableHead">Audience:</td>
+						<td>
+							<select if='communicationMailingList'>
+								<option disabled selected>Choose Mailing List</option>
+								<option>Subscribers</option>
+								<option disabled>Create new Mailing List…</option>
+							</select>
+						</td>
+						<td class="tableHead">Writing:</td>
+						<td id='communicationProgressCell'>50%<br />(4hrs remaining)
+						</td>
+						<td class="tableHead">Cost:</td>
+						<td id='communicationFundingCell'>no cost
+						</td>
+					</tr>
+					<tr id='communicationArticle01'>
+						<td class="tableHead">Cause:</td>
+						<td>
+							<select>
+								<option>Racial Justice</option>
+								<option>Economic Equity</option>
+								<option>Environmentalism</option>
+							</select>
+						</td>
+						<td class="tableHead">Appeal:</td>
+						<td>
+							<select>
+								<option>Ambition</option>
+								<option>Authority</option>
+								<option>Care</option>
+								<option>Fairness</option>
+								<option>Liberty</option>
+								<option>Loyalty</option>
+								<option>Purity</option>
+							</select>
+						</td>
+						<td class="tableHead">Target:</td>
+						<td>
+							<select id="communicationTargetList">
+								<option>Local Government</option>
+								<option>Baron of Industry</option>
+								<option>The Citizenry</option>
+							</select>
+						</td>
+						<td class="tableHead">Demand:</td>
+						<td>
+							<select>
+								<option>Attend Event</option>
+								<option>Raise Wages</option>
+								<option>Allow Union Reps</option>
+								<option>Subscription</option>
+								<option>Sign Petition</option>
+							</select>
+						</td>
+						<td>
+							<button>-</button>
+						</td>
+					</tr>
+					<tr>
+						<td align="right" colspan='8'>
+							<button id='communicationAddArticle'>Add an Article</button>
+							<button id='communicationWork'>Work on this Communication (<span>10</span> mana)</button>
+							<button id='communicationPublish'>Publish this Communication (<span>10</span> mana, $<span>10</span>)</button>
+							<button id='communicationScrap'>Scrap this Communication</button>
+						</td>
+					</tr>
+				</table>
+				<h3>Manage Subscription Lists</h3>
+				<div id='communicationManageListsDiv'>
+				</div>
+			</div>
+			<div id="actionEventPlanning" class="actionContent">
+				<h3>Event Logistics</h3>
+				<div id='actionPlanningPane'>
+					<table class="actionTable">
+						<tr>
+							<td colspan='4'><input id='eventNameInput' type='text' value='Name your event here' onFocus="this.value=''"></input></td>
+							<td align="right" colspan='4'>
+								<select id='newEventPlanList'>
+									<option disabled selected>Plan a New…</option>
+									<option>Rally</option>
+									<option>Protest</option>
+									<option>Vigil</option>
+									<option>Celebration</option>
+									<option>Mixer</option>
+									<option>Action Group</option>
+									<option>Town Hall</option>
+									<option>Faire</option>
+								</select>
+								<select id='editEventPlanList'>
+									<option disabled selected>Review…</option>
+									<option value='3'>The Sit-In</option>
+									<option value='4'>The Rally</option>
+									<option value='5'>The Vigil</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td class="tableHead">Date:</td>
+							<td id='eventPlanDateCell'>Next Tuesday
+							</td>
+							<td class="tableHead">Venue:</td>
+							<td>
+								<select id='eventPlanVenueList'>
+									<option disabled selected>To Be Determined</option>
+									<option>Manichean Church</option>
+									<option>Green Park</option>
+									<option>City Hall</option>
+								</select>
+							</td>
+							<td class="tableHead">Prepwork:</td>
+							<td id='eventPlanProgressCell'>50%<br />(4hrs remaining)
+							</td>
+							<td class="tableHead">Funding:</td>
+							<td id='eventPlanFundingCell'>50%<br />($55 / $110)
+							</td>
+						</tr>
+					<tr>
+						<td class="tableHead">Cause:</td>
+						<td>
+							<select id='eventPlanCauseList'>
+								<option>Racial Justice</option>
+								<option>Economic Equity</option>
+								<option>Environmentalism</option>
+							</select>
+						</td>
+						<td class="tableHead">Appeal:</td>
+						<td>
+							<select id='eventPlanValueList'>
+								<option>Ambition</option>
+								<option>Authority</option>
+								<option>Care</option>
+								<option>Fairness</option>
+								<option>Liberty</option>
+								<option>Loyalty</option>
+								<option>Purity</option>
+							</select>
+						</td>
+						<td class="tableHead">Target:</td>
+						<td>
+							<select id='eventPlanTargetList'>
+								<option>Local Government</option>
+								<option>Baron of Industry</option>
+								<option>Attendees</option>
+								<option>The Citizenry</option>
+							</select>
+						</td>
+						<td class="tableHead">Demand:</td>
+						<td>
+							<select id='eventPlanDemandList'>
+								<option>Attend Event</option>
+								<option>Raise Wages</option>
+								<option>Allow Union Reps</option>
+								<option>Donation</option>
+								<option>Subscription</option>
+								<option>Sign Petition</option>
+							</select>
+						</td>
+					</tr>
+						<tr>
+							<td class="tableHead">Type:</td>
+							<td id='eventPlanTypeCell'>Rally</td>
+							<td class="tableHead">Amenities:</td>
+							<td>
+								<ul id="eventPlanAmenitiesList" class="noIndent"><li>None</il></ul>
+								<select id='eventPlanAddAmenitiesList'>
+									<option>Add Props ($20)</option>
+									<option>Add Decorations ($20)</option>
+									<option>Add Signage ($20)</option>
+									<option>Add Catering ($50)</option>
+									<option>Add Swag ($100)</option>
+									<option>Add Security ($200)</option>
+								</select>
+							</td>
+							<td class="tableHead">Invitees:</td>
+							<td>
+								<ul id="eventPlanInviteesList" class="noIndent">
+									<li>Invite more with a personal call or email</li>
+								</ul>
+							</td>
+							<td class="tableHead">Sponsors:</td>
+							<td>
+								<ul id="eventPlanSponsorsList" class="noIndent">
+									<li>Invite more with a personal call or email</li>
+								</ul>
+							</td>
+						</tr>
+						<tr>
+							<td align='right' colspan='8'>
+								<button id='eventPlanPrepButton'>Prep this Event (<span id='eventPlanPrepCost'>10</span> mana)</button>
+								<button id='eventPlanScrapButton'>Scrap this Event</button>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div id="actionDelegate" class="actionContent">
+				<div id="actionDelegateContent">
+					<table>
+						<tr>
+							<td class="tableHead">In the Office:</td>
+							<td>Nobody</td>
+							<td class="tableHead">Out of the Office:</td>
+							<td>Nobody</td>
+						</tr>
+						<tr>
+							<td colspan='4' align='center'>
+								Ask
+								<select>
+									<option disabled selected>(select a volunteer)</option>
+								</select>
+								to 
+								<select>
+									<option disabled selected>(select a task)</option>
+									<option>research</option>
+									<option>solicit feedback</option>
+									<option>write</option>
+									<option>distribute</option>
+									<option>prep</option>
+									<option>solicit sponsorship</option>
+									<option>invite</option>
+									<option>solicit feedback</option>
+								</select>
+								on 
+								<select>
+									<option disabled selected>(select a project)</option>
+									<option>the rally</option>
+									<option>the newsletter</option>
+									<option>target neighborhood</option>
+								</select>
+								.
+						
+								<button disabled>Please and Thank You</button>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div id="actionSelfCare" class="actionContent">
+				<h3>Recharge those Batteries!</h3>
+				<div id="actionSelfCareContent">
+					<button id='selfCareButton' onclick='handlers.selfCare()'>Self Care ($<span id="selfCareCost">10</span>)</button>
+					<button id='sleepButton' onclick='handlers.sleep()'>Sleep til <span id="sleepUntil">8am</span></button>
+				</div>
+			</div>
 		</div>
-	
-	</div>
-	
-	<div class="header">
-	
-		<div class="resourceTracker">
-			<span id="time">Oct 5, 2018</span>
-		</div>
-	
-		<div class="resourceTracker">
-			<span id="resourceMana">X</span> mana
-		</div>
-	
-		<div class="resourceTracker">
-			<span id="resourceCash">X</span> cash
-		</div>
-	
-		<div class="resourceTracker">
-			<span id="resourceTreasury">X</span> treasury
-		</div>
-		
-		<ul class="barList" />
 	
 	</div>
 	

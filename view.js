@@ -407,12 +407,14 @@ var view = {
 		var issues = [];
 		var issueStrength = 0;
 		for (n in contact.issues) {
-			var person = contact;
-			issueStrength = contact.issues[n].value(contact);
+			issues.push({issue:contact.issues[n],value:contact.issues[n].value(contact)})
+			};
+		issues.sort(function(a,b) {return (a.value > b.value) ? -1 : 1 });
+		for (n in issues) {
 			issuesItem = document.createElement('li');
-			issuesItem.innerHTML =  contact.issues[n].name + " [" + issueStrength + "]";
+			issuesItem.innerHTML =  issues[n].issue.name + " [" + issues[n].value + "]";
 			issuesList.appendChild(issuesItem);
-			}
+			};
 			
 		view.focus.contact = contact;
 		
@@ -672,7 +674,6 @@ var view = {
 		
 		// Review Organization
 		document.getElementById('organizationName').innerHTML = institutions[0].name;
-		
 		document.getElementById('operationsTreasury').innerHTML = "$" + institutions[0].currencies.cash;
 		
 		var subscribers = []
@@ -704,21 +705,75 @@ var view = {
 		document.getElementById('operationsHires').innerHTML = '';
 		document.getElementById('operationsHires').appendChild(hiresList);
 		
-		var operationsAllies = document.getElementById('operationsAllies');
+		var allies = institutions[0].organizations.allies;
+		var alliesList = document.createElement('ul');
+		alliesList.className = 'noIndent';
+		for (i in allies) {
+			var alliesItem = document.createElement('li');
+			alliesItem.innerHTML = allies[i].name;
+			alliesList.appendChild(alliesItem);
+			};
+		document.getElementById('operationsAllies').innerHTML = '';
+		document.getElementById('operationsAllies').appendChild(alliesList);
+		if (allies.length === 0) {document.getElementById('operationsAllies').innerHTML = 0;};	
+		
 		var operationsPledges = document.getElementById('operationsPledges');
 		var operationsReputation = document.getElementById('operationsReputation');
 		var operationsGrants = document.getElementById('operationsGrants');
 		var operationsAchievements = document.getElementById('operationsAchievements');
 		var operationsOffices = document.getElementById('operationsOffices');
 		
-		// Connect with People
-		var connectNeighborButton = document.getElementById('connectNeighborButton');
-		var connectNeighborCost = document.getElementById('connectNeighborCost');
-		var connectCoworkerButton = document.getElementById('connectCoworkerButton');
-		var connectCoworkerCost = document.getElementById('connectCoworkerCost');
-		var connectCongregantButton = document.getElementById('connectCongregantButton');
-		var connectCongregantCost = document.getElementById('connectCongregantCost');
-		var visitContactList = document.getElementById('visitContactList');
+		// Connect with People		
+		var connections = '';
+		var connectCost = 10;
+		if (connectCost > people[0].currencies.mana) {var buttonDisabled = 'disabled'} else {var buttonDisabled = ''};
+		for (i in people[0].connections) {
+			if (i > 0) {
+				if (people[0].connections[i][1] === "lives at") {connections += "<div class='connectNewBox'>Connect with a <br /><button "+buttonDisabled+" onclick='handlers.connectNeighbor("+i+","+connectCost+")'>New Neighbor ("+connectCost+" mana)</button><br />at "+people[0].connections[i][0].name+"</div>"};
+				if (people[0].connections[i][1] === "works at") {connections += "<div class='connectNewBox'>Connect with a <br /><button "+buttonDisabled+" onclick='handlers.connectCoworker("+i+","+connectCost+")'>New Coworker ("+connectCost+" mana)</button><br />at "+people[0].connections[i][0].name+"</div>"};
+				if (people[0].connections[i][1] === "attends") {connections += "<div class='connectNewBox'>Connect with a <br /><button "+buttonDisabled+" onclick='handlers.connectCongregant("+i+","+connectCost+")'>New Congregant ("+connectCost+" mana)</button><br />from "+people[0].connections[i][0].name+"</div>"};
+				};
+			};
+		document.getElementById('actionConnectButtons').innerHTML = connections;
+		
+		// Populate Target Lists		
+		var callCapacity = 4;
+		document.getElementById('visitContactList').innerHTML = '<option selected disabled>Select a Contact</option>';
+		for (i=0;i<callCapacity;i++) {
+			document.getElementById('callContactList'+i).innerHTML = '<option selected disabled>Select a Contact</option>';
+			};
+		document.getElementById('communicationTargetList').innerHTML = '<option value="-1">All Readers</option>';
+		document.getElementById('eventPlanTargetList').innerHTML = '<option value="-1">Attendees</option>';
+
+		var contacts = [];
+		for (n in people) {
+			contacts.push([n,people[n]]);
+			}
+		contacts.sort(function(a,b) {return (a[1].name.last > b[1].name.last) ? 1 : ((b[1].name.last > a[1].name.last) ? -1 : 0);});
+
+		for (p in contacts) {
+			var optionText = contacts[p][1].name.first + " " + contacts[p][1].name.last;
+			var optionValue = contacts[p][0];
+			var visitItem = document.createElement('option');
+			visitItem.innerHTML = optionText;
+			visitItem.value = optionValue;
+			document.getElementById('visitContactList').appendChild(visitItem);
+			for (i=0;i<callCapacity;i++) {
+				var callItem = document.createElement('option');
+				callItem.innerHTML = optionText;
+				callItem.value = optionValue;
+				document.getElementById('callContactList'+i).appendChild(callItem);
+				}
+			var communicationTargetItem = document.createElement('option');
+			communicationTargetItem.innerHTML = optionText;
+			communicationTargetItem.value = optionValue;
+			document.getElementById('communicationTargetList').appendChild(communicationTargetItem);
+			var eventTargetItem = document.createElement('option');
+			eventTargetItem.innerHTML = optionText;
+			eventTargetItem.value = optionValue;
+			document.getElementById('eventPlanTargetList').appendChild(eventTargetItem);	
+			};
+		
 		var makeCallsButton = document.getElementById('makeCallsButton');
 		var makeCallsCost = document.getElementById('makeCallsCost');
 		

@@ -51,7 +51,8 @@ var handlers = {
 		var actionDelegate = document.getElementById('actionDelegate');
 		var actionSelfCare = document.getElementById('actionSelfCare');
 		
-
+		var actionTitle = document.getElementById('actionTitle');
+		
 		actionOperations.style.display = 'none';
 		actionConnect.style.display = 'none';
 		actionMassCommunication.style.display = 'none';
@@ -59,12 +60,12 @@ var handlers = {
 		actionDelegate.style.display = 'none';
 		actionSelfCare.style.display = 'none';
 		
-		if (pane == "actionOperations") {actionOperations.style.display = 'block'};
-		if (pane == "actionConnect") {actionConnect.style.display = 'block'};
-		if (pane == "actionMassCommunication") {actionMassCommunication.style.display = 'block'};
-		if (pane == "actionEventPlanning") {actionEventPlanning.style.display = 'block'};
-		if (pane == "actionDelegate") {actionDelegate.style.display = 'block'};
-		if (pane == "actionSelfCare") {actionSelfCare.style.display = 'block'};
+		if (pane == "actionOperations") {actionTitle.innerHTML = "Review "+institutions[0].name+" Operations";actionOperations.style.display = 'block'};
+		if (pane == "actionConnect") {actionTitle.innerHTML = "One-on-Ones";actionConnect.style.display = 'block'};
+		if (pane == "actionMassCommunication") {actionTitle.innerHTML = "Mass Communication";actionMassCommunication.style.display = 'block'};
+		if (pane == "actionEventPlanning") {actionTitle.innerHTML = "Event Planning";actionEventPlanning.style.display = 'block'};
+		if (pane == "actionDelegate") {actionTitle.innerHTML = "Delegate";actionDelegate.style.display = 'block'};
+		if (pane == "actionSelfCare") {actionTitle.innerHTML = "Self Care";actionSelfCare.style.display = 'block'};
 			
 	},
 	
@@ -155,6 +156,36 @@ var handlers = {
 		view.displayInstitution(institutions[0]);
 	},
 	
+	connectNeighbor: function(index,manaCost) {
+		var institution = people[0].connections[index][0];
+		var contact = institution.newClient();
+		people[0].currencies.mana -= manaCost;
+		view.refreshHeader();
+		view.refreshActions();
+		view.displayContact(contact);
+		handlers.sidebarPaneExpand("contact");
+	},
+	
+	connectCoworker: function(index,manaCost) {
+		var institution = people[0].connections[index][0];
+		var contact = institution.newEmployee();
+		people[0].currencies.mana -= manaCost;
+		view.refreshHeader();
+		view.refreshActions();
+		view.displayContact(contact);
+		handlers.sidebarPaneExpand("contact");
+	},
+	
+	connectCongregant: function(index,manaCost) {
+		var institution = people[0].connections[index][0];
+		var contact = institution.newClient();
+		people[0].currencies.mana -= manaCost;
+		view.refreshHeader();
+		view.refreshActions();
+		view.displayContact(contact);
+		handlers.sidebarPaneExpand("contact");
+	},
+	
 	newList: function() {
 		institutions[0].newList();
 		view.refreshActions();
@@ -180,6 +211,7 @@ var handlers = {
 	selfCare: function() {
 		var cost = document.getElementById('selfCareCost').innerHTML;
 		people[0].selfCare(cost);
+		view.refreshActions();
 	},
 	
 	sleep: function() {
@@ -188,5 +220,6 @@ var handlers = {
 		wake = parseInt(wake.substring(0,wake.length-2));
 		if (timeOfDay === "pm") {wake += 12}
 		people[0].sleep(wake);
+		view.refreshActions();
 	},
 }

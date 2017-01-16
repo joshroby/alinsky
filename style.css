@@ -307,8 +307,15 @@ dd {
 	margin-left: 5%;
 	}
 
-#actionConnectContent {
+.actionConnectContent {
 	margin-left: 5%;
+	}
+
+.connectNewBox {
+	display:inline-block;
+	text-align:center;
+	vertical-align:top;
+	margin-right: 5%;
 	}
 
 #actionMassCommunicationContent {

@@ -24,10 +24,10 @@ player.findHousing(playerHome);
 var playerChurch = new Institution(undefined,"religious",player.faith);
 player.findChurch(playerChurch);
 
-for (qwe=0;qwe<10;qwe++) {
-	handlers.newPerson();
-	}
-
+// for (qwe=0;qwe<10;qwe++) {
+// 	handlers.newPerson();
+// 	}
+// 
 // for (qwe = 0;qwe < 10;qwe++) {
 // 	var date = new Date().getDate() + (Math.random() * 20 << 0);
 // 	var hour = [8,12,16,20][Math.random() * 4 << 0];
@@ -40,8 +40,6 @@ for (qwe=0;qwe<10;qwe++) {
 // 	new Event("event " + qwe,eventDate,sponsors,venue,cost,prep);
 // 	}
 
-institutions[0].subscriptionLists[0].subscribers = [people[1],people[2]];
-
 player.currencies = {};
 player.currencies.mana = 50;
 player.currencies.cash = player.resources.money;
@@ -52,6 +50,7 @@ view.refreshHeader();
 view.refreshMap();
 view.displayContact(player);
 view.displayNeighborhood(neighborhoods[0]);
+// view.displayDate(gameDate);
 handlers.sidebarPaneExpand("contact");
 view.refreshCalendar();
 view.refreshActions();

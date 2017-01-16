@@ -413,7 +413,7 @@ function Institution(neighborhood,type,faith) {
 
 		var newClient = new Person();
 		
-		if (this.typicalClientele.genders !== undefined && Math.random() < 0.8) {
+		if (this.typicalClientele.genders[0] !== undefined && Math.random() < 0.8) {
 			var gender = this.typicalClientele.genders[this.typicalClientele.genders.length * Math.random() << 0];
 			newClient.gender.public = gender;
 			if (Math.random() < 0.8) {newClient.gender.identity = gender};
@@ -470,6 +470,8 @@ function Institution(neighborhood,type,faith) {
 		
 		view.displayNeighborhood(this.neighborhood);
 		view.displayInstitution(this);
+		
+		return newClient;
 		
 		};
 		
@@ -573,6 +575,8 @@ function Institution(neighborhood,type,faith) {
 		
 		view.displayNeighborhood(this.neighborhood);
 		view.displayInstitution(this);
+		
+		return newEmployee;
 		
 		};
 		
