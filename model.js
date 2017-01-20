@@ -4,6 +4,16 @@ var institutions = [];
 var housing = [];
 var shelters = [];
 
+function GameLog() {
+	this.log = [];
+	
+	this.add = function(type,text) {
+		this.log.push([gameDate,type,text]);
+	};
+};
+
+var gameLog = new GameLog();
+
 var events = {};
 
 var congregationsByFaith = {};
@@ -21,32 +31,6 @@ var gameDate = new Date(new Date().getFullYear() + 1, new Date().getMonth(), new
 function advanceClock() {
 	gameDate = new Date(gameDate.getFullYear(),gameDate.getMonth(),gameDate.getDate(),gameDate.getHours()+4);
 	view.refreshHeader();
-	};
-
-function Event(name,date,sponsors,venue,cost,prep,rsvps) {
-	this.name = name;
-	this.date = date;
-	
-	this.venue = venue;
-	
-	this.sponsors = sponsors;
-	this.rsvps = {declines:[],acceptances:[]};
-	this.playerRSVP = false;
-	
-	if (cost == undefined) {cost = 0};
-	this.cost = cost;
-	this.funding = 0;
-	
-	if (prep == undefined) {prep = 5};
-	this.prep = prep;
-	this.prepDone = 0;
-	
-	var key = date.getFullYear().toString() + ('0' + date.getMonth()).slice(-2) + ('0' + date.getDate()).slice(-2);
-	if (events[key] == undefined) {
-		events[key] = [this];
-	} else {
-		events[key].push(this);
-		};
 	};
 
 function curveRandom(depth) {
@@ -1128,7 +1112,159 @@ function Person(neighborhood) {
 		this.values = values;
 		this.issues = issues;
 		this.resources = resources;
-	};	
+	};
 	
+	this.reception = function(action) {
+		console.log(this.name.first + " responds to " + action.constructor.name);
+		
+		var baseCauseValue = 0;
+		var appeal = 0;
+		
+		var reticence = 0;
+		if (action.demand.type === "subscribe") {reticence = 20}
+		else if (action.demand.type === "donate") {reticence = 40}
+		else if (action.demand.type === "attend") {reticence = 60}
+		else if (action.demand.type === "sponsor") {reticence = 80}
+		else if (action.demand.type === "policy") {reticence = 100}
+		else if (action.demand.type === "employment") {reticence = 1000}
+		else if (action.demand.type === "alliance") {reticence = 1000}
+		
+		if (this.issues.indexOf(action.demand.cause) !== -1) {
+			baseCauseValue = action.demand.cause.value(this);
+			appeal = this.values[action.appeal];
+//			is the appeal complementary?
+		} else if (Math.random()*20 < this.values[action.appeal]) {
+			this.issues.push(action.demand.cause);
+			baseCauseValue = action.demand.cause.value(this) / 2;
+			appeal = this.values[action.appeal];
+			};
+		
+		var reputation = 0;
+		for (i in action.sponsors) {
+			reputation += action.sponsors[i][0].reputation.efficacy;
+			reputation -= action.sponsors[i][0].reputation.corruption;
+			}
+		
+		var power = baseCauseValue + appeal + reputation;
+		
+		action.demand.log(this,action.sponsors[0],power,demand.cause);
+		
+		var donation = 5 * Math.pow(2,1+this.resources.money);
+		
+		console.log("power: ",action.demand.strength(this));
+		console.log("reticence: ",reticence);
+		
+		if (action.demand.strength(this) < reticence) {
+			console.log("No thank you.");
+		} else if (action.demand.type === "subscribe") {
+			if (action.demand.subject[0].subscribers.indexOf(this) == -1) {action.demand.subject[0].subscribers.push(this)};
+			if (action.demand.subject.length > 1 && action.demand.subject[1].subscribers.indexOf(this) == -1) {
+				action.demand.subject[1].subscribers.push(this);
+				};
+			view.refreshActions();
+		} else if (action.demand.type === "donate") {
+			action.demand.subject.currencies.cash += donation;
+			action.demand.log(this,this,-80);
+			view.refreshHeader();
+		} else if (action.demand.type === "attend") {
+			if (action.demand.subject.rsvps.acceptances.indexOf(this) == -1) {
+				action.demand.subject.rsvps.acceptances.push(this);
+			};
+			console.log('RSVP! (needs to be a notification for the player)');
+		} else if (action.demand.type === "sponsor") {
+			action.demand.subject[1].sponsors.push({sponsor:action.demand.subject[0],contribution:10*(action.demand.subject[0].rent+4)});
+		} else if (action.demand.type === "policy") {
+			console.log("I'll change that policy!");
+		} else if (action.demand.type === "employment") {
+			console.log("I'll work with you!");
+		} else if (action.demand.type === "alliance") {
+			console.log("My organization is your ally!");
+			};
+	};
+	
+
+};
+
+function Event(name,date,sponsors,venue,cost,prep,rsvps,demand,appeal,target) {
+	this.name = name;
+	this.date = date;
+	
+	this.venue = venue;
+	
+	this.demand = demand;
+	this.appeal = appeal;
+	this.target = target;
+	this.sponsors = sponsors;
+	
+	this.rsvps = {declines:[],acceptances:[]};
+	this.playerRSVP = false;
+	
+	if (cost == undefined) {cost = 0};
+	this.cost = cost;
+	this.funding = 0;
+	
+	if (prep == undefined) {prep = 5};
+	this.prep = prep;
+	this.prepDone = 0;
+	
+	var key = date.getFullYear().toString() + ('0' + date.getMonth()).slice(-2) + ('0' + date.getDate()).slice(-2);
+	if (events[key] == undefined) {
+		events[key] = [this];
+	} else {
+		events[key].push(this);
+		};
+	};
+
+function Communication(articles,publisher) {
+	this.articles = articles;
+	this.publisher = publisher;
+	this.progress = 0;
+	this.funding = 0;
+	this.published = false;
+	};
+
+function Article(demand,appeal,publisher) {
+	this.demand = demand;
+	this.appeal = appeal;
+	this.target = undefined; // will set to the list of current subscribers ON PUBLICATION
+	this.sponsors = [[publisher,0]];
+};
+
+function Call(demand,appeal,target,caller) {
+	this.demand = demand;
+	this.appeal = appeal;
+	this.target = [target];
+	this.sponsors = [[caller,0]];
+};
+
+function Visit(demand,appeal,target,visitor) {
+	this.demand = demand;
+	this.appeal = appeal;
+	this.target = [target];
+	this.sponsors = [[visitor,0]];
+};
+
+function Demand(type,subject,cause) {
+	
+	this.type = type;
+	this.subject = subject;
+	this.cause = cause;
+	this.history = [];
+	
+	this.strength = function(person) {
+		var total = 0;
+		for (i in this.history[person]) {
+			total += this.history[person][i].power;
+		}
+		return total;
+	};
+	
+	this.log = function(person,sponsor,power) {
+		if (this.history[person] !== undefined) {
+			this.history[person].push({sponsor:sponsor,power:power});
+		} else {
+			this.history[person] = [{sponsor:sponsor,power:power}];
+			};
+	};
 
 };

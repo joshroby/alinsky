@@ -24,21 +24,21 @@ player.findHousing(playerHome);
 var playerChurch = new Institution(undefined,"religious",player.faith);
 player.findChurch(playerChurch);
 
-// for (qwe=0;qwe<10;qwe++) {
+// for (qwe=0;qwe<3;qwe++) {
 // 	handlers.newPerson();
 // 	}
-// 
-// for (qwe = 0;qwe < 10;qwe++) {
-// 	var date = new Date().getDate() + (Math.random() * 20 << 0);
-// 	var hour = [8,12,16,20][Math.random() * 4 << 0];
-// 	var eventDate = new Date(new Date().getFullYear() + 1, new Date().getMonth(), date,hour)
-// 	var venue = institutions[institutions.length * Math.random() << 0];
-// 	var sponsors = [institutions[institutions.length * Math.random() << 0]];
-// 	if (Math.random() > 0.5) {sponsors = [people[0]]};
-// 	var cost = (Math.random() * 100 << 0) * 10;
-// 	var prep = (Math.random() * 100 << 0) * 10;
-// 	new Event("event " + qwe,eventDate,sponsors,venue,cost,prep);
-// 	}
+
+for (qwe = 0;qwe < 10;qwe++) {
+	var date = new Date().getDate() + (Math.random() * 20 << 0);
+	var hour = [8,12,16,20][Math.random() * 4 << 0];
+	var eventDate = new Date(new Date().getFullYear() + 1, new Date().getMonth(), date,hour)
+	var type = ["Rally","Vigil","Protest","Faire","Celebration","Mixer","Town Hall","Action Group"][Math.random() * 8 << 0]
+	var venue = institutions[institutions.length * Math.random() << 0];
+	var sponsors = [{sponsor:institutions[institutions.length * Math.random() << 0],contribution:8}];
+	var cost = (Math.random() * 100 << 0) * 10;
+	var prep = (Math.random() * 100 << 0) * 10;
+	new Event(type + " " + qwe,eventDate,sponsors,venue,cost,prep);
+	}
 
 player.currencies = {};
 player.currencies.mana = 50;

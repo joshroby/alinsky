@@ -556,7 +556,7 @@
 						<button id='connectCoworkerButton' disabled>Connect with a new Coworker (<span id='connectCoworkerCost'>10</span> mana)</button>
 						<button id='connectCongregantButton' disabled>Connect with a new Congregant (<span id='connectCongregantCost'>10</span> mana)</button>
 					</div>
-					<h3>Visit</h3>
+					<h3>Pay a Visit</h3>
 					<div class="actionConnectContent">
 						Meet 
 						<select id='visitContactList'>
@@ -657,15 +657,8 @@
 					<tr>
 						<td colspan='4'><input id='titleInput' type='text' value='Title your communication here' onFocus="this.value=''"></input></td>
 						<td align="right" colspan='4'>
-							<select id='newCommunicationList'>
-								<option disabled selected>Start New…</option>
-								<option value='4'>Newsletter</option>
-								<option value='2'>Flyer</option>
-								<option value='3'>Press Release</option>
-								<option value='3'>Report</option>
-							</select>
 							<select>
-								<option id='editCommunicationList' disabled selected>Edit…</option>
+								<option id='editCommunicationList' disabled selected>Edit a Draft</option>
 								<option value='4'>October Newsletter</option>
 								<option value='2'>Rally Flyer</option>
 								<option value='3'>Statement on Recent Violence</option>
@@ -674,7 +667,14 @@
 					</tr>
 					<tr>
 						<td class="tableHead">Type:</td>
-						<td id='communicationTypeCell'></td>
+						<td id='communicationTypeCell'>
+							<select id='communicationTypeList'>
+								<option disabled selected>Select a Type…</option>
+								<option value='4'>Newsletter</option>
+								<option value='2'>Flyer</option>
+								<option value='3'>Press Release</option>
+								<option value='3'>Report</option>
+							</select></td>
 						<td class="tableHead">Audience:</td>
 						<td>
 							<select if='communicationMailingList'>
@@ -753,17 +753,6 @@
 						<tr>
 							<td colspan='4'><input id='eventNameInput' type='text' value='Name your event here' onFocus="this.value=''"></input></td>
 							<td align="right" colspan='4'>
-								<select id='newEventPlanList'>
-									<option disabled selected>Plan a New…</option>
-									<option>Rally</option>
-									<option>Protest</option>
-									<option>Vigil</option>
-									<option>Celebration</option>
-									<option>Mixer</option>
-									<option>Action Group</option>
-									<option>Town Hall</option>
-									<option>Faire</option>
-								</select>
 								<select id='editEventPlanList'>
 									<option disabled selected>Review…</option>
 									<option value='3'>The Sit-In</option>
@@ -836,7 +825,19 @@
 					</tr>
 						<tr>
 							<td class="tableHead">Type:</td>
-							<td id='eventPlanTypeCell'>Rally</td>
+							<td id='eventPlanTypeCell'>
+								<select id='newEventPlanList'>
+									<option disabled selected>Select a Type…</option>
+									<option>Rally</option>
+									<option>Vigil</option>
+									<option>Protest</option>
+									<option>Celebration</option>
+									<option>Faire</option>
+									<option>Mixer</option>
+									<option>Action Group</option>
+									<option>Town Hall</option>
+								</select>
+							</td>
 							<td class="tableHead">Amenities:</td>
 							<td>
 								<ul id="eventPlanAmenitiesList" class="noIndent"><li>None</il></ul>

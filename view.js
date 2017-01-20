@@ -162,10 +162,11 @@ var view = {
 					if (todaysEvents[i][e].sponsors[0] !== undefined) {
 					eventText += "<tr><td class='tableHead'>Sponsors:</td><td class='eventInfo'>";
 						for (s in todaysEvents[i][e].sponsors) {
-							if (todaysEvents[i][e].sponsors[s].name.first == undefined) {
-								eventText += todaysEvents[i][e].sponsors[s].name;
+							console.log(todaysEvents[i][e].sponsors[s].sponsor);
+							if (todaysEvents[i][e].sponsors[s].sponsor.name.first == undefined) {
+								eventText += todaysEvents[i][e].sponsors[s].sponsor.name + "<br />";
 							} else {
-								eventText += todaysEvents[i][e].sponsors[s].name.first + " " + todaysEvents[i][e].sponsors[s].name.last;
+								eventText += todaysEvents[i][e].sponsors[s].sponsor.name.first + " " + todaysEvents[i][e].sponsors[s].sponsor.name.last + "<br />";
 								};
 							};
 						};
@@ -672,6 +673,28 @@ var view = {
 		var goToEventButton = document.getElementById('goToEventButton');
 		var goToSleepButton = document.getElementById('goToSleepButton');
 		
+		// Populates Topics and Demand Lists
+		playerEvents = [];
+		for (d in events) {
+				for (e in events[d]) {
+					if (events[d][e].sponsors.indexOf(institutions[0]) !== -1) {playerEvents.push(events[d][e])};
+				};
+			};
+		for (i in playerEvents) {
+			var visitInviteItem = document.createElement('option');
+			var visitSponsorItem = document.createElement('option');
+			visitInviteItem.innerHTML = "an invite to " + playerEvents[i].name;
+			visitSponsorItem.innerHTML = "sponsoring " + playerEvents[i].name;
+			document.getElementById('visitTopicList').appendChild(visitInviteItem);
+			document.getElementById('visitTopicList').appendChild(visitSponsorItem);
+			
+			var attendItem = document.createElement('option');
+			attendItem.innerHTML = "attend " + playerEvents[i].name;
+			document.getElementById('eventPlanDemandList').appendChild(attendItem);
+			
+//			Also insert into calls and into articles
+			};
+		
 		// Review Organization
 		document.getElementById('organizationName').innerHTML = institutions[0].name;
 		document.getElementById('operationsTreasury').innerHTML = "$" + institutions[0].currencies.cash;
@@ -723,7 +746,7 @@ var view = {
 		var operationsAchievements = document.getElementById('operationsAchievements');
 		var operationsOffices = document.getElementById('operationsOffices');
 		
-		// Connect with People		
+		// Connect with New People		
 		var connections = '';
 		var connectCost = 10;
 		if (connectCost > people[0].currencies.mana) {var buttonDisabled = 'disabled'} else {var buttonDisabled = ''};
@@ -735,8 +758,9 @@ var view = {
 				};
 			};
 		document.getElementById('actionConnectButtons').innerHTML = connections;
-		
-		// Populate Target Lists		
+				
+		// Populate Target Lists
+		// (Article Targets are always 'All Readers'; Event Targets can be 'Attendees' and can be others (for sit-ins))
 		var callCapacity = 4;
 		document.getElementById('visitContactList').innerHTML = '<option selected disabled>Select a Contact</option>';
 		for (i=0;i<callCapacity;i++) {
@@ -747,7 +771,9 @@ var view = {
 
 		var contacts = [];
 		for (n in people) {
-			contacts.push([n,people[n]]);
+			if (n > 0) {
+				contacts.push([n,people[n]]);
+				};
 			}
 		contacts.sort(function(a,b) {return (a[1].name.last > b[1].name.last) ? 1 : ((b[1].name.last > a[1].name.last) ? -1 : 0);});
 
@@ -773,10 +799,10 @@ var view = {
 			eventTargetItem.value = optionValue;
 			document.getElementById('eventPlanTargetList').appendChild(eventTargetItem);	
 			};
-		
+			
 		var makeCallsButton = document.getElementById('makeCallsButton');
 		var makeCallsCost = document.getElementById('makeCallsCost');
-		
+				
 		// Mass Communication
 		var issues = people[0].issues;
 		
@@ -794,6 +820,7 @@ var view = {
 		var communicationPublishCost = document.getElementById('communicationPublishCost');
 		var communicationScrapButton = document.getElementById('communicationScrapButton');
 		
+		// Manage Mailing Lists
 		var communicationManageListsDiv = document.getElementById('communicationManageListsDiv');
 		communicationManageListsDiv.innerHTML = '';
 		for (i in institutions[0].subscriptionLists) {
@@ -848,10 +875,27 @@ var view = {
 		communicationManageListsDiv.appendChild(createNewList);
 		
 		// Event Planning
+		
+		//Populate Venues List
+		var venues = [];
+		for (i in institutions) {
+			if (true) {
+				venues.push({institution:i,name:institutions[i].name});
+				};
+			};
+		venues.sort(function(a,b) {return (a.name > b.name) ? -1 : 1});
+		var eventPlanVenueList = document.getElementById('eventPlanVenueList');
+		eventPlanVenueList.innerHTML = '<option selected value=-1>To Be Determined…</option>';
+		for (i in venues) {
+			var newVenueItem = document.createElement('option');
+			newVenueItem.innerHTML = venues[i].name;
+			newVenueItem.value = venues[i].institution;
+			eventPlanVenueList.appendChild(newVenueItem);
+			};
+			
 		var newEventPlanList = document.getElementById('newEventPlanList');
 		var editEventPlanList = document.getElementById('editEventPlanList');
 		var eventPlanDateCell = document.getElementById('eventPlanDateCell');
-		var eventPlanVenueList = document.getElementById('eventPlanVenueList');
 		var eventPlanProgressCell = document.getElementById('eventPlanProgressCell');
 		var eventPlanFundingCell = document.getElementById('eventPlanFundingCell');
 		var eventPlanCauseList = document.getElementById('eventPlanCauseList');
