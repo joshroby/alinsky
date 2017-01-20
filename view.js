@@ -673,28 +673,6 @@ var view = {
 		var goToEventButton = document.getElementById('goToEventButton');
 		var goToSleepButton = document.getElementById('goToSleepButton');
 		
-		// Populates Topics and Demand Lists
-		playerEvents = [];
-		for (d in events) {
-				for (e in events[d]) {
-					if (events[d][e].sponsors.indexOf(institutions[0]) !== -1) {playerEvents.push(events[d][e])};
-				};
-			};
-		for (i in playerEvents) {
-			var visitInviteItem = document.createElement('option');
-			var visitSponsorItem = document.createElement('option');
-			visitInviteItem.innerHTML = "an invite to " + playerEvents[i].name;
-			visitSponsorItem.innerHTML = "sponsoring " + playerEvents[i].name;
-			document.getElementById('visitTopicList').appendChild(visitInviteItem);
-			document.getElementById('visitTopicList').appendChild(visitSponsorItem);
-			
-			var attendItem = document.createElement('option');
-			attendItem.innerHTML = "attend " + playerEvents[i].name;
-			document.getElementById('eventPlanDemandList').appendChild(attendItem);
-			
-//			Also insert into calls and into articles
-			};
-		
 		// Review Organization
 		document.getElementById('organizationName').innerHTML = institutions[0].name;
 		document.getElementById('operationsTreasury').innerHTML = "$" + institutions[0].currencies.cash;
@@ -745,6 +723,48 @@ var view = {
 		var operationsGrants = document.getElementById('operationsGrants');
 		var operationsAchievements = document.getElementById('operationsAchievements');
 		var operationsOffices = document.getElementById('operationsOffices');
+
+		// Populates Demand Lists
+		var DemandItem;
+		var lists = {visitTopicList:0,callTopicList0:0,eventPlanDemandList:0,articleDemandList0:0};
+		playerEvents = [];
+		for (d in events) {
+			for (e in events[d]) {
+				for (s in events[d][e].sponsors) {
+					if (events[d][e].sponsors[s].sponsor == institutions[0]) {
+						playerEvents.push([events[d][e],d,e])
+						};
+					};
+				};
+			};
+		for (i in lists) {
+			document.getElementById(i).innerHTML = '<option disabled selected>[Select a Demand]</option>';
+			
+			demandItem = document.createElement('option');
+			demandItem.innerHTML = 'subscribe to ' + institutions[0].name;
+			demandItem.value = 'subscribe'
+			document.getElementById(i).appendChild(demandItem);
+			
+			demandItem = document.createElement('option');
+			demandItem.innerHTML = 'donate to ' + institutions[0].name;
+			demandItem.value = 'donate'
+			document.getElementById(i).appendChild(demandItem);
+			
+			for (e in playerEvents) {
+				demandItem = document.createElement('option');
+				demandItem.innerHTML = "attend " + playerEvents[e][0].name;
+				demandItem.value = 'attend ' + playerEvents[e][1] + playerEvents[e][2];
+				document.getElementById(i).appendChild(demandItem);
+				};
+				
+			for (e in playerEvents) {
+				demandItem = document.createElement('option');
+				demandItem.innerHTML = "sponsor " + playerEvents[e][0].name;
+				demandItem.value = 'sponsor ' + playerEvents[e][1] + playerEvents[e][2];
+				document.getElementById(i).appendChild(demandItem);
+			
+				};
+		};
 		
 		// Connect with New People		
 		var connections = '';
@@ -762,44 +782,30 @@ var view = {
 		// Populate Target Lists
 		// (Article Targets are always 'All Readers'; Event Targets can be 'Attendees' and can be others (for sit-ins))
 		var callCapacity = 4;
-		document.getElementById('visitContactList').innerHTML = '<option selected disabled>Select a Contact</option>';
-		for (i=0;i<callCapacity;i++) {
-			document.getElementById('callContactList'+i).innerHTML = '<option selected disabled>Select a Contact</option>';
-			};
+		document.getElementById('visitContactList').innerHTML = '<option selected disabled>[Select a Contact]</option>';
+		document.getElementById('callContactList0').innerHTML = '<option selected disabled>[Select a Contact]</option>';
 		document.getElementById('communicationTargetList').innerHTML = '<option value="-1">All Readers</option>';
 		document.getElementById('eventPlanTargetList').innerHTML = '<option value="-1">Attendees</option>';
-
-		var contacts = [];
-		for (n in people) {
-			if (n > 0) {
-				contacts.push([n,people[n]]);
+		
+		var contactItem;
+		lists = {visitContactList:0,callContactList0:0,communicationTargetList:0,eventPlanTargetList:0};
+		alphPeople = [];
+		for (p in people) {
+			if (p > 0) {
+				alphPeople.push([people[p],p]);
 				};
 			}
-		contacts.sort(function(a,b) {return (a[1].name.last > b[1].name.last) ? 1 : ((b[1].name.last > a[1].name.last) ? -1 : 0);});
-
-		for (p in contacts) {
-			var optionText = contacts[p][1].name.first + " " + contacts[p][1].name.last;
-			var optionValue = contacts[p][0];
-			var visitItem = document.createElement('option');
-			visitItem.innerHTML = optionText;
-			visitItem.value = optionValue;
-			document.getElementById('visitContactList').appendChild(visitItem);
-			for (i=0;i<callCapacity;i++) {
-				var callItem = document.createElement('option');
-				callItem.innerHTML = optionText;
-				callItem.value = optionValue;
-				document.getElementById('callContactList'+i).appendChild(callItem);
-				}
-			var communicationTargetItem = document.createElement('option');
-			communicationTargetItem.innerHTML = optionText;
-			communicationTargetItem.value = optionValue;
-			document.getElementById('communicationTargetList').appendChild(communicationTargetItem);
-			var eventTargetItem = document.createElement('option');
-			eventTargetItem.innerHTML = optionText;
-			eventTargetItem.value = optionValue;
-			document.getElementById('eventPlanTargetList').appendChild(eventTargetItem);	
+		alphPeople.sort(function(a,b) {return (a[0].name.last > b[0].name.last) ? 1 : ((b[0].name.last > a[0].name.last) ? -1 : 0);});
+		for (i in lists) {
+			document.getElementById(i).innerHTML = '<option selected disabled>[Select a Contact]</option>';
+			for (p in alphPeople) {
+				contactItem = document.createElement('option');
+				contactItem.innerHTML = alphPeople[p][0].name.first + " " + alphPeople[p][0].name.last;
+				contactItem.value = alphPeople[p][1]
+				document.getElementById(i).appendChild(contactItem);
+				};
 			};
-			
+
 		var makeCallsButton = document.getElementById('makeCallsButton');
 		var makeCallsCost = document.getElementById('makeCallsCost');
 				
@@ -917,6 +923,30 @@ var view = {
 		var sleepButton = document.getElementById('sleepButton');
 		var sleepButton = document.getElementById('sleepUntil');
 		
+	},
+	
+	addCall: function() {
+		var newCall = document.getElementById('call0').cloneNode(true);
+		var callNum = document.getElementById('actionCalls').lastElementChild.id;
+		callNum = callNum.replace(/\D/g,'');
+		callNum = parseInt(callNum) + 1;
+		newCall.id = "call" + callNum;
+		newCall.children[0].id = 'callContactList' + callNum;
+		newCall.children[1].id = 'callTopicList' + callNum;
+		newCall.children[2].id = 'deleteCallButton' + callNum;
+		newCall.children[2].setAttribute('onclick','handlers.deleteCall('+callNum+')');
+		document.getElementById('actionCalls').appendChild(newCall);
+		
+		var totalCalls = document.getElementById('actionCalls').children.length;
+		if (totalCalls > 4) {document.getElementById('addCallButton').disabled = true}
+	},
+	
+	deleteCall: function(index) {
+		var call = document.getElementById('call' + index);
+		document.getElementById('actionCalls').removeChild(call);
+		
+		var totalCalls = document.getElementById('actionCalls').children.length;
+		if (totalCalls < 5) {document.getElementById('addCallButton').disabled = false}
 	},
 
 }

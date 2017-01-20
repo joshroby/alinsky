@@ -44,6 +44,9 @@ var handlers = {
 	},
 	
 	actionPaneExpand: function(pane) {
+		
+		view.refreshActions();
+		
 		var actionOperations = document.getElementById('actionOperations');
 		var actionConnect = document.getElementById('actionConnect');
 		var actionMassCommunication = document.getElementById('actionMassCommunication');
@@ -122,6 +125,7 @@ var handlers = {
 		if (newGuy.resources.devotion > 1) {newGuy.findChurch()};
 		view.refreshContacts();
 		handlers.jumpToPerson(people.length-1);
+		view.refreshActions();
 	},
 
 	newNeighborhood: function() {
@@ -136,16 +140,19 @@ var handlers = {
 		view.refreshMap();
 		view.displayNeighborhood(view.focus.neighborhood);
 		view.displayInstitution(newInstitution);
+		view.refreshActions();
 	},
 	
 	newClient: function() {
 		view.focus.institution.newClient();
 		view.displayInstitution(view.focus.institution);
+		view.refreshActions();
 	},
 	
 	newEmployee: function(level) {
 		view.focus.institution.newEmployee(level);
 		view.displayInstitution(view.focus.institution);
+		view.refreshActions();
 	},
 	
 	renameOrganization: function() {
@@ -184,6 +191,14 @@ var handlers = {
 		view.refreshActions();
 		view.displayContact(contact);
 		handlers.sidebarPaneExpand("contact");
+	},
+	
+	addCall: function() {
+		view.addCall();
+	},
+	
+	deleteCall: function(index) {
+		view.deleteCall(index);
 	},
 	
 	newList: function() {

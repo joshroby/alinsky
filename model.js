@@ -1112,6 +1112,7 @@ function Person(neighborhood) {
 		this.values = values;
 		this.issues = issues;
 		this.resources = resources;
+		
 	};
 	
 	this.reception = function(action) {

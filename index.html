@@ -565,13 +565,13 @@
 							<option>Some Chick</option>
 							<option>Some Dude</option>
 						</select>
-						to discuss
+						asking that they
 						<select id='visitTopicList'>
 							<option disabled selected>select a Topic</option>
-							<option>Invitation</option>
-							<option>Subscription</option>
-							<option>a Sustaining Pledge</option>
-							<option>Event Sponsorship</option>
+							<option>Subscription to</option>
+							<option>a Donation</option>
+							<option>Invitation to</option>
+							<option>Sponsoring</option>
 							<option>Employment</option>
 							<option>Alliance</option>
 						</select>
@@ -579,74 +579,27 @@
 					</div>
 					<h3>Call List</h3>
 					<div class="actionConnectContent">
-						<p>
-							1. Call
-							<select id='callContactList0'>
-								<option disabled selected>select a Contact</option>
-								<option>Some Guy</option>
-								<option>Some Chick</option>
-								<option>Some Dude</option>
-							</select>
-							to discuss
-							<select id='callTopicList0'>
-								<option disabled selected>select a Topic</option>
-								<option>Invitation</option>
-								<option>Subscription</option>
-								<option>a Sustaining Pledge</option>
-								<option>Event Sponsorship</option>
-							</select>
-						</p>
-						<p>
-							2. Call
-							<select id='callContactList1'>
-								<option disabled selected>select a Contact</option>
-								<option>Some Guy</option>
-								<option>Some Chick</option>
-								<option>Some Dude</option>
-							</select>
-							to discuss
-							<select id='callTopicList1'>
-								<option disabled selected>select a Topic</option>
-								<option>Invitation</option>
-								<option>Subscription</option>
-								<option>a Sustaining Pledge</option>
-								<option>Event Sponsorship</option>
-							</select>
-						</p>
-						<p>
-							3. Call
-							<select id='callContactList2'>
-								<option disabled selected>select a Contact</option>
-								<option>Some Guy</option>
-								<option>Some Chick</option>
-								<option>Some Dude</option>
-							</select>
-							to discuss
-							<select id='callTopicList2'>
-								<option disabled selected>select a Topic</option>
-								<option>Invitation</option>
-								<option>Subscription</option>
-								<option>a Sustaining Pledge</option>
-								<option>Event Sponsorship</option>
-							</select>
-						</p>
-						<p>
-							4. Call
-							<select id='callContactList3'>
-								<option disabled selected>select a Contact</option>
-								<option>Some Guy</option>
-								<option>Some Chick</option>
-								<option>Some Dude</option>
-							</select>
-							to discuss
-							<select id='callTopicList3'>
-								<option disabled selected>select a Topic</option>
-								<option>Invitation</option>
-								<option>Subscription</option>
-								<option>a Sustaining Pledge</option>
-								<option>Event Sponsorship</option>
-							</select>
-						</p>
+						<ol id="actionCalls">
+							<li id='call0'>
+								Call
+								<select id='callContactList0'>
+									<option disabled selected>select a Contact</option>
+									<option>Some Guy</option>
+									<option>Some Chick</option>
+									<option>Some Dude</option>
+								</select>
+								asking that they
+								<select id='callTopicList0'>
+									<option disabled selected>select a Topic</option>
+									<option>Subsription to</option>
+									<option>a Donation</option>
+									<option>Invitation to</option>
+									<option>Sponsoring</option>
+								</select>
+								<button id="deleteCallButton0" onclick='handlers.deleteCall("0")'>-</button>
+							</li>
+						</ol>
+						<button id='addCallButton' onclick='handlers.addCall()'>Add Call</button>
 						<button id='makeCallsButton' disabled>Make Calls (<span id='makeCallsCost'>10</span> mana)</button>
 					</div>
 				</div>
@@ -690,7 +643,7 @@
 						<td id='communicationFundingCell'>no cost
 						</td>
 					</tr>
-					<tr id='communicationArticle01'>
+					<tr id='communicationArticle0'>
 						<td class="tableHead">Cause:</td>
 						<td>
 							<select>
@@ -721,7 +674,7 @@
 						</td>
 						<td class="tableHead">Demand:</td>
 						<td>
-							<select>
+							<select id='articleDemandList0'>
 								<option>Attend Event</option>
 								<option>Raise Wages</option>
 								<option>Allow Union Reps</option>
@@ -846,6 +799,7 @@
 									<option>Add Decorations ($20)</option>
 									<option>Add Signage ($20)</option>
 									<option>Add Catering ($50)</option>
+									<option>Add Childcare ($50)</option>
 									<option>Add Swag ($100)</option>
 									<option>Add Security ($200)</option>
 								</select>
