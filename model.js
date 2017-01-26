@@ -15,6 +15,7 @@ function GameLog() {
 var gameLog = new GameLog();
 
 var events = {};
+var demands = [];
 
 var congregationsByFaith = {};
 var congregationsBySect = {};
@@ -580,6 +581,18 @@ function Institution(neighborhood,type,faith) {
 	this.removeFromList = function(list,subscriber) {
 		this.subscriptionLists[list].subscribers.splice(subscriber,1);
 		};
+		
+	this.highestCauseReputation = function() {
+		var highest = 0;
+		var current = 'playerReputation';
+		for (i in dataIssues) {
+			if (this.reputation[i] > highest) {
+				highest = this.reputations[i];
+				current = i;
+				};
+			};
+		return current;
+		};
 
 	// And now sticking data on the object for later reference
 	this.name = name;
@@ -600,7 +613,7 @@ function Institution(neighborhood,type,faith) {
 	this.reputation = {efficacy:0,corruption:0};
 	this.achievements = [];
 	
-	this.subscriptionLists = [{name:'Master List',subscribers:[]}];
+	this.subscriptionLists = [{name:'General',subscribers:[]}];
 	
 	this.organizations = {unions: activeUnions,allies:[]};
 	
@@ -725,6 +738,20 @@ function Person(neighborhood) {
 	people.push(this);
 	
 	// Gameplay Functions
+	
+	this.highestValue = function() {
+		var highest = 0;
+		var current = '';
+		for (i in this.values) {
+			if (this.values[i] > highest) {
+				current = i;
+				highest = this.values[i];
+				};
+			};
+		console.log(current);
+		return current;
+		};
+	
 	this.selfCare = function(cost) {
 		people[0].currencies.mana = Math.min(100,people[0].currencies.mana + 20);
 		people[0].currencies.cash -= cost;
@@ -1130,6 +1157,8 @@ function Person(neighborhood) {
 		else if (action.demand.type === "employment") {reticence = 1000}
 		else if (action.demand.type === "alliance") {reticence = 1000}
 		
+		console.log(action.demand.cause);
+		
 		if (this.issues.indexOf(action.demand.cause) !== -1) {
 			baseCauseValue = action.demand.cause.value(this);
 			appeal = this.values[action.appeal];
@@ -1148,14 +1177,15 @@ function Person(neighborhood) {
 		
 		var power = baseCauseValue + appeal + reputation;
 		
-		action.demand.log(this,action.sponsors[0],power,demand.cause);
+		var peopleIndex = people.indexOf(this);
+		action.demand.log(peopleIndex,action.sponsors[0][0],power);
 		
 		var donation = 5 * Math.pow(2,1+this.resources.money);
 		
-		console.log("power: ",action.demand.strength(this));
+		console.log("power: ",action.demand.strength(peopleIndex));
 		console.log("reticence: ",reticence);
 		
-		if (action.demand.strength(this) < reticence) {
+		if (action.demand.strength(peopleIndex) < reticence) {
 			console.log("No thank you.");
 		} else if (action.demand.type === "subscribe") {
 			if (action.demand.subject[0].subscribers.indexOf(this) == -1) {action.demand.subject[0].subscribers.push(this)};
@@ -1165,7 +1195,7 @@ function Person(neighborhood) {
 			view.refreshActions();
 		} else if (action.demand.type === "donate") {
 			action.demand.subject.currencies.cash += donation;
-			action.demand.log(this,this,-80);
+			action.demand.log(peopleIndex,this,-80);
 			view.refreshHeader();
 		} else if (action.demand.type === "attend") {
 			if (action.demand.subject.rsvps.acceptances.indexOf(this) == -1) {
@@ -1180,6 +1210,9 @@ function Person(neighborhood) {
 			console.log("I'll work with you!");
 		} else if (action.demand.type === "alliance") {
 			console.log("My organization is your ally!");
+		} else {
+			console.log("error! unknown demand type:");
+			console.log(action.demand.type);
 			};
 	};
 	
@@ -1250,22 +1283,42 @@ function Demand(type,subject,cause) {
 	this.type = type;
 	this.subject = subject;
 	this.cause = cause;
-	this.history = [];
+	this.history = {};
 	
-	this.strength = function(person) {
+	this.strength = function(peopleIndex) {
 		var total = 0;
-		for (i in this.history[person]) {
-			total += this.history[person][i].power;
+		for (i in this.history[peopleIndex]) {
+			total += this.history[peopleIndex][i].power;
 		}
 		return total;
 	};
 	
 	this.log = function(person,sponsor,power) {
 		if (this.history[person] !== undefined) {
-			this.history[person].push({sponsor:sponsor,power:power});
+			this.history[person].push({sponsor:sponsor,power:power,timestamp:new Date(gameDate)});
 		} else {
-			this.history[person] = [{sponsor:sponsor,power:power}];
+			this.history[person] = [{sponsor:sponsor,power:power,timestamp:new Date(gameDate)}];
 			};
 	};
+	
+	demands.push(this);
 
+};
+
+function lookupDemand(type,subject,cause) {
+	for (i in demands) {
+		if (demands[i].type === type && demands[i].subject === subject && demands[i].cause === cause) {
+			return demands[i]
+		};
+		if (subject.length !== undefined && demands[i].type === type && demands[i].cause === cause) {
+			var check = true;
+			for (n in subject) {
+				if (demands[i].subject[n] !== subject[n]) {
+				check = false;
+				};
+			};
+			if (check === true) {return demands[i]}
+		};
+	};
+	return new Demand(type,subject,cause);
 };

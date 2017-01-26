@@ -575,7 +575,7 @@
 							<option>Employment</option>
 							<option>Alliance</option>
 						</select>
-						<button disabled>Go! (<span id="connectVisitCost">10</span> mana)</button>
+						<button onclick='handlers.goVisit()'>Go! (<span id="connectVisitCost">10</span> mana)</button>
 					</div>
 					<h3>Call List</h3>
 					<div class="actionConnectContent">
@@ -622,7 +622,7 @@
 						<td class="tableHead">Type:</td>
 						<td id='communicationTypeCell'>
 							<select id='communicationTypeList'>
-								<option disabled selected>Select a Type…</option>
+								<option disabled selected>[Select a Type]</option>
 								<option value='4'>Newsletter</option>
 								<option value='2'>Flyer</option>
 								<option value='3'>Press Release</option>
@@ -630,10 +630,9 @@
 							</select></td>
 						<td class="tableHead">Audience:</td>
 						<td>
-							<select if='communicationMailingList'>
-								<option disabled selected>Choose Mailing List</option>
-								<option>Subscribers</option>
-								<option disabled>Create new Mailing List…</option>
+							<select id='communicationMailingList'>
+								<option disabled selected>[Select Mailing List]</option>
+								<option>Master List</option>
 							</select>
 						</td>
 						<td class="tableHead">Writing:</td>
@@ -646,7 +645,7 @@
 					<tr id='communicationArticle0'>
 						<td class="tableHead">Cause:</td>
 						<td>
-							<select>
+							<select id='communicationIssueList0'>
 								<option>Racial Justice</option>
 								<option>Economic Equity</option>
 								<option>Environmentalism</option>
@@ -655,6 +654,7 @@
 						<td class="tableHead">Appeal:</td>
 						<td>
 							<select>
+								<option selected disabled>[Select an Appeal]</option>
 								<option>Ambition</option>
 								<option>Authority</option>
 								<option>Care</option>
@@ -711,12 +711,44 @@
 									<option value='3'>The Sit-In</option>
 									<option value='4'>The Rally</option>
 									<option value='5'>The Vigil</option>
+									<option value='now'>Plan a New Event</option>
 								</select>
 							</td>
 						</tr>
 						<tr>
 							<td class="tableHead">Date:</td>
-							<td id='eventPlanDateCell'>Next Tuesday
+							<td id='eventPlanDateCell'>
+								<select id='eventPlanMonth' onchange='handlers.updateDates()'>
+									<option selected disabled>[Select Month]</option>
+									<option value=0>January</option>
+									<option value=1>February</option>
+									<option value=2>March</option>
+									<option value=3>April</option>
+									<option value=4>May</option>
+									<option value=5>June</option>
+									<option value=6>July</option>
+									<option value=7>August</option>
+									<option value=8>September</option>
+									<option value=9>October</option>
+									<option value=10>November</option>
+									<option value=11>December</option>
+								</select>
+								<select id='eventPlanDate'>
+									<option selected disabled>[Day]</option>
+								</select>
+								<select id='eventPlanYear'>
+									<option>2018</option>
+									<option>2019</option>
+									<option>2020</option>
+								</select>
+								<select id='eventPlanTime'>
+									<option selected disabled>[Select Time]</option>
+									<option>Morning</option>
+									<option>Lunch</option>
+									<option>Afternoon</option>
+									<option>Evening</option>
+									<option>Late Night</option>
+								</select>
 							</td>
 							<td class="tableHead">Venue:</td>
 							<td>
@@ -746,6 +778,7 @@
 						<td class="tableHead">Appeal:</td>
 						<td>
 							<select id='eventPlanValueList'>
+								<option selected disabled>[Select an Appeal]</option>
 								<option>Ambition</option>
 								<option>Authority</option>
 								<option>Care</option>
@@ -780,7 +813,7 @@
 							<td class="tableHead">Type:</td>
 							<td id='eventPlanTypeCell'>
 								<select id='newEventPlanList'>
-									<option disabled selected>Select a Type…</option>
+									<option disabled selected>[Select a Type]</option>
 									<option>Rally</option>
 									<option>Vigil</option>
 									<option>Protest</option>
@@ -807,13 +840,13 @@
 							<td class="tableHead">Invitees:</td>
 							<td>
 								<ul id="eventPlanInviteesList" class="noIndent">
-									<li>Invite more with a personal call or email</li>
+									<li>Invite more with a visit or call</li>
 								</ul>
 							</td>
 							<td class="tableHead">Sponsors:</td>
 							<td>
 								<ul id="eventPlanSponsorsList" class="noIndent">
-									<li>Invite more with a personal call or email</li>
+									<li>Invite more with a visit or call</li>
 								</ul>
 							</td>
 						</tr>
@@ -875,6 +908,26 @@
 					<button id='sleepButton' onclick='handlers.sleep()'>Sleep til <span id="sleepUntil">8am</span></button>
 				</div>
 			</div>
+		</div>
+	
+	</div>
+	
+	<div id="resultsTray">
+		
+		<div id="resultsHeader">
+			Results
+		</div>
+		
+		<div id="resultsContent">
+		
+			<div id="resultsHistory">
+				History goes here
+			</div>
+			
+			<div id="resultsLast">
+				The last thing you did!
+			</div>
+		
 		</div>
 	
 	</div>

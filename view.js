@@ -726,7 +726,10 @@ var view = {
 
 		// Populates Demand Lists
 		var DemandItem;
-		var lists = {visitTopicList:0,callTopicList0:0,eventPlanDemandList:0,articleDemandList0:0};
+		var lists = {visitTopicList:0,eventPlanDemandList:0,articleDemandList0:0};
+		for (i=0;i<document.getElementById('actionCalls').children.length;i++) {
+			lists[document.getElementById('actionCalls').children[i].children[1].id]=0;
+			};
 		playerEvents = [];
 		for (d in events) {
 			for (e in events[d]) {
@@ -740,10 +743,12 @@ var view = {
 		for (i in lists) {
 			document.getElementById(i).innerHTML = '<option disabled selected>[Select a Demand]</option>';
 			
-			demandItem = document.createElement('option');
-			demandItem.innerHTML = 'subscribe to ' + institutions[0].name;
-			demandItem.value = 'subscribe'
-			document.getElementById(i).appendChild(demandItem);
+			for (l in institutions[0].subscriptionLists) {
+				demandItem = document.createElement('option');
+				demandItem.innerHTML = 'subscribe to ' + institutions[0].name + "'s " + institutions[0].subscriptionLists[l].name + " list";
+				demandItem.value = 'subscribe ' + l;
+				document.getElementById(i).appendChild(demandItem);
+				}
 			
 			demandItem = document.createElement('option');
 			demandItem.innerHTML = 'donate to ' + institutions[0].name;
@@ -766,19 +771,6 @@ var view = {
 				};
 		};
 		
-		// Connect with New People		
-		var connections = '';
-		var connectCost = 10;
-		if (connectCost > people[0].currencies.mana) {var buttonDisabled = 'disabled'} else {var buttonDisabled = ''};
-		for (i in people[0].connections) {
-			if (i > 0) {
-				if (people[0].connections[i][1] === "lives at") {connections += "<div class='connectNewBox'>Connect with a <br /><button "+buttonDisabled+" onclick='handlers.connectNeighbor("+i+","+connectCost+")'>New Neighbor ("+connectCost+" mana)</button><br />at "+people[0].connections[i][0].name+"</div>"};
-				if (people[0].connections[i][1] === "works at") {connections += "<div class='connectNewBox'>Connect with a <br /><button "+buttonDisabled+" onclick='handlers.connectCoworker("+i+","+connectCost+")'>New Coworker ("+connectCost+" mana)</button><br />at "+people[0].connections[i][0].name+"</div>"};
-				if (people[0].connections[i][1] === "attends") {connections += "<div class='connectNewBox'>Connect with a <br /><button "+buttonDisabled+" onclick='handlers.connectCongregant("+i+","+connectCost+")'>New Congregant ("+connectCost+" mana)</button><br />from "+people[0].connections[i][0].name+"</div>"};
-				};
-			};
-		document.getElementById('actionConnectButtons').innerHTML = connections;
-				
 		// Populate Target Lists
 		// (Article Targets are always 'All Readers'; Event Targets can be 'Attendees' and can be others (for sit-ins))
 		var callCapacity = 4;
@@ -805,12 +797,53 @@ var view = {
 				document.getElementById(i).appendChild(contactItem);
 				};
 			};
-
+		
+		// Populate Issues List
+		document.getElementById('eventPlanCauseList').innerHTML = '<option selected disabled>[Select a Cause]</option>';
+		document.getElementById('communicationIssueList0').innerHTML = '<option selected disabled>[Select a Cause]</option>';
+		var causeItem;
+		var causeList = people[0].issues;
+		causeList.sort(function(a,b) {return a.value(people[0]) < b.value(people[0]) ? 1 : ((b.value(people[0]) < a.value(people[0])) ? -1 : 0);});
+		for (i in causeList) {
+			causeItem = document.createElement('option');
+			causeItem.innerHTML = causeList[i].name;
+			causeItem.value = causeList[i].key;
+			document.getElementById('eventPlanCauseList').appendChild(causeItem);
+			
+			for (a=0;a<1;a++) {
+				causeItem = document.createElement('option');
+				causeItem.innerHTML = causeList[i].name;
+				causeItem.value = causeList[i].key;
+				document.getElementById('communicationIssueList'+a).appendChild(causeItem);
+				};
+			
+			};
+			
+		// One-on-Ones
+		var connections = '';
+		var connectCost = 10;
+		if (connectCost > people[0].currencies.mana) {var buttonDisabled = 'disabled'} else {var buttonDisabled = ''};
+		for (i in people[0].connections) {
+			if (i > 0) {
+				if (people[0].connections[i][1] === "lives at") {connections += "<div class='connectNewBox'>Connect with a <br /><button "+buttonDisabled+" onclick='handlers.connectNeighbor("+i+","+connectCost+")'>New Neighbor ("+connectCost+" mana)</button><br />at "+people[0].connections[i][0].name+"</div>"};
+				if (people[0].connections[i][1] === "works at") {connections += "<div class='connectNewBox'>Connect with a <br /><button "+buttonDisabled+" onclick='handlers.connectCoworker("+i+","+connectCost+")'>New Coworker ("+connectCost+" mana)</button><br />at "+people[0].connections[i][0].name+"</div>"};
+				if (people[0].connections[i][1] === "attends") {connections += "<div class='connectNewBox'>Connect with a <br /><button "+buttonDisabled+" onclick='handlers.connectCongregant("+i+","+connectCost+")'>New Congregant ("+connectCost+" mana)</button><br />from "+people[0].connections[i][0].name+"</div>"};
+				};
+			};
+		document.getElementById('actionConnectButtons').innerHTML = connections;
 		var makeCallsButton = document.getElementById('makeCallsButton');
 		var makeCallsCost = document.getElementById('makeCallsCost');
 				
 		// Mass Communication
-		var issues = people[0].issues;
+		var lists = institutions[0].subscriptionLists;
+		var listItem;
+		document.getElementById('communicationMailingList').innerHTML = '<option disabled selected>[Select Mailing List]</option>';
+		for (i in lists) {
+			listItem = document.createElement('option');
+			listItem.innerHTML = lists[i].name;
+			listItem.value = i;
+			document.getElementById('communicationMailingList').appendChild(listItem);
+			};
 		
 		var newCommunicationList = document.getElementById('newCommunicationList');
 		var editCommunicationList = document.getElementById('editCommunicationList');
@@ -947,6 +980,20 @@ var view = {
 		
 		var totalCalls = document.getElementById('actionCalls').children.length;
 		if (totalCalls < 5) {document.getElementById('addCallButton').disabled = false}
+	},
+	
+	updateDates: function() {
+		var month = document.getElementById('eventPlanMonth').value;
+		var dateRange = [31,28,31,30,31,30,31,31,30,31,30,31][month]
+		if (document.getElementById('eventPlanYear').value % 4 == 0 && month == 1) {dateRange++};
+		document.getElementById('eventPlanDate').innerHTML = '<option selected disabled>[Day]</option>';
+		var dateItem;
+		for (i=0;i<dateRange;i++) {
+			dateItem = document.createElement('option');
+			dateItem.innerHTML = i+1;
+			dateItem.value = i+1;
+			document.getElementById('eventPlanDate').appendChild(dateItem);
+			};
 	},
 
 }

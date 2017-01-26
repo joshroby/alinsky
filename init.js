@@ -37,7 +37,10 @@ for (qwe = 0;qwe < 10;qwe++) {
 	var sponsors = [{sponsor:institutions[institutions.length * Math.random() << 0],contribution:8}];
 	var cost = (Math.random() * 100 << 0) * 10;
 	var prep = (Math.random() * 100 << 0) * 10;
-	new Event(type + " " + qwe,eventDate,sponsors,venue,cost,prep);
+	var causes = Object.keys(dataIssues);
+	var cause = dataIssues[causes[Math.random() * causes.length << 0]];
+	var eventDemand = new Demand("donate",institutions[0],cause);
+	new Event(cause.name + " " + type,eventDate,sponsors,venue,cost,prep,undefined,eventDemand);
 	}
 
 player.currencies = {};

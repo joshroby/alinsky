@@ -31,107 +31,134 @@ var dataIssues = {
 
 	racialJustice: {
 		name: "Racial Justice",
+		key: 'racialJustice',
 		value: valuation("fairness",undefined,"liberty","race",false,"White"),
 		},
 		
 	whiteSupremacy: {
 		name: "White Supremacy",
+		key: 'whiteSupremacy',
 		value: valuation("authority",undefined,"loyalty","race",true,"White"),
 		},
 		
 	genderEquity: {
 		name: "Gender Equity",
+		key: 'genderEquity',
 		value: valuation("fairness",undefined,"liberty","gender",false,"Man"),
 		},
 		
 	patriarchy: {
 		name: "Patriarchy",
+		key: 'patriarchy',
 		value: valuation("authority",undefined,"loyalty","race",true,"Man"),
 		},
 		
 	queerRights: {
 		name: "Queer Rights",
+		key: 'queerRights',
 		value: valuation("fairness",undefined,"liberty","orientation",true,"Queer"),
 		},
 		
 	homophobia: {
 		name: "Homophobia",
+		key: 'homophobia',
 		value: valuation("purity",undefined,"authority","orientation",true,"Straight"),
 		},
 	
 	religiousFreedom: {
 		name: "Religious Freedom",
+		key: 'religiousFreedom',
 		value: valuation("liberty",undefined,"loyalty","faith",false,"Christian"),
 		},
 	
 	stateReligion: {
 		name: "State Religion",
+		key: 'stateReligion',
 		value: valuation("loyalty",undefined,"authority","faith",true,"Christian"),
 		},
 		
 	localEconomy: {
 		name: "Local Economy",
+		key: 'localEconomy',
 		value: valuation("ambition","loyalty"),
 		},
 		
 	economicEquity: {
 		name: "Economic Equity",
+		key: 'economicEquity',
 		value: valuation("care","fairness"),
 		},
 		
 	schoolReform: {
 		name: "School Reform",
+		key: 'schoolReform',
 		value: valuation("ambition","fairness"),
 		},
 		
 	schoolPrivatization: {
 		name: "School Privatization",
+		key: 'schoolPrivatization',
 		value: valuation("liberty","ambition"),
 		},
 		
 	electoralReform: {
 		name: "Electoral Reform",
+		key: 'electoralReform',
 		value: valuation("liberty","fairness"),
 		},
 		
 	voterSuppression: {
 		name: "Voter Suppression",
+		key: 'voterSuppression',
 		value: valuation("loyalty","authority"),
 		},
 		
 	prisonReform: {
 		name: "Prison Reform",
+		key: 'prisonReform',
 		value: valuation("care","purity"),
 		},
 		
 	laissezFaire: {
 		name: "Industrial Deregulation",
+		key: 'laissezFaire',
 		value: valuation("ambition","liberty"),
 		},
 		
 	environmentalism: {
 		name: "Environmentalism",
+		key: 'environmentalism',
 		value: valuation("purity","fairness"),
 		},
 		
 	healthcare: {
 		name: "Healthcare",
+		key: 'healthcare',
 		value: valuation("care","purity"),
 		},
 	
 	immigrationReform: {
 		name: "Immigration",
+		key: 'immigrationReform',
 		value: valuation("liberty","care"),
 		},
 	
 	immigrationRestriction: {
 		name: "Immigration Restriction",
+		key: 'immigrationRestriction',
 		value: valuation("loyalty","purity"),
 		},
 	
 	myNeighborhood: {
 		name: "My Neighborhood",
+		key: 'myNeighborhood',
 		value: valuation("loyalty","purity"),
+		},
+	
+	playerReputation: {
+		name: "Trading on the Player's Reputation",
+		key: "playerReputation",
+		value: valuation("loyalty",undefined,"authority","faith",true,"Flying Spaghetti Monster"),
 		},
 
 	};

@@ -193,6 +193,39 @@ var handlers = {
 		handlers.sidebarPaneExpand("contact");
 	},
 	
+	goVisit: function() {
+		var cause = dataIssues[institutions[0].highestCauseReputation()];
+		var target = people[document.getElementById('visitContactList').value];
+		var topic = document.getElementById('visitTopicList').value;
+		var type = topic.split(' ')[0];
+		if (type === "subscribe") {
+			var subject = institutions[0].subscriptionLists[topic.split(' ')[1]];
+			if (subject.cause !== undefined) {cause = subject.cause};
+		} else if (type === "donate") {
+			var subject = institutions[0];
+		} else if (type === "attend") {
+			var eventDate = topic.split(' ')[1].slice(0,8);
+			var eventIndex = topic.split(' ')[1].slice(-1);
+			var subject = events[eventDate][eventIndex];
+			cause = subject.demand.cause;
+		} else if (type === "sponsor") {
+			var eventDate = topic.split(' ')[1].slice(0,8);
+			var eventIndex = topic.split(' ')[1].slice(-1);
+			cause = events[eventDate][eventIndex].demand.cause;
+			var sponsor = institutions[topic.split(' ')[2]];
+			if (sponsor == undefined) {sponsor = target};
+			var subject = [sponsor,events[eventDate][eventIndex]]
+		} else if (type === "employment") {
+		} else if (type === "alliance") {
+		}
+		var appeal = target.highestValue();
+		var visitDemand = lookupDemand(type,subject,cause);
+// 		var visitDemand = new Demand(type,subject,cause);
+		var visit = new Call(visitDemand,appeal,target,institutions[0]);
+		console.log(visit);
+		target.reception(visit);
+	},
+	
 	addCall: function() {
 		view.addCall();
 	},
@@ -221,6 +254,14 @@ var handlers = {
 	removeFromList: function(list,subscriber) {
 		institutions[0].removeFromList(list,subscriber);
 		view.refreshActions();
+	},
+	
+	updateDates: function() {
+		view.updateDates();
+	},
+	
+	prepEvent: function() {
+		console.log("Prep!");
 	},
 	
 	selfCare: function() {
