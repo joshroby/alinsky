@@ -7,8 +7,16 @@ var shelters = [];
 function GameLog() {
 	this.log = [];
 	
-	this.add = function(type,text) {
+	this.add = function(type,text,result,person) {
 		this.log.push([gameDate,type,text]);
+		
+		if (result) {
+			var newResult = document.createElement('p');
+			var pic = '<div class="pic"></div>';
+			newResult.innerHTML = pic + text;
+			newResult.className = 'result' + type;
+			resultsLast=document.getElementById('resultsLast').appendChild(newResult);
+		}
 	};
 };
 
@@ -565,8 +573,9 @@ function Institution(neighborhood,type,faith) {
 		
 		};
 		
-	this.newList = function() {
-		this.subscriptionLists.push({name:"New List",subscribers:[]});
+	this.newList = function(name,issue) {
+		if (name == undefined) {name = "New List"};
+		this.subscriptionLists.push({name:name,subscribers:[],issue:issue});
 		};
 	
 	this.renameList = function(list,newName) {
@@ -580,6 +589,10 @@ function Institution(neighborhood,type,faith) {
 		
 	this.removeFromList = function(list,subscriber) {
 		this.subscriptionLists[list].subscribers.splice(subscriber,1);
+		};
+	
+	this.deleteList = function(list) {
+		this.subscriptionLists.splice(list,1);
 		};
 		
 	this.highestCauseReputation = function() {
@@ -613,7 +626,7 @@ function Institution(neighborhood,type,faith) {
 	this.reputation = {efficacy:0,corruption:0};
 	this.achievements = [];
 	
-	this.subscriptionLists = [{name:'General',subscribers:[]}];
+	this.subscriptionLists = [{name:'All Subscribers',subscribers:[],issue:undefined}];
 	
 	this.organizations = {unions: activeUnions,allies:[]};
 	
@@ -1163,10 +1176,11 @@ function Person(neighborhood) {
 			baseCauseValue = action.demand.cause.value(this);
 			appeal = this.values[action.appeal];
 //			is the appeal complementary?
-		} else if (Math.random()*20 < this.values[action.appeal]) {
+		} else if (Math.random()*20 < this.values[action.appeal] && action.demand.cause !== dataIssues.playerReputation) {
 			this.issues.push(action.demand.cause);
 			baseCauseValue = action.demand.cause.value(this) / 2;
 			appeal = this.values[action.appeal];
+			gameLog.add("introduceCause","They seem to have been unfamiliar with the issue but take a provisional interest.",true,this);
 			};
 		
 		var reputation = 0;
@@ -1180,36 +1194,47 @@ function Person(neighborhood) {
 		var peopleIndex = people.indexOf(this);
 		action.demand.log(peopleIndex,action.sponsors[0][0],power);
 		
-		var donation = 5 * Math.pow(2,1+this.resources.money);
+		var donation = Math.ceil(5 * Math.pow(2,1+this.resources.money));
 		
-		console.log("power: ",action.demand.strength(peopleIndex));
-		console.log("reticence: ",reticence);
+		var strength = action.demand.strength(peopleIndex);
 		
-		if (action.demand.strength(peopleIndex) < reticence) {
-			console.log("No thank you.");
+		if (strength < reticence) {
+			if (strength === 0) {
+				var text = "'Sorry, I am completely disinterested in that sort of thing.'";
+			} else if (this.issues.indexOf(action.demand.cause) !== -1 && baseCauseValue > 10) {
+				var text = "'That's an issue I really care about, I just… can't right now.'";
+			} else {
+				var text = "'No thank you.'";
+			}
+			text += " <span class='gameNumbers'>(" + action.demand.strength(peopleIndex) + "/" + reticence + ")</span>";
+			gameLog.add("reception",text,true,this);
 		} else if (action.demand.type === "subscribe") {
+			console.log(action.demand);
 			if (action.demand.subject[0].subscribers.indexOf(this) == -1) {action.demand.subject[0].subscribers.push(this)};
 			if (action.demand.subject.length > 1 && action.demand.subject[1].subscribers.indexOf(this) == -1) {
 				action.demand.subject[1].subscribers.push(this);
 				};
+			gameLog.add("reception","'I'd love to hear more, sign me up!'",true,this);
 			view.refreshActions();
 		} else if (action.demand.type === "donate") {
 			action.demand.subject.currencies.cash += donation;
 			action.demand.log(peopleIndex,this,-80);
+			gameLog.add("reception","'I can donate $" + donation + ", I hope that helps.'",true,this);
 			view.refreshHeader();
 		} else if (action.demand.type === "attend") {
 			if (action.demand.subject.rsvps.acceptances.indexOf(this) == -1) {
 				action.demand.subject.rsvps.acceptances.push(this);
 			};
-			console.log('RSVP! (needs to be a notification for the player)');
+			gameLog.add("reception","'I'll be there!'",true,this);
 		} else if (action.demand.type === "sponsor") {
 			action.demand.subject[1].sponsors.push({sponsor:action.demand.subject[0],contribution:10*(action.demand.subject[0].rent+4)});
+			gameLog.add("reception","'I'd love to!'",true,this);
 		} else if (action.demand.type === "policy") {
-			console.log("I'll change that policy!");
+			gameLog.add("reception","'I'll change that policy!'",true,this);
 		} else if (action.demand.type === "employment") {
-			console.log("I'll work with you!");
+			gameLog.add("reception","'I'd love to work with you!'",true,this);
 		} else if (action.demand.type === "alliance") {
-			console.log("My organization is your ally!");
+			gameLog.add("reception","'My organization is your ally!'",true,this);
 		} else {
 			console.log("error! unknown demand type:");
 			console.log(action.demand.type);

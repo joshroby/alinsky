@@ -75,6 +75,7 @@ var dataIssues = {
 		name: "State Religion",
 		key: 'stateReligion',
 		value: valuation("loyalty",undefined,"authority","faith",true,"Christian"),
+		euphemisms: ['Religious Freedom'],
 		},
 		
 	localEconomy: {
@@ -138,7 +139,7 @@ var dataIssues = {
 		},
 	
 	immigrationReform: {
-		name: "Immigration",
+		name: "Immigration Justice",
 		key: 'immigrationReform',
 		value: valuation("liberty","care"),
 		},
@@ -156,7 +157,7 @@ var dataIssues = {
 		},
 	
 	playerReputation: {
-		name: "Trading on the Player's Reputation",
+		name: "Your Personal Reputation",
 		key: "playerReputation",
 		value: valuation("loyalty",undefined,"authority","faith",true,"Flying Spaghetti Monster"),
 		},

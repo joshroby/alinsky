@@ -49,11 +49,17 @@ player.currencies.cash = player.resources.money;
 playerOrganization.currencies = {};
 playerOrganization.currencies.cash = 0;
 
+player.issues.sort(function(a,b) {return (a.value(player) > b.value(player)) ? -1 : 1 });
+
+institutions[0].newList(player.issues[0].name + " News",player.issues[0]);
+institutions[0].newList(player.issues[1].name + " Dispatches",player.issues[1]);
+institutions[0].newList(player.issues[2].name + " Report",player.issues[2]);
+
+// New Game UI Setup
 view.refreshHeader();
 view.refreshMap();
 view.displayContact(player);
 view.displayNeighborhood(neighborhoods[0]);
-// view.displayDate(gameDate);
 handlers.sidebarPaneExpand("contact");
 view.refreshCalendar();
 view.refreshActions();

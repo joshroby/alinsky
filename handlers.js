@@ -164,6 +164,7 @@ var handlers = {
 	},
 	
 	connectNeighbor: function(index,manaCost) {
+		document.getElementById('resultsLast').innerHTML = '';
 		var institution = people[0].connections[index][0];
 		var contact = institution.newClient();
 		people[0].currencies.mana -= manaCost;
@@ -171,9 +172,13 @@ var handlers = {
 		view.refreshActions();
 		view.displayContact(contact);
 		handlers.sidebarPaneExpand("contact");
+		gameLog.add("connect","You connect with a neighbor, " + contact.name.first + " " + contact.name.last + ", who you didn't know very well.",true,this);
+		handlers.showResultsLast();
+		handlers.showResultsTray();
 	},
 	
 	connectCoworker: function(index,manaCost) {
+		document.getElementById('resultsLast').innerHTML = '';
 		var institution = people[0].connections[index][0];
 		var contact = institution.newEmployee();
 		people[0].currencies.mana -= manaCost;
@@ -181,9 +186,13 @@ var handlers = {
 		view.refreshActions();
 		view.displayContact(contact);
 		handlers.sidebarPaneExpand("contact");
+		gameLog.add("connect","You connect with a coworker, " + contact.name.first + " " + contact.name.last + ", who you didn't know very well.",true,this);
+		handlers.showResultsLast();
+		handlers.showResultsTray();
 	},
 	
 	connectCongregant: function(index,manaCost) {
+		document.getElementById('resultsLast').innerHTML = '';
 		var institution = people[0].connections[index][0];
 		var contact = institution.newClient();
 		people[0].currencies.mana -= manaCost;
@@ -191,16 +200,23 @@ var handlers = {
 		view.refreshActions();
 		view.displayContact(contact);
 		handlers.sidebarPaneExpand("contact");
+		gameLog.add("connect","You connect with a congregant, " + contact.name.first + " " + contact.name.last + ", who you didn't know very well.",true,this);
+		handlers.showResultsLast();
+		handlers.showResultsTray();
 	},
 	
 	goVisit: function() {
+		document.getElementById('resultsLast').innerHTML = '';
+		var visitTopicList = document.getElementById('visitTopicList');
 		var cause = dataIssues[institutions[0].highestCauseReputation()];
 		var target = people[document.getElementById('visitContactList').value];
-		var topic = document.getElementById('visitTopicList').value;
+		var appeal = target.highestValue();
+		var topic = visitTopicList.value;
+		var topicText = visitTopicList[visitTopicList.selectedIndex].text;
 		var type = topic.split(' ')[0];
 		if (type === "subscribe") {
-			var subject = institutions[0].subscriptionLists[topic.split(' ')[1]];
-			if (subject.cause !== undefined) {cause = subject.cause};
+			var subject = [institutions[0].subscriptionLists[0],institutions[0].subscriptionLists[topic.split(' ')[1]]];
+			if (subject[1].issue !== undefined) {cause = subject[1].issue};
 		} else if (type === "donate") {
 			var subject = institutions[0];
 		} else if (type === "attend") {
@@ -218,12 +234,21 @@ var handlers = {
 		} else if (type === "employment") {
 		} else if (type === "alliance") {
 		}
-		var appeal = target.highestValue();
+		console.log(cause);
 		var visitDemand = lookupDemand(type,subject,cause);
-// 		var visitDemand = new Demand(type,subject,cause);
 		var visit = new Call(visitDemand,appeal,target,institutions[0]);
+		var text = "You visit " + target.name.first + " " + target.name.last + " and ask them to " + topicText + ".";
+		text += " The conversation tends towards <strong>" + appeal + "</strong>, and you make your appeal on those grounds."; 
+		if (cause === dataIssues.playerReputation) {
+			text += " Since " + institutions[0].name + " has no reputation for any cause, you have only your good name to stand on."
+		} else {
+			text += "You talk extensively about " + cause.name + ".";
+			};
+		gameLog.add("visit",text,true,target);
 		console.log(visit);
 		target.reception(visit);
+		handlers.showResultsLast();
+		handlers.showResultsTray();
 	},
 	
 	addCall: function() {
@@ -235,8 +260,13 @@ var handlers = {
 	},
 	
 	newList: function() {
-		institutions[0].newList();
-		view.refreshActions();
+		var createNewListSelect = document.getElementById('createNewListSelect');
+		console.log(createNewListSelect.value);
+		if (createNewListSelect !== null) {
+			institutions[0].newList(undefined,dataIssues[createNewListSelect.value]);
+			view.refreshActions();
+			};
+
 	},
 	
 	renameList: function(list) {
@@ -253,6 +283,11 @@ var handlers = {
 	
 	removeFromList: function(list,subscriber) {
 		institutions[0].removeFromList(list,subscriber);
+		view.refreshActions();
+	},
+	
+	deleteList: function(list) {
+		institutions[0].deleteList(list);
 		view.refreshActions();
 	},
 	

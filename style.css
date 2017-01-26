@@ -24,6 +24,10 @@ td {
 	display:none;
 	}
 
+.gameNumbers {
+	color: red;
+	}
+
 .noIndent {
 	padding-left: 25px;
 	}
@@ -334,6 +338,18 @@ dd {
 	margin-bottom: 5%;
 	}
 
+.listTitle {
+	margin-bottom: 0;
+	padding-bottom: 0;
+	}
+
+.listIssue {
+	font-size: 0.8em;
+	margin-left: 10px;
+	margin-top: 0;
+	padding-top: 0;
+}
+
 #actionDelegateContent {
 	margin-left: 5%;
 	}
@@ -357,6 +373,11 @@ dd {
   		black 20px,
   		black 40px
 		);
+	}
+
+#contactCauses {
+	background-color: #fff;
+	border: 2px solid black;
 	}
 
 
@@ -422,8 +443,8 @@ dd {
 	position: fixed;
 	bottom: 0;
 	background-color: #fefefe;
-	width: 90%;
-	margin-left: 5%;
+	width: 60%;
+	margin-left: 20%;
 	-webkit-animation-name: slideIn;
 	-webkit-animation-duration: 0.4s;
 	animation-name: slideIn;
@@ -434,8 +455,8 @@ dd {
 	position: fixed;
 	bottom: 0;
 	background-color: #fefefe;
-	width: 90%;
-	margin-left: 5%;
+	width: 60%;
+	margin-left: 20%;
 	}
 
 .resultsHeader {

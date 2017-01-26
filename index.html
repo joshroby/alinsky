@@ -463,14 +463,15 @@
 					</td>
 				</tr>
 			</table>
-			
-			<h3>Appeal of Causes</h3>
-			<ul id="issuesList">
-				<li></li>
-			</ul>
-			
+						
 			<div class="debug">
 				<button onclick="handlers.newPerson()">New Person</button>
+				<div id='contactCauses'>
+					<h3>Appeal of Causes</h3>
+						<ul id="issuesList">
+						<li></li>
+						</ul>
+				</div>
 			</div>
 		</div>
 		
@@ -697,6 +698,9 @@
 				</table>
 				<h3>Manage Subscription Lists</h3>
 				<div id='communicationManageListsDiv'>
+				</div>
+				<div>
+					<select id='createNewListSelect' onchange='handlers.newList()'></select>
 				</div>
 			</div>
 			<div id="actionEventPlanning" class="actionContent">

@@ -743,9 +743,9 @@ var view = {
 		for (i in lists) {
 			document.getElementById(i).innerHTML = '<option disabled selected>[Select a Demand]</option>';
 			
-			for (l in institutions[0].subscriptionLists) {
+			for (l=1; l < institutions[0].subscriptionLists.length; l++) {
 				demandItem = document.createElement('option');
-				demandItem.innerHTML = 'subscribe to ' + institutions[0].name + "'s " + institutions[0].subscriptionLists[l].name + " list";
+				demandItem.innerHTML = 'subscribe to your ' + institutions[0].subscriptionLists[l].name + " list";
 				demandItem.value = 'subscribe ' + l;
 				document.getElementById(i).appendChild(demandItem);
 				}
@@ -866,7 +866,15 @@ var view = {
 			var listDiv = document.createElement('div');
 			listDiv.className = 'listBox';
 			var listTitle = document.createElement('h4');
+			listTitle.className = 'listTitle';
 			listTitle.innerHTML = institutions[0].subscriptionLists[i].name;
+			var listIssue = document.createElement('p');
+			if (institutions[0].subscriptionLists[i].issue !== undefined) {
+				listIssue.innerHTML = "focusing on " + institutions[0].subscriptionLists[i].issue.name;
+				listIssue.className = 'listIssue';
+			} else {
+				listIssue.innerHTML = "";
+			};
 			var listList = document.createElement('ul');
 			for (s in institutions[0].subscriptionLists[i].subscribers) {
 				var listItem = document.createElement('li');
@@ -900,18 +908,27 @@ var view = {
 				listList.appendChild(addSubscriberItem);
 				};
 			listDiv.appendChild(listTitle);
+			listDiv.appendChild(listIssue);
 			listDiv.appendChild(listList);
 			if (i > 0) {
 				var renameListField = document.createElement('p');
 				renameListField.innerHTML = "<input type='text' id='communicationListRenameField"+i+"' /><button onclick='handlers.renameList("+i+")'>Rename</button>";
 				listDiv.appendChild(renameListField);
+				var deleteListField = document.createElement('p');
+				deleteListField.innerHTML = '<button onclick="handlers.deleteList('+i+')">Delete List</button>';
+				listDiv.appendChild(deleteListField);
 				};
 			communicationManageListsDiv.appendChild(listDiv);
 			};
-		var createNewList = document.createElement('div');
-		createNewList.innerHTML = '<button onclick="handlers.newList()">Create New Mailing List</button>';
-		createNewList.className = 'listBox';
-		communicationManageListsDiv.appendChild(createNewList);
+		var createNewListSelect = document.getElementById('createNewListSelect');
+		createNewListSelect.innerHTML = '<option selected disabled>[Create New Mailing List]</option>';
+		var createNewListItem;
+		for (qx in people[0].issues) {
+			createNewListItem = document.createElement('option');
+			createNewListItem.innerHTML = "promoting " + people[0].issues[qx].name;
+			createNewListItem.value = people[0].issues[qx].key;
+			createNewListSelect.appendChild(createNewListItem);
+			};
 		
 		// Event Planning
 		
