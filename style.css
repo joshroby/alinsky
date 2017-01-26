@@ -398,3 +398,85 @@ dd {
 #purityCell {
 	background: #a9b2b1;
 	}
+	
+/* Results Tray */
+
+#resultsTray {
+	display: none;
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgb(0,0,0);
+	background-color: rgba(0,0,0,0.4);
+	-webkit-animation-name: fadeIn;
+	-webKit-animation-duration: 0.4s;
+	animation-name: fadeIn;
+	animation-duration: 0.4s;
+	}
+
+#resultsContent {
+	position: fixed;
+	bottom: 0;
+	background-color: #fefefe;
+	width: 90%;
+	margin-left: 5%;
+	-webkit-animation-name: slideIn;
+	-webkit-animation-duration: 0.4s;
+	animation-name: slideIn;
+	animation-duration: 0.4s;
+	}
+
+#resultsTrayStub {
+	position: fixed;
+	bottom: 0;
+	background-color: #fefefe;
+	width: 90%;
+	margin-left: 5%;
+	}
+
+.resultsHeader {
+	background: #81223D;
+	color: #C9738C;
+	}
+	
+#resultsTrayCloseButton {
+	float:right;
+	margin-right: 20px;
+	}
+
+#resultsHistory {
+	display: none;
+	padding: 40px;
+	}
+
+#resultsLast {
+	padding: 40px;
+	}
+
+#resultsButtons {
+	padding: 40px;
+	}
+
+@-webkit-keyframes slideIn {
+	from {bottom: -300px; opacity: 0}
+	to {bottom:0; opacity: 1}
+	}
+
+@keyframes slideIn {
+	from {bottom: -300px; opacity: 0}
+	to {bottom: 0; opacity: 1}
+	}
+	
+@-webkit-keyframes fadeIn {
+	from {opacity: 0}
+	to {opacity: 1}
+	}
+
+@keyframes fadeIn {
+	from {opacity: 0}
+	to {opacity: 1}
+	}

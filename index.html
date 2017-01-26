@@ -912,20 +912,34 @@
 	
 	</div>
 	
+	<div id='resultsTrayStub' onclick='handlers.showResultsTray()'>
+
+		<h3 class="resultsHeader">Results</h3>
+	
+	</div>
+	
 	<div id="resultsTray">
-		
-		<div id="resultsHeader">
-			Results
-		</div>
-		
+	
 		<div id="resultsContent">
 		
+			<div class="resultsHeader" onclick='handlers.hideResultsTray()'>
+				<h3>
+					Results
+				</h3>
+			</div>
+				
 			<div id="resultsHistory">
 				History goes here
 			</div>
 			
 			<div id="resultsLast">
 				The last thing you did!
+			</div>
+			
+			<div id="resultsButtons">
+				<button onclick='handlers.showResultsHistory()'>Show History</button>
+				<button onclick='handlers.showResultsLast()'>Show Last Action</button>
+				<button onclick='handlers.hideResultsTray()'>Close</button>
 			</div>
 		
 		</div>

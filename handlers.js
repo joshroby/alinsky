@@ -278,4 +278,31 @@ var handlers = {
 		people[0].sleep(wake);
 		view.refreshActions();
 	},
+	
+	showResultsTray: function() {
+		var resultsTray = document.getElementById('resultsTray');
+		resultsTray.style.display = 'block';
+	},
+	
+	hideResultsTray: function() {
+		var resutlsTray = document.getElementById('resultsTray');
+		resutlsTray.style.display = 'none';
+	},
+	
+	showResultsHistory: function () {
+		document.getElementById('resultsLast').style.display = 'none';
+		document.getElementById('resultsHistory').style.display = 'block';
+	},
+	
+	showResultsLast: function () {
+		document.getElementById('resultsHistory').style.display = 'none';
+		document.getElementById('resultsLast').style.display = 'block';
+	},
+}
+
+window.onclick = function(event) {
+	var resultsTray = document.getElementById('resultsTray');
+	if (event.target == resultsTray) {
+		resultsTray.style.display = 'none';
+	};
 }
