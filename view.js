@@ -171,12 +171,22 @@ var view = {
 							};
 						};
 					eventText += "</td></tr>";
-					var checkSponsors = todaysEvents[i][e].sponsors.indexOf(people[0]) + todaysEvents[i][e].sponsors.indexOf(institutions[0]);
-					if (checkSponsors !== -2) {
+					var playerEvent = false;
+					for (s in todaysEvents[i][e].sponsors) {
+						console.log(todaysEvents[i][e].sponsors[s].sponsor);
+						if (todaysEvents[i][e].sponsors[s].sponsor == institutions[0] || todaysEvents[i][e].sponsors[s].sponsor == people[0]) {
+							playerEvent = true;
+							}
+						}
+					if (playerEvent) {
 						eventText += "<tr><td class='tableHead'>Prepwork:</td><td class='eventInfo'>"
 						eventText += Math.round(100*todaysEvents[i][e].prepDone/todaysEvents[i][e].prep) + "% (" + (todaysEvents[i][e].prep - todaysEvents[i][e].prepDone) + " hours remaining)";
 						eventText += "</td></tr><tr><td class='tableHead'>Funding:</td><td class='eventInfo'>"
-						eventText += Math.round(100*todaysEvents[i][e].funding/todaysEvents[i][e].cost) + "% ($" + todaysEvents[i][e].funding + " / $" + todaysEvents[i][e].cost + ")";
+						if (todaysEvents[i][e].cost === 0) {
+							eventText += 'no cost';
+						} else {
+							eventText += Math.round(100*todaysEvents[i][e].funding/todaysEvents[i][e].cost) + "% ($" + todaysEvents[i][e].funding + " / $" + todaysEvents[i][e].cost + ")";
+							};
 						eventText += "</td></tr><tr><td class='tableHead'>RSVPs:</td><td class='eventInfo'>";
 						eventText += todaysEvents[i][e].rsvps.acceptances.length + " accepted, " + todaysEvents[i][e].rsvps.declines.length + " declined";
 						eventText += "</td></tr>"
