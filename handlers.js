@@ -205,14 +205,7 @@ var handlers = {
 		handlers.showResultsTray();
 	},
 	
-	goVisit: function() {
-		document.getElementById('resultsLast').innerHTML = '';
-		var visitTopicList = document.getElementById('visitTopicList');
-		var cause = dataIssues[institutions[0].highestCauseReputation()];
-		var target = people[document.getElementById('visitContactList').value];
-		var appeal = target.highestValue();
-		var topic = visitTopicList.value;
-		var topicText = visitTopicList[visitTopicList.selectedIndex].text;
+	interpretDemand: function(topic,topicText) {
 		var type = topic.split(' ')[0];
 		if (type === "subscribe") {
 			var subject = [institutions[0].subscriptionLists[0],institutions[0].subscriptionLists[topic.split(' ')[1]]];
@@ -234,9 +227,24 @@ var handlers = {
 		} else if (type === "employment") {
 		} else if (type === "alliance") {
 		}
-		console.log(cause);
+		return [type,subject,cause];
+	},
+	
+	goVisit: function() {
+		document.getElementById('resultsLast').innerHTML = '';
+		var cause = dataIssues[institutions[0].highestCauseReputation()];
+		var target = people[document.getElementById('visitContactList').value];
+		var appeal = target.highestValue();
+		var visitTopicList = document.getElementById('visitTopicList');
+		var topic = visitTopicList.value;
+		var topicText = visitTopicList[visitTopicList.selectedIndex].text;
+		var interprettedDemand = handlers.interpretDemand(topic,topicText);
+		var type = interprettedDemand[0];
+		var subject = interprettedDemand[1];
+		var cause = interprettedDemand[2];
 		var visitDemand = lookupDemand(type,subject,cause);
 		var visit = new Call(visitDemand,appeal,target,institutions[0]);
+		
 		var text = "You visit " + target.name.first + " " + target.name.last + " and ask them to " + topicText + ".";
 		text += " The conversation tends towards <strong>" + appeal + "</strong>, and you make your appeal on those grounds."; 
 		if (cause === dataIssues.playerReputation) {
@@ -245,10 +253,48 @@ var handlers = {
 			text += "You talk extensively about " + cause.name + ".";
 			};
 		gameLog.add("visit",text,true,target);
+		
 		console.log(visit);
 		target.reception(visit);
+		
 		handlers.showResultsLast();
 		handlers.showResultsTray();
+		advanceClock();
+	},
+	
+	makeCalls: function() {
+		document.getElementById('resultsLast').innerHTML = '';
+		for (c=0;c<document.getElementById('actionCalls').children.length;c++) {
+			var target = people[document.getElementById('actionCalls').children[c].children[0].value];
+			var appeal = target.highestValue();
+			var caller = institutions[0];
+			var callTopicList = document.getElementById('actionCalls').children[c].children[1];
+			console.log("call",c);
+			var topic = callTopicList.value;
+			var topicText = callTopicList[callTopicList.selectedIndex].text;
+			var interprettedDemand = handlers.interpretDemand(topic,topicText);
+			var type = interprettedDemand[0];
+			var subject = interprettedDemand[1];
+			var cause = interprettedDemand[2];
+			var callDemand = lookupDemand(type,subject,cause);
+			var call = new Call(callDemand,appeal,target,caller);
+			
+			var text = "You call " + target.name.first + " " + target.name.last + " and ask them to " +topicText + ".";
+			text += " The conversation tends towards <strong>" + appeal + "</strong>, and you make your appeal on those grounds."; 
+			if (cause === dataIssues.playerReputation) {
+				text += " Since " + institutions[0].name + " has no reputation for any cause, you have only your good name to stand on."
+			} else {
+				text += "You talk extensively about " + cause.name + ".";
+				};
+			gameLog.add("call",text,true,target);
+	
+			console.log(call);
+			target.reception(call);
+			
+			handlers.showResultsLast();
+			handlers.showResultsTray();
+			advanceClock();
+		}
 	},
 	
 	addCall: function() {

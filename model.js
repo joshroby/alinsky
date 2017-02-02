@@ -755,13 +755,12 @@ function Person(neighborhood) {
 	this.highestValue = function() {
 		var highest = 0;
 		var current = '';
-		for (i in this.values) {
-			if (this.values[i] > highest) {
-				current = i;
-				highest = this.values[i];
+		for (v in this.values) {
+			if (this.values[v] > highest) {
+				current = v;
+				highest = this.values[v];
 				};
 			};
-		console.log(current);
 		return current;
 		};
 	
