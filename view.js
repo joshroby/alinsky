@@ -787,12 +787,15 @@ var view = {
 		// (Article Targets are always 'All Readers'; Event Targets can be 'Attendees' and can be others (for sit-ins))
 		var callCapacity = 4;
 		document.getElementById('visitContactList').innerHTML = '<option selected disabled>[Select a Contact]</option>';
-		document.getElementById('callContactList0').innerHTML = '<option selected disabled>[Select a Contact]</option>';
 		document.getElementById('communicationTargetList').innerHTML = '<option value="-1">All Readers</option>';
 		document.getElementById('eventPlanTargetList').innerHTML = '<option value="-1">Attendees</option>';
 		
 		var contactItem;
-		lists = {visitContactList:0,callContactList0:0,communicationTargetList:0,eventPlanTargetList:0};
+		lists = {visitContactList:0,communicationTargetList:0,eventPlanTargetList:0};
+		for (i=0;i<document.getElementById('actionCalls').children.length;i++) {
+			lists[document.getElementById('actionCalls').children[i].children[0].id]=0;
+			}
+		
 		alphPeople = [];
 		for (p in people) {
 			if (p > 0) {
@@ -1036,4 +1039,3 @@ var view = {
 	},
 
 }
-
