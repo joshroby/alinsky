@@ -151,8 +151,11 @@ var view = {
 					};
 				eventText += '<table id = "eventBar"><tr>';
 				for (e in todaysEvents[i]) {
-					eventText += "<td class='eventCell'><h3 class='eventHead'>" + todaysEvents[i][e].name + "</h3>";
-					eventText += "<table class='eventList'><tr><td class='tableHead'>Location:</td><td class='eventInfo'>";
+					eventText += "<td class='eventCell'><h3 class='eventHead'>" + todaysEvents[i][e].name + "</h3><table class='eventList'>";
+					if (todaysEvents[i][e].demand !== undefined) {
+						eventText += "<tr><td class='tableHead'>Promoting:</td><td class='eventInfo'>" + todaysEvents[i][e].demand.cause.name + "</td></tr>";
+						};
+					eventText += "<tr><td class='tableHead'>Location:</td><td class='eventInfo'>";
 					if (todaysEvents[i][e].venue !== undefined) {
 						eventText += todaysEvents[i][e].venue.name;
 					} else {
@@ -162,7 +165,6 @@ var view = {
 					if (todaysEvents[i][e].sponsors[0] !== undefined) {
 					eventText += "<tr><td class='tableHead'>Sponsors:</td><td class='eventInfo'>";
 						for (s in todaysEvents[i][e].sponsors) {
-							console.log(todaysEvents[i][e].sponsors[s].sponsor);
 							if (todaysEvents[i][e].sponsors[s].sponsor.name.first == undefined) {
 								eventText += todaysEvents[i][e].sponsors[s].sponsor.name + "<br />";
 							} else {
@@ -986,7 +988,7 @@ var view = {
 	},
 	
 	addCall: function() {
-		var newCall = document.getElementById('call0').cloneNode(true);
+		var newCall = document.getElementById('actionCalls').lastElementChild.cloneNode(true);
 		var callNum = document.getElementById('actionCalls').lastElementChild.id;
 		callNum = callNum.replace(/\D/g,'');
 		callNum = parseInt(callNum) + 1;
@@ -997,6 +999,12 @@ var view = {
 		newCall.children[2].setAttribute('onclick','handlers.deleteCall('+callNum+')');
 		document.getElementById('actionCalls').appendChild(newCall);
 		
+		if (document.getElementById('actionCalls').children.length > 1) {
+			for (i=0;i<document.getElementById('actionCalls').children.length;i++) {
+				document.getElementById('actionCalls').children[i].children[2].disabled = false;
+				};
+			};
+		
 		var totalCalls = document.getElementById('actionCalls').children.length;
 		if (totalCalls > 4) {document.getElementById('addCallButton').disabled = true}
 	},
@@ -1004,6 +1012,10 @@ var view = {
 	deleteCall: function(index) {
 		var call = document.getElementById('call' + index);
 		document.getElementById('actionCalls').removeChild(call);
+		
+		if (document.getElementById('actionCalls').children.length === 1) {
+			document.getElementById('actionCalls').children[0].children[2].disabled = true;
+			};
 		
 		var totalCalls = document.getElementById('actionCalls').children.length;
 		if (totalCalls < 5) {document.getElementById('addCallButton').disabled = false}
