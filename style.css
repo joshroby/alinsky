@@ -20,6 +20,10 @@ td {
 /* 	border: 1px solid blue; */
 	}
 
+select {
+	width: 150px;
+	}
+
 #newGame {
 	display:none;
 	}

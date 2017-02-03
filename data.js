@@ -1714,3 +1714,86 @@ var dataColors = [
 	"teal",
 	"purple",
 ];
+
+var dataCommunications = {
+
+	flyer: {
+		name: "Flyer",
+		maxArticles: 1,
+		baseTime: 4,
+		timePerArticle: 0,
+		baseCost: 10,
+		costPerArticle: 0,
+		requires: undefined,
+	},
+
+	mailer: {
+		name: "Mailer",
+		maxArticles: 1,
+		baseTime: 4,
+		timePerArticle: 0,
+		baseCost: 100,
+		costPerArticle: 0,
+		requires: undefined,
+	},
+
+	newsletter: {
+		name: "Newsletter",
+		maxArticles: 4,
+		baseTime: 2,
+		timePerArticle: 2,
+		baseCost: 10,
+		costPerArticle: 5,
+		requires: undefined,
+	},
+
+	enewsletter: {
+		name: "eNewsletter",
+		maxArticles: 4,
+		baseTime: 2,
+		timePerArticle: 2,
+		baseCost: 0,
+		costPerArticle: 0,
+		requires: undefined,
+	},
+
+	report: {
+		name: "Report",
+		maxArticles: 4,
+		baseTime: 8,
+		timePerArticle: 4,
+		baseCost: 50,
+		costPerArticle: 10,
+		requires: undefined,
+	},
+
+	pressRelease: {
+		name: "Press Release",
+		maxArticles: 1,
+		baseTime: 4,
+		timePerArticle: 0,
+		baseCost: 0,
+		costPerArticle: 0,
+		requires: undefined,
+	},
+
+	blogpost: {
+		name: "Blog Post",
+		maxArticles: 4,
+		baseTime: 0,
+		timePerArticle: 4,
+		baseCost: 0,
+		costPerArticle: 0,
+		requires: undefined, // will be 'dataAssets.blog'
+	},
+
+	socialMedia: {
+		name: "Social Media Blast",
+		maxArticles: 1,
+		baseTime: 4,
+		timePerArticle: 0,
+		baseCost: 0,
+		costPerArticle: 0,
+		requires: undefined, // will be 'dataAssets.socialMediaAccount'
+	},
+};

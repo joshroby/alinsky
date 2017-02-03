@@ -789,11 +789,11 @@ var view = {
 		// (Article Targets are always 'All Readers'; Event Targets can be 'Attendees' and can be others (for sit-ins))
 		var callCapacity = 4;
 		document.getElementById('visitContactList').innerHTML = '<option selected disabled>[Select a Contact]</option>';
-		document.getElementById('communicationTargetList').innerHTML = '<option value="-1">All Readers</option>';
+		document.getElementById('communicationTargetList0').innerHTML = '<option value="-1">All Readers</option>';
 		document.getElementById('eventPlanTargetList').innerHTML = '<option value="-1">Attendees</option>';
 		
 		var contactItem;
-		lists = {visitContactList:0,communicationTargetList:0,eventPlanTargetList:0};
+		lists = {visitContactList:0,communicationTargetList0:0,eventPlanTargetList:0};
 		for (i=0;i<document.getElementById('actionCalls').children.length;i++) {
 			lists[document.getElementById('actionCalls').children[i].children[0].id]=0;
 			}
@@ -860,6 +860,13 @@ var view = {
 			listItem.innerHTML = lists[i].name;
 			listItem.value = i;
 			document.getElementById('communicationMailingList').appendChild(listItem);
+			};
+		document.getElementById('communicationTypeList').innerHTML = '<option disabled selected>[Select a Type]</option>';
+		for (i in dataCommunications) {
+			listItem = document.createElement('option');
+			listItem.innerHTML = dataCommunications[i].name;
+			listItem.value = i;
+			document.getElementById('communicationTypeList').appendChild(listItem);
 			};
 		
 		var newCommunicationList = document.getElementById('newCommunicationList');
@@ -990,13 +997,16 @@ var view = {
 		var sleepButton = document.getElementById('sleepButton');
 		var sleepButton = document.getElementById('sleepUntil');
 		
+		view.updateMassComm();
+		
 	},
 	
 	addCall: function() {
-		var newCall = document.getElementById('actionCalls').lastElementChild.cloneNode(true);
 		var callNum = document.getElementById('actionCalls').lastElementChild.id;
 		callNum = callNum.replace(/\D/g,'');
 		callNum = parseInt(callNum) + 1;
+		
+		var newCall = document.getElementById('actionCalls').lastElementChild.cloneNode(true);
 		newCall.id = "call" + callNum;
 		newCall.children[0].id = 'callContactList' + callNum;
 		newCall.children[1].id = 'callTopicList' + callNum;
@@ -1024,6 +1034,50 @@ var view = {
 		
 		var totalCalls = document.getElementById('actionCalls').children.length;
 		if (totalCalls < 5) {document.getElementById('addCallButton').disabled = false}
+	},
+	
+	addArticle: function() {
+		var articleNum = document.getElementById('massCommTable').children[0].lastElementChild.id;
+		articleNum = articleNum.replace(/\D/g,'');
+		articleNum = parseInt(articleNum) + 1;
+		
+		var newArticle = document.getElementById('massCommTable').children[0].children[2].cloneNode(true);
+		newArticle.id = "communicationArticle" + articleNum;
+		newArticle.children[1].children[0].id = 'communicationIssueList' + articleNum;
+		newArticle.children[3].children[0].id = 'communicationAppealList' + articleNum;
+		newArticle.children[5].children[0].id = 'communicationTargetList' + articleNum;
+		newArticle.children[7].children[0].id = 'communicationDemandList' + articleNum;
+		newArticle.children[8].children[0].id = 'communicationDeleteButton' + articleNum;
+		newArticle.children[8].children[0].setAttribute('onclick','handlers.deleteArticle('+articleNum+')');
+		
+		document.getElementById('massCommTable').children[0].appendChild(newArticle);
+		
+		view.updateMassComm();
+	},
+	
+	deleteArticle: function(index) {
+		var targetArticle = document.getElementById('communicationArticle' + index);
+		document.getElementById('massCommTable').children[0].removeChild(targetArticle);
+		view.updateMassComm();
+	},
+	
+	updateMassComm: function() {
+		var type = document.getElementById('communicationTypeList').value;
+		if (type === '[Select a Type]') {
+			document.getElementById('communicationProgressCell').innerHTML = 'unknown';
+			document.getElementById('communicationFundingCell').innerHTML = 'unknown';
+		} else {
+			var articleNum = document.getElementById('massCommTable').children[0].children.length-2;
+			var fundingTotal = dataCommunications[type].baseCost + dataCommunications[type].costPerArticle * articleNum;
+			var progressTotal = dataCommunications[type].baseTime + dataCommunications[type].timePerArticle * articleNum;
+			var progressSoFar = 0;
+			
+			document.getElementById('communicationProgressCell').innerHTML = progressSoFar + " / " + progressTotal + "hrs";
+			document.getElementById('communicationFundingCell').innerHTML = "$" + fundingTotal;
+			document.getElementById('communicationPublishCostSpan').innerHTML = fundingTotal;
+		};
+		
+		// And then disable / enable add, delete, work, and publish buttons
 	},
 	
 	updateDates: function() {

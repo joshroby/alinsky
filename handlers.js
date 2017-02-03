@@ -52,6 +52,7 @@ var handlers = {
 		var actionMassCommunication = document.getElementById('actionMassCommunication');
 		var actionEventPlanning = document.getElementById('actionEventPlanning');
 		var actionDelegate = document.getElementById('actionDelegate');
+		var actionResearch = document.getElementById('actionResearch');
 		var actionSelfCare = document.getElementById('actionSelfCare');
 		
 		var actionTitle = document.getElementById('actionTitle');
@@ -61,6 +62,7 @@ var handlers = {
 		actionMassCommunication.style.display = 'none';
 		actionEventPlanning.style.display = 'none';
 		actionDelegate.style.display = 'none';
+		actionResearch.style.display = 'none';
 		actionSelfCare.style.display = 'none';
 		
 		if (pane == "actionOperations") {actionTitle.innerHTML = "Review "+institutions[0].name+" Operations";actionOperations.style.display = 'block'};
@@ -68,6 +70,7 @@ var handlers = {
 		if (pane == "actionMassCommunication") {actionTitle.innerHTML = "Mass Communication";actionMassCommunication.style.display = 'block'};
 		if (pane == "actionEventPlanning") {actionTitle.innerHTML = "Event Planning";actionEventPlanning.style.display = 'block'};
 		if (pane == "actionDelegate") {actionTitle.innerHTML = "Delegate";actionDelegate.style.display = 'block'};
+		if (pane == "actionResearch") {actionTitle.innerHTML = "Research";actionResearch.style.display = 'block'};
 		if (pane == "actionSelfCare") {actionTitle.innerHTML = "Self Care";actionSelfCare.style.display = 'block'};
 			
 	},
@@ -309,6 +312,18 @@ var handlers = {
 	
 	deleteCall: function(index) {
 		view.deleteCall(index);
+	},
+	
+	addArticle: function() {
+		view.addArticle();
+	},
+	
+	deleteArticle: function(index) {
+		view.deleteArticle(index);
+	},
+	
+	updateMassComm: function() {
+		view.updateMassComm();
 	},
 	
 	newList: function() {

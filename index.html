@@ -196,6 +196,7 @@
 					<li onclick='handlers.actionPaneExpand("actionMassCommunication")'>Mass Communication</li>
 					<li onclick='handlers.actionPaneExpand("actionEventPlanning")'>Event Planning</li>
 					<li onclick='handlers.actionPaneExpand("actionDelegate")'>Delegate</li>
+					<li onclick='handlers.actionPaneExpand("actionResearch")'>Research</li>
 					<li onclick='handlers.actionPaneExpand("actionSelfCare")'>Self Care</li>
 				</ul>
 			</div>
@@ -607,7 +608,7 @@
 			</div>
 			<div id="actionMassCommunication" class="actionContent">
 				<h3>Compose Mass Communication</h3>
-				<table class="actionTable">
+				<table id='massCommTable' class="actionTable">
 					<tr>
 						<td colspan='4'><input id='titleInput' type='text' value='Title your communication here' onFocus="this.value=''"></input></td>
 						<td align="right" colspan='4'>
@@ -622,7 +623,7 @@
 					<tr>
 						<td class="tableHead">Type:</td>
 						<td id='communicationTypeCell'>
-							<select id='communicationTypeList'>
+							<select id='communicationTypeList' onchange='handlers.updateMassComm()'>
 								<option disabled selected>[Select a Type]</option>
 								<option value='4'>Newsletter</option>
 								<option value='2'>Flyer</option>
@@ -654,7 +655,7 @@
 						</td>
 						<td class="tableHead">Appeal:</td>
 						<td>
-							<select>
+							<select id='communicationAppealList0'>
 								<option selected disabled>[Select an Appeal]</option>
 								<option>Ambition</option>
 								<option>Authority</option>
@@ -667,7 +668,7 @@
 						</td>
 						<td class="tableHead">Target:</td>
 						<td>
-							<select id="communicationTargetList">
+							<select id="communicationTargetList0">
 								<option>Local Government</option>
 								<option>Baron of Industry</option>
 								<option>The Citizenry</option>
@@ -684,17 +685,18 @@
 							</select>
 						</td>
 						<td>
-							<button>-</button>
+							<button id='communicationDeleteButton0' onclick='handlers.deleteArticle(0)'>-</button>
 						</td>
 					</tr>
-					<tr>
-						<td align="right" colspan='8'>
-							<button id='communicationAddArticle'>Add an Article</button>
-							<button id='communicationWork'>Work on this Communication (<span>10</span> mana)</button>
-							<button id='communicationPublish'>Publish this Communication (<span>10</span> mana, $<span>10</span>)</button>
-							<button id='communicationScrap'>Scrap this Communication</button>
-						</td>
-					</tr>
+					<tfoot>
+						<tr id='massCommTableButtons'>
+							<td align="right" colspan='8'>
+								<button id='communicationAddArticle' onclick='handlers.addArticle()'>Add an Article</button>
+								<button id='communicationWork'>Work on this Communication (<span>10</span> mana)</button>
+								<button id='communicationPublish'>Publish this Communication (<span>10</span> mana, $<span id='communicationPublishCostSpan'>10</span>)</button>
+							</td>
+						</tr>
+					</tfoot>
 				</table>
 				<h3>Manage Subscription Lists</h3>
 				<div id='communicationManageListsDiv'>
@@ -904,6 +906,9 @@
 						</tr>
 					</table>
 				</div>
+			</div>
+			<div id='actionResearch' class='actionContent'>
+				<h3>Research</h3>
 			</div>
 			<div id="actionSelfCare" class="actionContent">
 				<h3>Recharge those Batteries!</h3>
