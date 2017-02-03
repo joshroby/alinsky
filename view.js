@@ -868,7 +868,7 @@ var view = {
 			listItem.value = i;
 			document.getElementById('communicationTypeList').appendChild(listItem);
 			};
-		
+				
 		var newCommunicationList = document.getElementById('newCommunicationList');
 		var editCommunicationList = document.getElementById('editCommunicationList');
 		var communicationTypeCell = document.getElementById('communicationTypeCell');
@@ -1051,14 +1051,69 @@ var view = {
 		newArticle.children[8].children[0].setAttribute('onclick','handlers.deleteArticle('+articleNum+')');
 		
 		document.getElementById('massCommTable').children[0].appendChild(newArticle);
-		
-		view.updateMassComm();
 	},
 	
 	deleteArticle: function(index) {
 		var targetArticle = document.getElementById('communicationArticle' + index);
 		document.getElementById('massCommTable').children[0].removeChild(targetArticle);
-		view.updateMassComm();
+	},
+	
+	loadMassComm: function() {
+		var index = document.getElementById('editCommunicationList').value;
+		if (index == -1) {
+			var extraArticles=document.getElementById('massCommTable').children[0].children.length-3;
+			for (i=0;i<extraArticles;i++) {
+				document.getElementById('massCommTable').deleteRow(2);
+				}
+			document.getElementById('massCommTable').children[0].children[2].id = 'communicationArticle0';
+			document.getElementById('massCommTable').children[0].children[2].children[1].children[0].id = 'communicationIssueList0';
+			document.getElementById('massCommTable').children[0].children[2].children[3].children[0].id = 'communicationAppealList0';
+			document.getElementById('massCommTable').children[0].children[2].children[5].children[0].id = 'communicationTargetList0';
+			document.getElementById('massCommTable').children[0].children[2].children[7].children[0].id = 'articleDemandList0';
+			selects = {communicationTypeList:0,communicationMailingList:0,communicationIssueList0:0,communicationAppealList0:0,communicationTargetList0:0,articleDemandList0:0};
+			for (i in selects) { document.getElementById(i).selectedIndex=0;}
+			document.getElementById('titleInput').value = 'Title your communication here';
+			document.getElementById('communicationProgressCell').innerHTML = 'unknown';
+			document.getElementById('communicationFundingCell').innerHTML = 'unknown';
+			view.focus.draft = undefined;
+		} else {
+			console.log('loading',drafts[index].title);
+			console.log(drafts[index]);
+			document.getElementById('titleInput').value = drafts[index].title;
+			document.getElementById('communicationTypeList').value = drafts[index].type;
+			
+			for (i=1;i<drafts[index].articles.length;i++) {view.addArticle();console.log(i);};
+			for (i=0;i<drafts[index].articles.length;i++) {
+				document.getElementById('communicationIssueList'+i).value = drafts[index].articles[i].issue;
+				document.getElementById('communicationAppealList'+i).value = drafts[index].articles[i].appeal;
+				document.getElementById('communicationTargetList'+i).value = drafts[index].articles[i].target;
+				var demandKey = drafts[index].articles[i].demand.type;
+				if (demandKey === "subscribe") {
+				} else if (demandKey === "attend" || demandKey === "sponsor") {
+					console.log(drafts[index].articles[i].demand);
+					if (demandKey === "attend") {
+						var event = drafts[index].articles[i].demand.subject;
+					} else {
+						var event = drafts[index].articles[i].demand.subject[1];
+						};
+					demandKey += " ";
+					var eventDateString = event.date.getFullYear().toString();
+					if (event.date.getMonth() < 10) {eventDateString += '0';}
+					eventDateString += event.date.getMonth();
+					if (event.date.getDate() < 10) {eventDateString += '0';}
+					eventDateString += event.date.getDate();
+					console.log(eventDateString);
+					var eventIndex = events[eventDateString].indexOf(event);
+					eventDateString += eventIndex;
+					demandKey += eventDateString;
+					
+				} else if (demandKey === "policy") {
+					};
+				console.log(demandKey);
+				document.getElementById('articleDemandList'+i).value = demandKey;
+				};
+			view.focus.draft = drafts[index];
+		};
 	},
 	
 	updateMassComm: function() {
@@ -1100,6 +1155,19 @@ var view = {
 			document.getElementById('communicationPublishButton').disabled = true;
 			document.getElementById('communicationWorkButton').disabled = false;
 			};
+		
+		document.getElementById('editCommunicationList').innerHTML = '<option disabled selected>[Edit a Draft]</option>';
+		for (i in drafts) {
+			listItem = document.createElement('option');
+			listItem.innerHTML = drafts[i].title;
+			listItem.value = i;
+			document.getElementById('editCommunicationList').appendChild(listItem);
+			}
+		listItem = document.createElement('option');
+		listItem.innerHTML = "Start a New Communication";
+		listItem.value = -1;
+		document.getElementById('editCommunicationList').appendChild(listItem);
+
 	},
 	
 	updateDates: function() {

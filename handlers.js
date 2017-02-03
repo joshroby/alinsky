@@ -316,13 +316,20 @@ var handlers = {
 	
 	addArticle: function() {
 		view.addArticle();
+		view.updateMassComm();
 	},
 	
 	deleteArticle: function(index) {
 		view.deleteArticle(index);
+		view.updateMassComm();
 	},
 	
 	updateMassComm: function() {
+		view.updateMassComm();
+	},
+	
+	loadMassComm: function() {
+		view.loadMassComm();
 		view.updateMassComm();
 	},
 	

@@ -612,8 +612,8 @@
 					<tr>
 						<td colspan='4'><input id='titleInput' type='text' value='Title your communication here' onFocus="this.value=''"></input></td>
 						<td align="right" colspan='4'>
-							<select>
-								<option id='editCommunicationList' disabled selected>Edit a Draft</option>
+							<select id='editCommunicationList' onchange = 'handlers.loadMassComm()'>
+								<option disabled selected>Edit a Draft</option>
 								<option value='4'>October Newsletter</option>
 								<option value='2'>Rally Flyer</option>
 								<option value='3'>Statement on Recent Violence</option>
