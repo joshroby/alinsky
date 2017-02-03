@@ -1063,6 +1063,8 @@ var view = {
 	
 	updateMassComm: function() {
 		var type = document.getElementById('communicationTypeList').value;
+		var progressSoFar = 0;
+		var progressTotal = 1;
 		if (type === '[Select a Type]') {
 			document.getElementById('communicationProgressCell').innerHTML = 'unknown';
 			document.getElementById('communicationFundingCell').innerHTML = 'unknown';
@@ -1070,14 +1072,34 @@ var view = {
 			var articleNum = document.getElementById('massCommTable').children[0].children.length-2;
 			var fundingTotal = dataCommunications[type].baseCost + dataCommunications[type].costPerArticle * articleNum;
 			var progressTotal = dataCommunications[type].baseTime + dataCommunications[type].timePerArticle * articleNum;
-			var progressSoFar = 0;
+			if (view.focus.draft !== undefined) { progressSoFar = view.focus.draft.progress};
 			
 			document.getElementById('communicationProgressCell').innerHTML = progressSoFar + " / " + progressTotal + "hrs";
 			document.getElementById('communicationFundingCell').innerHTML = "$" + fundingTotal;
 			document.getElementById('communicationPublishCostSpan').innerHTML = fundingTotal;
 		};
 		
+		if (type === 'socialMedia' || type === 'blogpost') {
+			document.getElementById('communicationMailingList').hidden = true;
+			document.getElementById('communicationAlternativeAudience').hidden = false;
+			document.getElementById('communicationAlternativeAudience').innerHTML = "Online";
+		} else if (type === 'pressRelease') {
+			document.getElementById('communicationMailingList').hidden = true;
+			document.getElementById('communicationAlternativeAudience').hidden = false;
+			document.getElementById('communicationAlternativeAudience').innerHTML = "Media";
+		} else {
+			document.getElementById('communicationMailingList').hidden = false;
+			document.getElementById('communicationAlternativeAudience').hidden = true;
+		};
+		
 		// And then disable / enable add, delete, work, and publish buttons
+		if (progressSoFar >= progressTotal) {
+			document.getElementById('communicationPublishButton').disabled = false;
+			document.getElementById('communicationWorkButton').disabled = true;
+		} else {
+			document.getElementById('communicationPublishButton').disabled = true;
+			document.getElementById('communicationWorkButton').disabled = false;
+			};
 	},
 	
 	updateDates: function() {

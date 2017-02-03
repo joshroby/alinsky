@@ -228,7 +228,7 @@ var handlers = {
 			var eventIndex = topic.split(' ')[1].slice(-1);
 			cause = events[eventDate][eventIndex].demand.cause;
 			var sponsor = institutions[topic.split(' ')[2]];
-			if (sponsor == undefined) {sponsor = target};
+			if (sponsor == undefined) {sponsor = undefined};
 			var subject = [sponsor,events[eventDate][eventIndex]]
 		} else if (type === "employment") {
 		} else if (type === "alliance") {
@@ -323,6 +323,42 @@ var handlers = {
 	},
 	
 	updateMassComm: function() {
+		view.updateMassComm();
+	},
+	
+	workOnMassComm: function() {
+		var draft = view.focus.draft;
+		if (draft === undefined) {
+			var type = document.getElementById('communicationTypeList').value;
+			var draft = new Communication(type,[],institutions[0])
+			view.focus.draft = draft;
+		}
+		if (draft.title === undefined && document.getElementById('titleInput').value !== 'Title your communication here') {
+			draft.title = document.getElementById('titleInput').value;
+		} else if (draft.title === undefined) {
+			draft.title = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][gameDate.getMonth()] + " " + gameDate.getDate() + " " + gameDate.getHours() + "00 Draft";
+		};
+		draft.articles = [];
+		for (a=2;a<document.getElementById('massCommTable').children[0].children.length;a++) {
+			var cause = document.getElementById('massCommTable').children[0].children[a].children[1].children[0].value;
+			var appeal = document.getElementById('massCommTable').children[0].children[a].children[3].children[0].value;
+			var target = document.getElementById('massCommTable').children[0].children[a].children[5].children[0].value;
+			
+			var articleTopicList = document.getElementById('massCommTable').children[0].children[a].children[7].children[0];
+			var topic = articleTopicList.value;
+			var topicText = articleTopicList[articleTopicList.selectedIndex].text;
+			var interprettedDemand = handlers.interpretDemand(topic,topicText);
+			var type = interprettedDemand[0];
+			var subject = interprettedDemand[1];
+			var articleDemand = lookupDemand(type,subject,cause);
+			
+			var article = new Article(articleDemand,appeal,target,cause,institutions[0]);
+			draft.articles.push(article);
+			console.log('article:',a,article);
+			};
+		draft.progress += 4;
+		people[0].currencies.mana -= document.getElementById('communicationWorkManaCost').innerHTML;
+		advanceClock();
 		view.updateMassComm();
 	},
 	

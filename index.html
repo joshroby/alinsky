@@ -636,6 +636,7 @@
 								<option disabled selected>[Select Mailing List]</option>
 								<option>Master List</option>
 							</select>
+							<span id='communicationAlternativeAudience'></span>
 						</td>
 						<td class="tableHead">Writing:</td>
 						<td id='communicationProgressCell'>50%<br />(4hrs remaining)
@@ -657,13 +658,13 @@
 						<td>
 							<select id='communicationAppealList0'>
 								<option selected disabled>[Select an Appeal]</option>
-								<option>Ambition</option>
-								<option>Authority</option>
-								<option>Care</option>
-								<option>Fairness</option>
-								<option>Liberty</option>
-								<option>Loyalty</option>
-								<option>Purity</option>
+								<option value='ambition'>Ambition</option>
+								<option value='authority'>Authority</option>
+								<option value='care'>Care</option>
+								<option value='fairness'>Fairness</option>
+								<option value='liberty'>Liberty</option>
+								<option value='loyalty'>Loyalty</option>
+								<option value='purity'>Purity</option>
 							</select>
 						</td>
 						<td class="tableHead">Target:</td>
@@ -692,8 +693,8 @@
 						<tr id='massCommTableButtons'>
 							<td align="right" colspan='8'>
 								<button id='communicationAddArticle' onclick='handlers.addArticle()'>Add an Article</button>
-								<button id='communicationWork'>Work on this Communication (<span>10</span> mana)</button>
-								<button id='communicationPublish'>Publish this Communication (<span>10</span> mana, $<span id='communicationPublishCostSpan'>10</span>)</button>
+								<button id='communicationWorkButton' onclick='handlers.workOnMassComm()'>Work on this Communication (<span id='communicationWorkManaCost'>10</span> mana)</button>
+								<button id='communicationPublishButton'>Publish this Communication (<span>10</span> mana, $<span id='communicationPublishCostSpan'>10</span>)</button>
 							</td>
 						</tr>
 					</tfoot>

@@ -3,6 +3,7 @@ var neighborhoods = [];
 var institutions = [];
 var housing = [];
 var shelters = [];
+var drafts=[];
 
 function GameLog() {
 	this.log = [];
@@ -1299,18 +1300,20 @@ function Event(name,date,sponsors,venue,cost,prep,rsvps,demand,appeal,target) {
 		};
 	};
 
-function Communication(articles,publisher) {
+function Communication(type,articles,publisher) {
+	this.type = type;
 	this.articles = articles;
 	this.publisher = publisher;
 	this.progress = 0;
-	this.funding = 0;
 	this.published = false;
+	drafts.push(this);
 	};
 
-function Article(demand,appeal,publisher) {
+function Article(demand,appeal,target,issue,publisher) {
 	this.demand = demand;
 	this.appeal = appeal;
-	this.target = undefined; // will set to the list of current subscribers ON PUBLICATION
+	this.target = target;
+	this.issue = issue;
 	this.sponsors = [[publisher,0]];
 };
 
