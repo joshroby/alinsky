@@ -341,9 +341,7 @@ var view = {
 				personalNetworkItem.innerHTML = personalNetwork[i][0] + " <button disabled>Meet</button>";
 			} else if (personalNetwork[i][0] === 'a child') {
 				var childBirth = personalNetwork[i][2];
-				var childAge = date.year - childBirth.year;
-				if (childBirth.month < date.month) {childAge--};
-				if (childBirth.month == date.month && childBirth.day < date.day) {childBirth--};
+				var childAge = Math.round((gameDate - childBirth)/31536000000);
 				if (childAge < 18) {
 				personalNetworkItem.innerHTML = "a " + childAge + "-year-old child";
 				} else {

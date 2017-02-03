@@ -1131,7 +1131,7 @@ function Person(neighborhood) {
 		}
 		var children = resources.child + Math.random() * 2 << 0 ;
 		for (i=0;i<children;i++) {
-			var childBirth = {year:date.year - (Math.random() * (age-15) <<0),month:Math.random() * 12 << 0,day:Math.random() * 28 << 0};
+			var childBirth = new Date(new Date() - (Math.random() * (age-15) * 31536000000));
 			this.personalNetwork.push(["a child",undefined,childBirth])
 		}
 	
