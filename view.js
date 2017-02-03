@@ -370,7 +370,11 @@ var view = {
 		var backstories = [];
 		for (n in contact.backstories) {
 			backstoryItem = document.createElement('li');
-			backstoryItem.innerHTML = contact.backstories[n].type.name;
+			if (contact.backstories[n].known === 1) {
+				backstoryItem.innerHTML = contact.backstories[n].type.name;
+			} else {
+				backstoryItem.innerHTML = "You haven't heard about this part of their backstory.";
+				};
 			contactBackstory.appendChild(backstoryItem);
 			}
 		

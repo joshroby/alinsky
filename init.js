@@ -24,6 +24,10 @@ player.findHousing(playerHome);
 var playerChurch = new Institution(undefined,"religious",player.faith);
 player.findChurch(playerChurch);
 
+for (i in player.backstories) {
+	player.backstories[i].known = 1;
+	};
+
 // for (qwe=0;qwe<3;qwe++) {
 // 	handlers.newPerson();
 // 	}

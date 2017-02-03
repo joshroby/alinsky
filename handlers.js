@@ -168,11 +168,12 @@ var handlers = {
 		var institution = people[0].connections[index][0];
 		var contact = institution.newClient();
 		people[0].currencies.mana -= manaCost;
+		gameLog.add("connect","You connect with a neighbor, " + contact.name.first + " " + contact.name.last + ", who you didn't know very well.",true,this);
+		contact.revealBackstory('connect');
 		view.refreshHeader();
 		view.refreshActions();
 		view.displayContact(contact);
 		handlers.sidebarPaneExpand("contact");
-		gameLog.add("connect","You connect with a neighbor, " + contact.name.first + " " + contact.name.last + ", who you didn't know very well.",true,this);
 		handlers.showResultsLast();
 		handlers.showResultsTray();
 	},
@@ -182,11 +183,12 @@ var handlers = {
 		var institution = people[0].connections[index][0];
 		var contact = institution.newEmployee();
 		people[0].currencies.mana -= manaCost;
+		gameLog.add("connect","You connect with a coworker, " + contact.name.first + " " + contact.name.last + ", who you didn't know very well.",true,this);
+		contact.revealBackstory('connect');
 		view.refreshHeader();
 		view.refreshActions();
 		view.displayContact(contact);
 		handlers.sidebarPaneExpand("contact");
-		gameLog.add("connect","You connect with a coworker, " + contact.name.first + " " + contact.name.last + ", who you didn't know very well.",true,this);
 		handlers.showResultsLast();
 		handlers.showResultsTray();
 	},
@@ -196,11 +198,12 @@ var handlers = {
 		var institution = people[0].connections[index][0];
 		var contact = institution.newClient();
 		people[0].currencies.mana -= manaCost;
+		gameLog.add("connect","You connect with a congregant, " + contact.name.first + " " + contact.name.last + ", who you didn't know very well.",true,this);
+		contact.revealBackstory('connect');
 		view.refreshHeader();
 		view.refreshActions();
 		view.displayContact(contact);
 		handlers.sidebarPaneExpand("contact");
-		gameLog.add("connect","You connect with a congregant, " + contact.name.first + " " + contact.name.last + ", who you didn't know very well.",true,this);
 		handlers.showResultsLast();
 		handlers.showResultsTray();
 	},
@@ -253,6 +256,7 @@ var handlers = {
 			text += "You talk extensively about " + cause.name + ".";
 			};
 		gameLog.add("visit",text,true,target);
+		target.revealBackstory('visit');
 		
 		console.log(visit);
 		target.reception(visit);
@@ -266,6 +270,7 @@ var handlers = {
 		document.getElementById('resultsLast').innerHTML = '';
 		for (c=0;c<document.getElementById('actionCalls').children.length;c++) {
 			var target = people[document.getElementById('actionCalls').children[c].children[0].value];
+			console.log(target);
 			var appeal = target.highestValue();
 			var caller = institutions[0];
 			var callTopicList = document.getElementById('actionCalls').children[c].children[1];
@@ -287,6 +292,7 @@ var handlers = {
 				text += "You talk extensively about " + cause.name + ".";
 				};
 			gameLog.add("call",text,true,target);
+			target.revealBackstory('call');
 	
 			console.log(call);
 			target.reception(call);

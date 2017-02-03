@@ -1240,6 +1240,32 @@ function Person(neighborhood) {
 			};
 	};
 	
+	this.revealBackstory = function(event) {
+		var unknownBackstories = [];
+		for (i in this.backstories) {
+			if (this.backstories[i].known === 0) {
+				unknownBackstories.push(this.backstories[i]);
+				};
+			}
+		var reveals = 2;
+		if (event === 'connect') {
+			reveals = 4;
+		} else if (event === 'visit') {
+			reveals = 3;
+		} else if (event === 'call') {
+			reveals = 1;
+		};
+		
+		for (i=0;i<reveals;i++) {
+			var tellBackstory = unknownBackstories[unknownBackstories.length * Math.random() << 0];
+			if (tellBackstory.known === 0) {
+				var backstoryText = "You also learn a bit of their story: " + tellBackstory.type.name;
+				tellBackstory.known = 1;
+				gameLog.add("backstory",backstoryText,true,this);
+				};
+			};
+	};
+	
 
 };
 
