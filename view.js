@@ -444,8 +444,8 @@ var view = {
 		mapImagePane.style.backgroundColor = dataColors[neighborhood.color];
 		
 		var neighborhoodName = document.getElementById('neighborhoodName');
-		var neighborhoodStatusCell = document.getElementById('neighborhoodStatusCell');
-		var neighborhoodMoneyCell = document.getElementById('neighborhoodMoneyCell');
+// 		var neighborhoodStatusCell = document.getElementById('neighborhoodStatusCell');
+// 		var neighborhoodMoneyCell = document.getElementById('neighborhoodMoneyCell');
 		var neighborhoodZoningCell = document.getElementById('neighborhoodZoningCell');
 		var neighborhoodRacesCell = document.getElementById('neighborhoodRacesCell');
 		var neighborhoodResidentialSpan = document.getElementById('neighborhoodResidentialSpan');
@@ -458,8 +458,6 @@ var view = {
 		var neighborhoodMunicipalList = document.getElementById('neighborhoodMunicipalList');
 		
 		neighborhoodName.innerHTML = neighborhood.name;
-		neighborhoodStatusCell.innerHTML = descStatus[Math.min(5,Math.max(0,neighborhood.demographics.status))] + " (" + neighborhood.demographics.status + ")";
-		neighborhoodMoneyCell.innerHTML = descPropertyValue[Math.min(5,Math.max(0,neighborhood.demographics.money))] + " (" + neighborhood.demographics.money + ")";
 		
 		neighborhoodResidentialSpan.innerHTML = Math.round(neighborhood.zoning.residential*100) + "%";
 		neighborhoodCommercialSpan.innerHTML = Math.round(neighborhood.zoning.commercial*100) + "%";
@@ -473,9 +471,37 @@ var view = {
 			if (neighborhood.demographics.race[races[i]] > 0) {
 				raceDemographicsList += "<li>" + Math.round(100*neighborhood.demographics.race[races[i]]/neighborhood.demographics.population) + "% " + dataRaces[races[i]].name + "</li>";
 				}
-		}
-					
-		neighborhoodRacesCell.innerHTML = raceDemographicsList;
+		}		
+		
+		var neighborhoodNumbers = document.getElementById('neighborhoodNumbers');
+		neighborhoodNumbers.innerHTML = '<tr><td class="tableHead tableHeadNarrow">Status:</td><td class="verboseCell" id="neighborhoodStatusCell">X</td><td class="tableHead tableHeadNarrow">Property:</td><td class="verboseCell" id="neighborhoodMoneyCell">X</td></tr>';
+		document.getElementById('neighborhoodStatusCell').innerHTML = descStatus[Math.min(5,Math.max(0,neighborhood.demographics.status))] + " (" + neighborhood.demographics.status + ")";
+		document.getElementById('neighborhoodMoneyCell').innerHTML = descPropertyValue[Math.min(5,Math.max(0,neighborhood.demographics.money))] + " (" + neighborhood.demographics.money + ")";
+		var top = true;
+		for (a in neighborhood.accesses) {
+			var newRow = document.createElement('tr');
+			var newHeaderCell = document.createElement('td');
+			var newContentCell = document.createElement('td');
+			newHeaderCell.innerHTML = dataAccesses[a].name + ":";
+			newHeaderCell.className = "tableHead tableHeadNarrow";
+			newContentCell.innerHTML   = dataAccesses[a].levels[neighborhood.accesses[a]] + " ("+neighborhood.accesses[a]+")";
+			newContentCell.className = "verboseCell";
+			newRow.appendChild(newHeaderCell);
+			newRow.appendChild(newContentCell);
+			if (top) {
+				top = false;
+				var demoCell = document.createElement('td');
+				demoCell.rowSpan = Object.keys(neighborhood.accesses).length;
+				demoCell.innerHTML = "Demo- graphics:";
+				demoCell.className = "tableHead tableHeadNarrow";
+				newRow.appendChild(demoCell);
+				demoCell = document.createElement('td');
+				demoCell.rowSpan = Object.keys(neighborhood.accesses).length;
+				demoCell.innerHTML = "<ul class='noIndent'>"+raceDemographicsList+"</ul>"
+				newRow.appendChild(demoCell);
+				};
+			neighborhoodNumbers.appendChild(newRow);
+		};
 			
 		neighborhoodResidentialList.innerHTML = '';
 		neighborhoodCommercialList.innerHTML = '';

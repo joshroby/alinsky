@@ -66,6 +66,10 @@ h3 {
 	font-size: 80%;
 	}
 
+.tableHeadNarrow {
+	width: 20px;
+	}
+
 .tableColumnHead {
 	font-weight: bold;
 	border-bottom: 2px solid black;

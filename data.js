@@ -1560,6 +1560,45 @@ var dataNeighborhoodNames = {
 			],
 	};
 
+var dataAccesses = {
+	education: {
+		name: "Education",
+		levels: ["no local schools","terrible schools","adequate schools","good schools","excellent schools","schools integrated with local university"],
+		},
+	fireProtection: {
+		name: "Fire Protection",
+		levels: ["> 1 hr response","1 hr response time","45 min response time","30 min response time","20 min response time","5-10 min response time"],
+		},
+	greenspace: {
+		name: "Greenspace",
+		levels: ["no public parks","a single small park","postage-stamp parks","large municipal park and small neighborhood parks","parks and protected wilderness areas","walking access to major park"],
+		},
+	groceries: {
+		name: "Groceries",
+		levels: ["fast food & convenience stores","bodegas","a few small markets","a supermarket","supermarkets and boutique markets","broad access"],
+		},
+	healthcare: {
+		name: "Healthcare",
+		levels: ["no neighborhood healthcare","a few clinics","satellite emergency room","small neighborhood hospital","trauma-1 hospital","trauma-1 & research hospital"],
+		},
+	transit: {
+		name: "Mass Transit",
+		levels: ["no access","one bus line","multiple bus lines","bus and light rail","multiple light rail stations","ubiquitous access"],
+		},
+	policing: {
+		name: "Policing",
+		levels: ["> 1 hr response","1 hr response time","45 min response time","30 min response time","20 min response time","5-10 min response time"],
+		},
+	roads: {
+		name: "Roads",
+		levels: ["no real maintenance","shoddy roads","old roads","maintained roads","optimized roads","perfect"],
+		},
+	water: {
+		name: "Water",
+		levels: ["bottles and cisterns","tainted","smells funny","good","excellent","thoughtless access"],
+		},
+	};
+
 var dataInstitutionNames = {
 	commercial: {
 		first: [
@@ -1724,6 +1763,8 @@ var dataCommunications = {
 		timePerArticle: 0,
 		baseCost: 10,
 		costPerArticle: 0,
+		reputationGain: 1,
+		reputationCeiling: 3,
 		requires: undefined,
 	},
 
@@ -1734,6 +1775,8 @@ var dataCommunications = {
 		timePerArticle: 0,
 		baseCost: 100,
 		costPerArticle: 0,
+		reputationGain: 1,
+		reputationCeiling: 10,
 		requires: undefined,
 	},
 
@@ -1744,6 +1787,8 @@ var dataCommunications = {
 		timePerArticle: 2,
 		baseCost: 10,
 		costPerArticle: 5,
+		reputationGain: 1,
+		reputationCeiling: 5,
 		requires: undefined,
 	},
 
@@ -1754,6 +1799,20 @@ var dataCommunications = {
 		timePerArticle: 2,
 		baseCost: 0,
 		costPerArticle: 0,
+		reputationGain: 1,
+		reputationCeiling: 5,
+		requires: undefined,
+	},
+
+	openLetter: {
+		name: "Open Letter",
+		maxArticles: 2,
+		baseTime: 4,
+		timePerArticle: 2,
+		baseCost: 0,
+		costPerArticle: 0,
+		reputationGain: 1,
+		reputationCeiling: 10,
 		requires: undefined,
 	},
 
@@ -1764,6 +1823,8 @@ var dataCommunications = {
 		timePerArticle: 4,
 		baseCost: 50,
 		costPerArticle: 10,
+		reputationGain: 1,
+		reputationCeiling: 20,
 		requires: undefined,
 	},
 
@@ -1774,26 +1835,32 @@ var dataCommunications = {
 		timePerArticle: 0,
 		baseCost: 0,
 		costPerArticle: 0,
+		reputationGain: 1,
+		reputationCeiling: 10,
 		requires: undefined,
 	},
 
-	blogpost: {
-		name: "Blog Post",
-		maxArticles: 4,
-		baseTime: 0,
-		timePerArticle: 4,
-		baseCost: 0,
-		costPerArticle: 0,
-		requires: undefined, // will be 'dataAssets.blog'
-	},
-
-	socialMedia: {
-		name: "Social Media Blast",
-		maxArticles: 1,
-		baseTime: 4,
-		timePerArticle: 0,
-		baseCost: 0,
-		costPerArticle: 0,
-		requires: undefined, // will be 'dataAssets.socialMediaAccount'
-	},
+// 	blogpost: {
+// 		name: "Blog Post",
+// 		maxArticles: 4,
+// 		baseTime: 0,
+// 		timePerArticle: 4,
+// 		baseCost: 0,
+// 		costPerArticle: 0,
+// 		reputationGain: 1,
+// 		reputationCeiling: 5,
+// 		requires: undefined, // will be 'dataAssets.blog'
+// 	},
+// 
+// 	socialMedia: {
+// 		name: "Social Media Blast",
+// 		maxArticles: 1,
+// 		baseTime: 4,
+// 		timePerArticle: 0,
+// 		baseCost: 0,
+// 		costPerArticle: 0,
+// 		reputationGain: 1,
+// 		reputationCeiling: 5,
+// 		requires: undefined, // will be 'dataAssets.socialMediaAccount'
+// 	},
 };

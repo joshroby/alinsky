@@ -168,7 +168,19 @@ function Community(size) {
 function Neighborhood(status) {
 
 	if (status === undefined) {
-		status = Math.random() * 6 << 0;
+		status = (Math.random()+Math.random()) * 3 << 0;
+	};
+	
+	var accesses = {};
+	for (i in dataAccesses) {
+		accesses[i] = Math.random();
+		}
+	var total = 0;
+	for (a in accesses) {
+		total += accesses[a];
+	};
+	for (a in accesses) {
+		accesses[a] = Math.min(5,Math.floor(status/2 + Object.keys(accesses).length*Math.pow(1.5,status)*accesses[a]/total));
 	};
 
 	var statusDemographics = status;
@@ -229,6 +241,7 @@ function Neighborhood(status) {
 	this.demographics.population = 0;
 	
 	this.zoning = zoning;
+	this.accesses = accesses;
 	
 	this.institutions = [];
 	
