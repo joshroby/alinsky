@@ -297,7 +297,6 @@ var handlers = {
 			gameLog.add("call",text,true,target);
 			target.revealBackstory('call');
 	
-			console.log(call);
 			target.reception(call);
 			
 			handlers.showResultsLast();
@@ -336,7 +335,7 @@ var handlers = {
 	workOnMassComm: function() {
 		var draft = view.focus.draft;
 		if (draft === undefined) {
-			var type = document.getElementById('communicationTypeList').value;
+			var type = dataCommunications[document.getElementById('communicationTypeList').value];
 			var draft = new Communication(type,[],institutions[0])
 			view.focus.draft = draft;
 		}
@@ -347,7 +346,7 @@ var handlers = {
 		};
 		draft.articles = [];
 		for (a=2;a<document.getElementById('massCommTable').children[0].children.length;a++) {
-			var cause = document.getElementById('massCommTable').children[0].children[a].children[1].children[0].value;
+			var cause = dataIssues[document.getElementById('massCommTable').children[0].children[a].children[1].children[0].value];
 			var appeal = document.getElementById('massCommTable').children[0].children[a].children[3].children[0].value;
 			var target = document.getElementById('massCommTable').children[0].children[a].children[5].children[0].value;
 			
@@ -363,10 +362,65 @@ var handlers = {
 			draft.articles.push(article);
 			console.log('article:',a,article);
 			};
+		draft.audience = document.getElementById('communicationMailingList').value;
 		draft.progress += 4;
 		people[0].currencies.mana -= document.getElementById('communicationWorkManaCost').innerHTML;
 		advanceClock();
 		view.updateMassComm();
+	},
+	
+	publishMassComm: function() {
+		var publication = view.focus.draft;
+		console.log(publication);
+		
+		publication.audience = institutions[0].subscriptionLists[document.getElementById('communicationMailingList').value].subscribers;
+		
+		document.getElementById('resultsLast').innerHTML = '';
+		var text = "You publish the " + publication.title + " " + publication.type.name + ".";
+		gameLog.add("publish",text,true,people[0]);
+		
+		if (publication.type.indirect) {
+			if (publication.type.name = "Press Release") {
+				// Does the media pick it up?  If so, media-ness.
+				gameLog.add("press","No one picks up the story, because Media isn't implemented yet.",true);
+			} else if (publication.type.name = "Open Letter") {
+				// Does the target see the letter? If so, target.reception()
+				gameLog.add("file","It is seen by "+publication.audience.length+" people and filed.",true,institutions[0]);
+			} else if (publication.type.name = "Report") {
+				gameLog.add("file","It is seen by "+publication.audience.length+" people and filed.",true,institutions[0]);
+			};
+			for (a in publication.articles) {
+				institutions[0].gainReputation(publication.articles[a].issue.key,publication.type.reputationGain,publication.type.reputationCeiling)
+				};
+		} else {
+			for (art in publication.articles) {
+				var articleNumber = art;
+				articleNumber = parseInt(articleNumber)+1;
+				text = "In article #" + articleNumber + ", you ask them to " + publication.articles[art].demand.type + ":";
+				gameLog.add("publish",text,true,institutions[0]);
+					for (i in publication.audience) {
+						publication.audience[i].reception(publication.articles[art]);
+					};
+				institutions[0].gainReputation(publication.articles[art].issue.key,publication.type.reputationGain,publication.type.reputationCeiling)
+				};
+			};
+		
+		// remove draft from drafts array
+		drafts.splice(drafts.indexOf(publication),1);
+		document.getElementById('editCommunicationList').value = -1;
+		view.loadMassComm();
+		view.updateMassComm();
+			
+		people[0].currencies.mana -= document.getElementById('communicationPublishManaSpan').innerHTML;
+		institutions[0].currencies.cash -= document.getElementById('communicationPublishCostSpan').innerHTML;
+		if (institutions[0].currencies.cash < 0) {
+			people[0].currencies.cash += institutions[0].currencies.cash;
+			institutions[0].currencies.cash = 0;
+			};
+		advanceClock();
+			
+		handlers.showResultsLast();
+		handlers.showResultsTray();
 	},
 	
 	newList: function() {

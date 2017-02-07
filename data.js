@@ -1185,7 +1185,7 @@ var dataBackstories = {
 		},
 
 	unemployment: {
-		name: "Unemployment",
+		name: "Period of Unemployment",
 		values: ["care","ambition"],
 		issues: [dataIssues.economicEquity],
 		resources: ["debt"],
@@ -1758,6 +1758,7 @@ var dataCommunications = {
 
 	flyer: {
 		name: "Flyer",
+		key: "flyer",
 		maxArticles: 1,
 		baseTime: 4,
 		timePerArticle: 0,
@@ -1765,11 +1766,13 @@ var dataCommunications = {
 		costPerArticle: 0,
 		reputationGain: 1,
 		reputationCeiling: 3,
+		indirect: false,
 		requires: undefined,
 	},
 
 	mailer: {
 		name: "Mailer",
+		key: "mailer",
 		maxArticles: 1,
 		baseTime: 4,
 		timePerArticle: 0,
@@ -1777,11 +1780,13 @@ var dataCommunications = {
 		costPerArticle: 0,
 		reputationGain: 1,
 		reputationCeiling: 10,
+		indirect: false,
 		requires: undefined,
 	},
 
 	newsletter: {
 		name: "Newsletter",
+		key: "newsletter",
 		maxArticles: 4,
 		baseTime: 2,
 		timePerArticle: 2,
@@ -1789,11 +1794,13 @@ var dataCommunications = {
 		costPerArticle: 5,
 		reputationGain: 1,
 		reputationCeiling: 5,
+		indirect: false,
 		requires: undefined,
 	},
 
 	enewsletter: {
 		name: "eNewsletter",
+		key: "enewsletter",
 		maxArticles: 4,
 		baseTime: 2,
 		timePerArticle: 2,
@@ -1801,11 +1808,13 @@ var dataCommunications = {
 		costPerArticle: 0,
 		reputationGain: 1,
 		reputationCeiling: 5,
+		indirect: false,
 		requires: undefined,
 	},
 
 	openLetter: {
 		name: "Open Letter",
+		name: "openLetter",
 		maxArticles: 2,
 		baseTime: 4,
 		timePerArticle: 2,
@@ -1813,23 +1822,13 @@ var dataCommunications = {
 		costPerArticle: 0,
 		reputationGain: 1,
 		reputationCeiling: 10,
-		requires: undefined,
-	},
-
-	report: {
-		name: "Report",
-		maxArticles: 4,
-		baseTime: 8,
-		timePerArticle: 4,
-		baseCost: 50,
-		costPerArticle: 10,
-		reputationGain: 1,
-		reputationCeiling: 20,
+		indirect: true,
 		requires: undefined,
 	},
 
 	pressRelease: {
 		name: "Press Release",
+		key: "pressRelease",
 		maxArticles: 1,
 		baseTime: 4,
 		timePerArticle: 0,
@@ -1837,11 +1836,27 @@ var dataCommunications = {
 		costPerArticle: 0,
 		reputationGain: 1,
 		reputationCeiling: 10,
+		indirect: true,
+		requires: undefined,
+	},
+
+	report: {
+		name: "Report",
+		key: "report",
+		maxArticles: 4,
+		baseTime: 8,
+		timePerArticle: 4,
+		baseCost: 50,
+		costPerArticle: 10,
+		reputationGain: 1,
+		reputationCeiling: 20,
+		indirect: true,
 		requires: undefined,
 	},
 
 // 	blogpost: {
 // 		name: "Blog Post",
+// 		key: "blogpost",
 // 		maxArticles: 4,
 // 		baseTime: 0,
 // 		timePerArticle: 4,
@@ -1849,11 +1864,13 @@ var dataCommunications = {
 // 		costPerArticle: 0,
 // 		reputationGain: 1,
 // 		reputationCeiling: 5,
+// 		indirect: false,
 // 		requires: undefined, // will be 'dataAssets.blog'
 // 	},
 // 
 // 	socialMedia: {
 // 		name: "Social Media Blast",
+// 		key: "socialMedia",
 // 		maxArticles: 1,
 // 		baseTime: 4,
 // 		timePerArticle: 0,
@@ -1861,6 +1878,7 @@ var dataCommunications = {
 // 		costPerArticle: 0,
 // 		reputationGain: 1,
 // 		reputationCeiling: 5,
+// 		indirect: false,
 // 		requires: undefined, // will be 'dataAssets.socialMediaAccount'
 // 	},
 };

@@ -38,6 +38,7 @@ select {
 	
 .verboseCell{
 	font-size: .8em;
+	width: 30%;
 	}
 	
 .header {
@@ -457,6 +458,8 @@ dd {
 	-webkit-animation-duration: 0.4s;
 	animation-name: slideIn;
 	animation-duration: 0.4s;
+	max-height: 70%;
+	overflow-y: auto;
 	}
 
 #resultsTrayStub {

@@ -1106,15 +1106,18 @@ var view = {
 			console.log('loading',drafts[index].title);
 			console.log(drafts[index]);
 			document.getElementById('titleInput').value = drafts[index].title;
-			document.getElementById('communicationTypeList').value = drafts[index].type;
+			document.getElementById('communicationTypeList').value = drafts[index].type.key;
+			document.getElementById('communicationMailingList').value = drafts[index].audience;
 			
 			for (i=1;i<drafts[index].articles.length;i++) {view.addArticle();console.log(i);};
 			for (i=0;i<drafts[index].articles.length;i++) {
-				document.getElementById('communicationIssueList'+i).value = drafts[index].articles[i].issue;
+				document.getElementById('communicationIssueList'+i).value = drafts[index].articles[i].issue.key;
 				document.getElementById('communicationAppealList'+i).value = drafts[index].articles[i].appeal;
 				document.getElementById('communicationTargetList'+i).value = drafts[index].articles[i].target;
 				var demandKey = drafts[index].articles[i].demand.type;
 				if (demandKey === "subscribe") {
+					demandKey += " ";
+					demandKey += institutions[0].subscriptionLists.indexOf(drafts[index].articles[i].demand.subject[1]);
 				} else if (demandKey === "attend" || demandKey === "sponsor") {
 					console.log(drafts[index].articles[i].demand);
 					if (demandKey === "attend") {
@@ -1135,7 +1138,7 @@ var view = {
 					
 				} else if (demandKey === "policy") {
 					};
-				console.log(demandKey);
+				console.log("demandKey",demandKey);
 				document.getElementById('articleDemandList'+i).value = demandKey;
 				};
 			view.focus.draft = drafts[index];
