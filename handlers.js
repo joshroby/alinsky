@@ -455,6 +455,26 @@ var handlers = {
 		view.refreshActions();
 	},
 	
+	loadEvent: function() {
+		var eventCode = document.getElementById('editEventPlanList').value;
+		eventCode = eventCode.replace(/\D/g,'');
+		var eventDate = eventCode.substring(0,eventCode.length -1);
+		var eventIndex = eventCode.substring(eventCode.length-1);
+		var event = events[eventDate][eventIndex];
+		view.loadEvent(event);
+	},
+	
+	addAmenity: function() {
+		var amenity = document.getElementById('eventPlanAddAmenitiesList').value;
+		view.addAmenity(amenity);
+		view.updateEventProgress();
+	},
+	
+	deleteAmenity: function(amenity) {
+		view.deleteAmenity(amenity);
+		view.updateEventProgress();
+	},
+	
 	updateDates: function() {
 		view.updateDates();
 	},

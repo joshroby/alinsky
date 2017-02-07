@@ -175,7 +175,6 @@ var view = {
 					eventText += "</td></tr>";
 					var playerEvent = false;
 					for (s in todaysEvents[i][e].sponsors) {
-						console.log(todaysEvents[i][e].sponsors[s].sponsor);
 						if (todaysEvents[i][e].sponsors[s].sponsor == institutions[0] || todaysEvents[i][e].sponsors[s].sponsor == people[0]) {
 							playerEvent = true;
 							}
@@ -811,17 +810,27 @@ var view = {
 				};
 		};
 		
+		// Populate Review Event Pulldown
+		document.getElementById('editEventPlanList').innerHTML = '<option disabled selected>Review…</option>';
+		for (e in playerEvents) {
+			var eventItem = document.createElement('option');
+			eventItem.innerHTML = playerEvents[e][0].name;
+			eventItem.value = 'event ' + playerEvents[e][1] + playerEvents[e][2];
+			document.getElementById('editEventPlanList').appendChild(eventItem);
+		};
+		
 		// Populate Target Lists
-		// (Article Targets are always 'All Readers'; Event Targets can be 'Attendees' and can be others (for sit-ins))
+		// (Article Targets can be 'All Readers'; Event Targets can be 'Attendees' and can be others (for sit-ins))
 		var callCapacity = 4;
 		document.getElementById('visitContactList').innerHTML = '<option selected disabled>[Select a Contact]</option>';
-		document.getElementById('communicationTargetList0').innerHTML = '<option value="-1">All Readers</option>';
-		document.getElementById('eventPlanTargetList').innerHTML = '<option value="-1">Attendees</option>';
+		document.getElementById('communicationTargetList0').innerHTML = '<option selected value="-1">All Readers</option>';
+		document.getElementById('eventPlanTargetList').innerHTML = '<option selected value="-1">Attendees</option>';
 		
 		var contactItem;
 		lists = {visitContactList:0,communicationTargetList0:0,eventPlanTargetList:0};
 		for (i=0;i<document.getElementById('actionCalls').children.length;i++) {
 			lists[document.getElementById('actionCalls').children[i].children[0].id]=0;
+			document.getElementById('actionCalls').children[i].children[0].innerHTML = '<option selected disabled>[Select a Contact]</option>';
 			}
 		
 		alphPeople = [];
@@ -832,7 +841,6 @@ var view = {
 			}
 		alphPeople.sort(function(a,b) {return (a[0].name.last > b[0].name.last) ? 1 : ((b[0].name.last > a[0].name.last) ? -1 : 0);});
 		for (i in lists) {
-			document.getElementById(i).innerHTML = '<option selected disabled>[Select a Contact]</option>';
 			for (p in alphPeople) {
 				contactItem = document.createElement('option');
 				contactItem.innerHTML = alphPeople[p][0].name.first + " " + alphPeople[p][0].name.last;
@@ -985,8 +993,8 @@ var view = {
 		//Populate Venues List
 		var venues = [];
 		for (i in institutions) {
-			if (true) {
-				venues.push({institution:i,name:institutions[i].name});
+			if (institutions[i].venue.available) {
+				venues.push({institution:i,name:institutions[i].name,venueCost:institutions[i].venue.cost,permitRequired:institutions[i].venue.permitRequired});
 				};
 			};
 		venues.sort(function(a,b) {return (a.name > b.name) ? -1 : 1});
@@ -994,7 +1002,9 @@ var view = {
 		eventPlanVenueList.innerHTML = '<option selected value=-1>To Be Determined…</option>';
 		for (i in venues) {
 			var newVenueItem = document.createElement('option');
-			newVenueItem.innerHTML = venues[i].name;
+			newVenueItem.innerHTML = venues[i].name
+			if (venues[i].venueCost > 0) {newVenueItem.innerHTML += " ($" + venues[i].venueCost + ")";};
+			if (venues[i].permitRequired) {newVenueItem.innerHTML += " (permit required)";};
 			newVenueItem.value = venues[i].institution;
 			eventPlanVenueList.appendChild(newVenueItem);
 			};
@@ -1199,6 +1209,55 @@ var view = {
 
 	},
 	
+	clearEvent: function() {
+	},
+	
+	loadEvent: function(event) {
+		view.focus.event = event;
+		document.getElementById('eventPlanNameInput').value = event.name;
+		document.getElementById('eventPlanTypeList').value = event.type;
+		document.getElementById('eventPlanMonth').value = event.date.getMonth();
+		view.updateDates();
+		document.getElementById('eventPlanDate').value = event.date.getDate();
+		document.getElementById('eventPlanYear').value = event.date.getFullYear();
+		document.getElementById('eventPlanTime').value = event.date.getHours();
+		document.getElementById('eventPlanCauseList').value = event.demand.cause.key;
+		document.getElementById('eventPlanAppealList').value = event.appeal;
+		document.getElementById('eventPlanTargetList').value = event.target;
+		document.getElementById('eventPlanDemandList').value = event.demand.type; // needs translation here
+		document.getElementById('eventPlanVenueList').value = institutions.indexOf(event.venue);
+				
+		var amenities = event.amenities;
+		var listNumber = 0;
+		document.getElementById('eventPlanAmenitiesList').innerHTML = '';
+		for (a in amenities) {
+			var listItem = document.createElement('li');
+			listItem.innerHTML = dataEventAmenities[a].name + " ($<span class='amenityCost'>"+amenities[a]+"</span>) <button onclick='handlers.deleteAmenity(amenity"+listNumber+")'></button>";
+			document.getElementById('eventPlanAmenitiesList').appendChild(listItem);
+			listNumber++;
+		};
+		
+		var rsvps = event.rsvps.acceptances;
+		document.getElementById('eventPlanInviteesList').innerHTML = '';
+		for (a in rsvps.acceptances) {
+			var listItem = document.createElement('li');
+			listItem.innerHTML = rsvps.acceptances[a].name.first + " " + rsvps.acceptances[a].name.last;
+			document.getElementById('eventPlanInviteesList').appendChild(listItem);
+		};
+		
+		var sponsors = event.sponsors;
+		document.getElementById('eventPlanSponsorsList').innerHTML = '';
+		for (a in sponsors) {
+			var listItem = document.createElement('li');
+			listItem.innerHTML = event.sponsors[a].sponsor.name + " ($" + event.sponsors[a].contribution + ")";
+			document.getElementById('eventPlanSponsorsList').appendChild(listItem);
+		};
+		
+		view.updateEventProgress();
+		
+		console.log(event);
+	},
+	
 	updateDates: function() {
 		var month = document.getElementById('eventPlanMonth').value;
 		var dateRange = [31,28,31,30,31,30,31,31,30,31,30,31][month]
@@ -1211,6 +1270,53 @@ var view = {
 			dateItem.value = i+1;
 			document.getElementById('eventPlanDate').appendChild(dateItem);
 			};
+	},
+	
+	addAmenity: function(amenity) {
+		var listItem = document.createElement('li');
+		if (document.getElementById('eventPlanAmenitiesList').lastChild !== null) {
+			var listNumber = document.getElementById('eventPlanAmenitiesList').lastChild.id;
+			listNumber = 1+parseInt(listNumber.substring(listNumber.length-1));
+		} else { var listNumber = 0};
+		listItem.innerHTML = dataEventAmenities[amenity].name + " ($<span class='amenityCost'>" + dataEventAmenities[amenity].cost + "</span>) <button onclick='handlers.deleteAmenity(amenity"+listNumber+")'>-</button>";
+		listItem.id = "amenity"+listNumber;
+		document.getElementById('eventPlanAmenitiesList').appendChild(listItem);
+	},
+	
+	deleteAmenity: function(amenity) {
+		console.log(amenity);
+		document.getElementById('eventPlanAmenitiesList').removeChild(amenity);
+	},
+	
+	updateEventProgress: function() {
+		var fundingProgress = 0;
+		var prep = 0;
+		var totalCost = 0;
+		var totalPrep = 0;
+		if (document.getElementById('eventPlanTypeList').value !== "[Select a Type]") {
+			totalPrep = dataEventTypes[document.getElementById('eventPlanTypeList').value].baseTime;
+			};
+		if (view.focus.event !== undefined) {
+			event = view.focus.event;
+			prep = event.prep;
+			var fundingProgress = 0;
+			for (a in event.sponsors) {
+				fundingProgress += event.sponsors[a].contribution;
+			}
+		};
+		if (document.getElementById('eventPlanVenueList').value > 0) {
+			totalCost += institutions[document.getElementById('eventPlanVenueList').value].venue.cost;
+			if (institutions[document.getElementById('eventPlanVenueList').value].venue.permitRequired) {
+				totalPrep += 4;
+			};
+		};
+		for (a=0;a < document.getElementById('eventPlanAmenitiesList').children.length;a++) {
+			totalCost += parseInt(document.getElementById('eventPlanAmenitiesList').children[a].childNodes[1].innerHTML);
+			};
+
+		document.getElementById('eventPlanProgressCell').innerHTML = prep + " / <span id='eventPrepTotal'>"+totalPrep+"</span>";
+		document.getElementById('eventPlanFundingCell').innerHTML = "$" + fundingProgress + " / $<span id='eventFundingTotal'>"+totalCost+"</span>";
+		
 	},
 
 }

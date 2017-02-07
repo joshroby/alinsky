@@ -36,15 +36,14 @@ for (qwe = 0;qwe < 10;qwe++) {
 	var date = new Date().getDate() + (Math.random() * 20 << 0);
 	var hour = [8,12,16,20][Math.random() * 4 << 0];
 	var eventDate = new Date(new Date().getFullYear() + 1, new Date().getMonth(), date,hour)
-	var type = ["Rally","Vigil","Protest","Faire","Celebration","Mixer","Town Hall","Action Group"][Math.random() * 8 << 0]
+	var type = Object.keys(dataEventTypes)[Math.random() * 8 << 0]
 	var venue = institutions[institutions.length * Math.random() << 0];
-	var sponsors = [{sponsor:institutions[institutions.length * Math.random() << 0],contribution:8}];
-	var cost = (Math.random() * 100 << 0) * 10;
-	var prep = (Math.random() * 100 << 0) * 10;
+	var sponsors = [{sponsor:institutions[institutions.length * Math.random() << 0],contribution:0}];
 	var causes = Object.keys(dataIssues);
 	var cause = dataIssues[causes[Math.random() * causes.length << 0]];
 	var eventDemand = new Demand("donate",institutions[0],cause);
-	new Event(cause.name + " " + type,eventDate,sponsors,venue,cost,prep,undefined,eventDemand);
+	var appeal = ["purity","care","fairness"][Math.random() * 3 << 0]
+	new Event(cause.name + " " + dataEventTypes[type].name,type,eventDate,sponsors,venue,undefined,eventDemand,appeal,-1);
 	}
 
 player.currencies = {};

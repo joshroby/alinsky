@@ -1882,3 +1882,101 @@ var dataCommunications = {
 // 		requires: undefined, // will be 'dataAssets.socialMediaAccount'
 // 	},
 };
+
+var dataEventTypes = {
+	
+	rally: {
+		name: "Rally",
+		baseTime: 8,
+		reputationGain: 1,
+		reputationCeiling: 5,
+	},
+	
+	vigil: {
+		name: "Vigil",
+		baseTime: 8,
+		reputationGain: 1,
+		reputationCeiling: 5,
+	},
+	
+	protest: {
+		name: "Protest",
+		baseTime: 8,
+		reputationGain: 1,
+		reputationCeiling: 5,
+	},
+	
+	celebration: {
+		name: "Celebration",
+		baseTime: 8,
+		reputationGain: 3,
+		reputationCeiling: 5,
+	},
+	
+	faire: {
+		name: "Faire",
+		baseTime: 20,
+		reputationGain: 5,
+		reputationCeiling: 20,
+	},
+	
+	mixer: {
+		name: "Mixer",
+		baseTime: 8,
+		reputationGain: 1,
+		reputationCeiling: 10,
+	},
+	
+	actionGroup: {
+		name: "Action Group",
+		baseTime: 8,
+		reputationGain: 1,
+		reputationCeiling: 5,
+	},
+	
+	townHall: {
+		name: "Town Hall",
+		baseTime: 32,
+		reputationGain: 3,
+		reputationCeiling: 20,
+	},
+
+};
+
+var dataEventAmenities = {
+
+	props: {
+		name: "Props",
+		cost: "20",
+	},
+
+	decorations: {
+		name: "Decorations",
+		cost: "20",
+	},
+
+	signage: {
+		name: "Signage",
+		cost: "20",
+	},
+
+	catering: {
+		name: "Catering",
+		cost: "50",
+	},
+
+	childcare: {
+		name: "Childcare",
+		cost: "50",
+	},
+
+	swag: {
+		name: "Swag",
+		cost: "100",
+	},
+
+	security: {
+		name: "Security",
+		cost: "200",
+	},
+};

@@ -704,9 +704,9 @@
 				<div id='actionPlanningPane'>
 					<table class="actionTable">
 						<tr>
-							<td colspan='4'><input id='eventNameInput' type='text' value='Name your event here' onFocus="this.value=''"></input></td>
+							<td colspan='4'><input id='eventPlanNameInput' type='text' value='Name your event here' onFocus="this.value=''"></input></td>
 							<td align="right" colspan='4'>
-								<select id='editEventPlanList'>
+								<select id='editEventPlanList' onchange='handlers.loadEvent()'>
 									<option disabled selected>Review…</option>
 									<option value='3'>The Sit-In</option>
 									<option value='4'>The Rally</option>
@@ -716,6 +716,20 @@
 							</td>
 						</tr>
 						<tr>
+							<td class="tableHead">Type:</td>
+							<td id='eventPlanTypeCell'>
+								<select id='eventPlanTypeList' onchange='view.updateEventProgress()'>
+									<option disabled selected>[Select a Type]</option>
+									<option value="rally">Rally</option>
+									<option value="vigil">Vigil</option>
+									<option value="protest">Protest</option>
+									<option value="celebration">Celebration</option>
+									<option value="faire">Faire</option>
+									<option value="mixer">Mixer</option>
+									<option value="actionGroup">Action Group</option>
+									<option value="townHall">Town Hall</option>
+								</select>
+							</td>
 							<td class="tableHead">Date:</td>
 							<td id='eventPlanDateCell'>
 								<select id='eventPlanMonth' onchange='handlers.updateDates()'>
@@ -743,27 +757,18 @@
 								</select>
 								<select id='eventPlanTime'>
 									<option selected disabled>[Select Time]</option>
-									<option>Morning</option>
-									<option>Lunch</option>
-									<option>Afternoon</option>
-									<option>Evening</option>
-									<option>Late Night</option>
-								</select>
-							</td>
-							<td class="tableHead">Venue:</td>
-							<td>
-								<select id='eventPlanVenueList'>
-									<option disabled selected>To Be Determined</option>
-									<option>Manichean Church</option>
-									<option>Green Park</option>
-									<option>City Hall</option>
+									<option value=8>Morning</option>
+									<option value=12>Lunch</option>
+									<option value=16>Afternoon</option>
+									<option value=20>Evening</option>
+									<option value=0>Late Night</option>
 								</select>
 							</td>
 							<td class="tableHead">Prepwork:</td>
-							<td id='eventPlanProgressCell'>50%<br />(4hrs remaining)
+							<td id='eventPlanProgressCell'><span class='eventPrepTotal'>unknown</span>
 							</td>
 							<td class="tableHead">Funding:</td>
-							<td id='eventPlanFundingCell'>50%<br />($55 / $110)
+							<td id='eventPlanFundingCell'><span class='eventFundingTotal'>unknown</span>
 							</td>
 						</tr>
 					<tr>
@@ -777,15 +782,15 @@
 						</td>
 						<td class="tableHead">Appeal:</td>
 						<td>
-							<select id='eventPlanValueList'>
+							<select id='eventPlanAppealList'>
 								<option selected disabled>[Select an Appeal]</option>
-								<option>Ambition</option>
-								<option>Authority</option>
-								<option>Care</option>
-								<option>Fairness</option>
-								<option>Liberty</option>
-								<option>Loyalty</option>
-								<option>Purity</option>
+								<option value="ambition">Ambition</option>
+								<option value="authority">Authority</option>
+								<option value="care">Care</option>
+								<option value="fairness">Fairness</option>
+								<option value="liberty">Liberty</option>
+								<option value="loyalty">Loyalty</option>
+								<option value="purity">Purity</option>
 							</select>
 						</td>
 						<td class="tableHead">Target:</td>
@@ -810,34 +815,29 @@
 						</td>
 					</tr>
 						<tr>
-							<td class="tableHead">Type:</td>
-							<td id='eventPlanTypeCell'>
-								<select id='newEventPlanList'>
-									<option disabled selected>[Select a Type]</option>
-									<option>Rally</option>
-									<option>Vigil</option>
-									<option>Protest</option>
-									<option>Celebration</option>
-									<option>Faire</option>
-									<option>Mixer</option>
-									<option>Action Group</option>
-									<option>Town Hall</option>
+							<td class="tableHead">Venue:</td>
+							<td>
+								<select id='eventPlanVenueList' onchange='view.updateEventProgress()'>
+									<option disabled selected>To Be Determined</option>
+									<option>Manichean Church</option>
+									<option>Green Park</option>
+									<option>City Hall</option>
 								</select>
 							</td>
 							<td class="tableHead">Amenities:</td>
 							<td>
-								<ul id="eventPlanAmenitiesList" class="noIndent"><li>None</il></ul>
-								<select id='eventPlanAddAmenitiesList'>
-									<option>Add Props ($20)</option>
-									<option>Add Decorations ($20)</option>
-									<option>Add Signage ($20)</option>
-									<option>Add Catering ($50)</option>
-									<option>Add Childcare ($50)</option>
-									<option>Add Swag ($100)</option>
-									<option>Add Security ($200)</option>
+								<ul id="eventPlanAmenitiesList" class="noIndent"></ul>
+								<select id='eventPlanAddAmenitiesList' onchange='handlers.addAmenity()'>
+									<option value="props">Add Props ($20)</option>
+									<option value="decorations">Add Decorations ($20)</option>
+									<option value="signage">Add Signage ($20)</option>
+									<option value="catering">Add Catering ($50)</option>
+									<option value="childcare">Add Childcare ($50)</option>
+									<option value="swag">Add Swag ($100)</option>
+									<option value="security">Add Security ($200)</option>
 								</select>
 							</td>
-							<td class="tableHead">Invitees:</td>
+							<td class="tableHead">RSVPs:</td>
 							<td>
 								<ul id="eventPlanInviteesList" class="noIndent">
 									<li>Invite more with a visit or call</li>

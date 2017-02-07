@@ -321,6 +321,20 @@ function Institution(neighborhood,type,faith) {
 	capacity *= Math.max(1,rent);
 	if (type === "religious") {capacity *= 20};
 	
+	var venue = {available:false, capacity:capacity, cost:undefined, permitRequired: false};
+	if (type === "greenspace") {
+		venue.available = true;
+		venue.cost = 0;
+		venue.permitRequired = true;
+	} else if (type === "religious") {
+		venue.available = true;
+		venue.cost = Math.ceil(capacity * rent / 100 ) * 100;
+	} else if (type === "municipal") {
+	} else if (capacity > 10 && Math.random() > 0.5 ) {
+		venue.available = true;
+		venue.cost = Math.ceil(capacity * rent / 100 ) * 100;
+		}
+	
 	if (type === "religious" || type === "greenspace") {
 			var payroll = capacity / 50;
 		} else {
@@ -649,6 +663,7 @@ function Institution(neighborhood,type,faith) {
 	this.status = status;
 	this.rent = rent;
 	this.capacity = capacity;
+	this.venue = venue;
 	this.payroll = payroll;
 	this.paygrade = {unskilled:unskilled,skilled:skilled,management:management,executive:executive};
 
@@ -1307,8 +1322,9 @@ function Person(neighborhood) {
 
 };
 
-function Event(name,date,sponsors,venue,cost,prep,rsvps,demand,appeal,target) {
+function Event(name,type,date,sponsors,venue,rsvps,demand,appeal,target) {
 	this.name = name;
+	this.type = type;
 	this.date = date;
 	
 	this.venue = venue;
@@ -1321,13 +1337,9 @@ function Event(name,date,sponsors,venue,cost,prep,rsvps,demand,appeal,target) {
 	this.rsvps = {declines:[],acceptances:[]};
 	this.playerRSVP = false;
 	
-	if (cost == undefined) {cost = 0};
-	this.cost = cost;
-	this.funding = 0;
+	this.amenities = {};
 	
-	if (prep == undefined) {prep = 5};
-	this.prep = prep;
-	this.prepDone = 0;
+	this.prep = 0;
 	
 	var key = date.getFullYear().toString() + ('0' + date.getMonth()).slice(-2) + ('0' + date.getDate()).slice(-2);
 	if (events[key] == undefined) {
@@ -1335,6 +1347,7 @@ function Event(name,date,sponsors,venue,cost,prep,rsvps,demand,appeal,target) {
 	} else {
 		events[key].push(this);
 		};
+	
 	};
 
 function Communication(type,articles,publisher,audience) {
